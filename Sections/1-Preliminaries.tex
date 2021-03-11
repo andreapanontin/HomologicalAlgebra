@@ -1,0 +1,961 @@
+\documentclass[../Main]{subfiles}
+\begin{document}
+\section{Sheaves}
+\subsection{Basic definitions}
+Let's begin with a couple of preliminary definitions.
+\begin{defn}[Presheaf]
+	Let $X$ be a topological space.
+	A {\em presheaf} $P$ of {\em abelian groups} on $X$ consists of the data of:
+	\begin{itemize}
+		\item for any $\mathcal{U} \subset X$ open, an abelian group $P(\mathcal{U})$,
+		\item for any inclusion $\mathcal{V} \subset \mathcal{U}$ of open
+			subsets of $X$, of a morphism of abelian groups
+			\begin{equation}
+				\begin{tikzcd}
+					\rho_{\mathcal{UV}}\colon P(\mathcal{U}) \arrow[r, "", rightarrow] &
+					P(\mathcal{V})
+				\end{tikzcd}
+			\end{equation} 
+			such that
+			\begin{enumerate}
+				\item $\rho_{\mathcal{U}\mathcal{U}} = \mathrm{id}_{P(\mathcal{U})}$,
+				\item For any $\mathcal{W} \subset \mathcal{V} \subset \mathcal{U}$,
+					then the following diagram commutes
+					\begin{equation}
+					\begin{tikzcd}
+						P(\mathcal{U}) \arrow[rr, "\rho_{\mathcal{U}\mathcal{W}}", rightarrow] 
+						\arrow[rd, "\rho_{\mathcal{U}\mathcal{V}}"', rightarrow] & &
+						P(\mathcal{W})\\
+						&
+						P(\mathcal{V}) \arrow[ru, "\rho_{\mathcal{V}\mathcal{W}}"', rightarrow] &
+					\end{tikzcd}
+					.\end{equation} 
+			\end{enumerate}
+	\end{itemize}
+\end{defn}
+
+\begin{ntt}[Restriction]
+	Let $\mathcal{U} \subset X$ be an open subset, and $s \in P(\mathcal{U})$.
+	Given $\mathcal{V} \subset \mathcal{U}$ open, we define the following: 
+	\begin{equation}
+		\left.s\right|_{\mathcal{V}} := \rho_{\mathcal{UV}}(s) \in P(\mathcal{V})
+	.\end{equation} 
+	The element $\left.s\right|_{\mathcal{V}}$ is called the {\em restriction} of $s$ to $\mathcal{V}$
+	and $\rho_{\mathcal{UV}}$ is called the {\em restriction morphism} from $\mathcal{U}$
+	to $\mathcal{V}$.
+\end{ntt}
+
+\begin{rem}[Category of open subset]
+	Given a topological space $X$, 
+	we can define the category $\mathsf{Op}(X)$, characterized by:
+	\begin{itemize}
+	\item Objects: $\mathcal{U} \in \mathrm{Ob} \left(\mathsf{Op}(X)\right)$
+		are given by open subsets $\mathcal{U} \subset X$,
+	\item Morphisms: The set of morphisms are given by
+		\begin{equation}
+			\mathrm{Hom}_{\mathsf{Op}(X)} \left( \mathcal{U}, \mathcal{V} \right) :=
+		\begin{cases}
+			\left\{ * \right\} & \text{if } \mathcal{U} \subset \mathcal{V}\\
+			\emptyset & \text{otherwise}
+		\end{cases} 
+		,\end{equation} 
+		i.e. there is an arrow $\mathcal{U} \hookrightarrow \mathcal{V}$ iff
+		$\mathcal{U} \subset \mathcal{V}$.
+	\end{itemize}
+\end{rem}
+
+\begin{defn}[Presheaf (again)]
+	A {\em presheaf} of abelian groups on a topological space $X$ is a (contravariant) functor
+	\begin{align}
+		P: \mathsf{Op}(X)^{op} &\longrightarrow \mathsf{Ab} \\
+		\mathcal{U} &\longmapsto P(\mathcal{U}) \nonumber\\
+		(\mathcal{U} \hookrightarrow \mathcal{V}) &\longmapsto \rho_{\mathcal{UV}}\colon 
+		P(\mathcal{U}) \to P(\mathcal{V}) \nonumber
+	.\end{align} 
+	Recall that, in $\mathsf{Op}(X)^{op}$, the arrow $\mathcal{U} \to \mathcal{V}$
+	corresponds to the inclusion $\mathcal{V} \subset \mathcal{U}$.
+\end{defn}
+
+\begin{defn}[Presheaf of rings, groups, sets]
+	A presheaf of {\em rings, groups} or {\em sets} is simply
+	a functor on the appropriate category.
+\end{defn}
+
+\begin{defn}[Sheaf]
+	A presheaf $\mathcal{F}$ of abelian groups on $X$ is called a {\em sheaf} iff
+	it satisfies the following conditions:
+	\begin{itemize}
+		\item $\mathcal{F}(\emptyset) = 0$,
+		\item \textbf{Uniqueness:} let $\mathcal{U} \subset X$ an open subset, and
+			$\left\{ \mathcal{U}_i \right\}_{i \in I}$ an
+			open cover of $\mathcal{U}$.
+			Given a section $s \in \mathcal{F}(\mathcal{U})$ s.t.
+			$\left.s\right|_{\mathcal{U}_i} = 0$ for all $i \in I$,
+			then $s = 0 \in \mathcal{F}(\mathcal{U})$.
+		\item \textbf{Gluing:} let $\mathcal{U} \subset X$ an open subset, and
+			$\left\{ \mathcal{U}_i \right\}_{i \in I}$ an
+			open cover of $\mathcal{U}$.
+			Given a family of sections $s_i \in \mathcal{F}(\mathcal{U}_i)$
+			for all $i \in I$, s.t. for all $\left(i, j\right) \in I^2$
+			\begin{equation}
+			\left.s_i\right|_{\mathcal{U}_i \cap \mathcal{U}_j} =
+			\left.s_j\right|_{\mathcal{U}_i \cap \mathcal{U}_j} 
+			,\end{equation} 
+			then there exists $s \in \mathcal{F}(\mathcal{U})$ s.t.
+			$\left.s\right|_{\mathcal{U}_i} = s_i$ for all $i \in I$.
+	\end{itemize}
+\end{defn}
+
+\begin{rem}[]
+	Uniqueness above grants that, given a family of compatible
+	sections on an open cover of an open set, their gluing is unique.
+\end{rem}
+
+\begin{rem}[]
+	In the same way, just changing the target category,
+	one defines sheaves of rings, groups and sets.
+\end{rem}
+
+\begin{rem}[Condition 1 is redundant tk: fix it, please]
+	(The fact that the product over an empty set is a final object is explained
+	in section 3, then I'd also add the exact sequence satisfied by sheaves).
+	In fact the covering $\bigcup_{i \in \emptyset} U_i = \emptyset$,
+	then $\prod_{i \in \emptyset} F(\mathcal{U}_i)$ is a final object in our category
+	Then, in the exact sequence for the definition of sheaf we have
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}(\emptyset) \arrow[r, "", rightarrow] &
+		0 \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	By exactness $\mathcal{F}(\emptyset) = 0$.
+\end{rem}
+
+
+\begin{defn}[Section]
+	An element $s \in \mathcal{F}(\mathcal{U})$ is called a {\em section}
+	of $\mathcal{F}$ over $\mathcal{U}$.
+\end{defn}
+
+\begin{ex}[Continuous functions]
+	Let $X$ be a topological space and $\mathcal{U} \subset X$ an open subset of $X$.
+	One defines the ring
+	\begin{equation}
+		\mathcal{C}(\mathcal{U}) := 
+		\mathcal{C}^0\left( \mathcal{U}, \mathbb{R} \right) :=
+		\left\{ f\colon \mathcal{U} \to \mathbb{R} \ \middle|\ 
+		f \text{ is continuous on } \mathcal{U}\, \right\} \in 
+		\mathrm{Ob} \left(\mathsf{Rings}\right) 
+	.\end{equation} 
+	Notice that above we consider $\mathcal{C}\left(\mathcal{U}\right)$
+	with its natural ring structure.
+	Then, given $\mathcal{V} \subset \mathcal{U}$ an open subset of $X$,
+	to the inclusion we associate the restriction map
+	\begin{align}
+		\rho_{\mathcal{UV}}: \mathcal{C}(\mathcal{U}) &\longrightarrow \mathcal{C}(\mathcal{V}) \\
+		\left( f\colon \mathcal{U} \to \mathbb{R} \right) &\longmapsto 
+		\left( \left.f\right|_{\mathcal{V}}\colon \mathcal{V} \to \mathbb{R} \right) \nonumber
+	.\end{align} 
+	Clearly $\mathcal{C}$ is a sheaf of rings on $X$, in fact:
+	\begin{itemize}
+		\item $\mathcal{C}\left( \emptyset \right) = 0$,
+		\item By the gluing lemma, one can glue together continuous functions,
+			defined on arbitrarily many (possibly overlapping)
+			open subsets of $X$, in a unique way
+			in order to obtain a continuous function
+			defined on the union.
+	\end{itemize}
+\end{ex}
+
+\begin{ex}[]
+	Let $A \neq 0$ be a nontrivial abelian group.
+	Let $X := X_1 \sqcup X_2$ be a topological space with two connected components,
+	i.e. $X_i \neq \emptyset$ and it is connected for $i = 1,2$.
+	Let's define the presheaf $A_X$ on $X$, on objects, by
+	\begin{equation}
+		A_X(\emptyset) := 0
+		\qquad \text{ and } \qquad
+		A_X(\mathcal{U}) := A \quad
+		\,\forall\ \emptyset \neq \mathcal{U} \subset X
+	,\end{equation} 
+	and on morphisms (i.e. inclusions), for all $\emptyset \neq \mathcal{V} \subset \mathcal{U} \subset X$,
+	by setting $\rho_{\mathcal{UV}}: A_X(\mathcal{U}) \to A_X(\mathcal{V})$
+	to be $id_A\colon A \to A$
+	and $\rho_{\mathcal{U}\emptyset}\colon A_X(\mathcal{U}) \to A_X(\emptyset) = 0$
+	to be, of course, the zero morphism.
+
+	Clearly $A_X$ is not a sheaf.
+	In fact, given $s_1 \neq s_2 \in A$, with $s_i \in A_X(X_i) = A$,
+	Then we have $X_1 \cap X_2 = \emptyset$, hence $A_X(X_1 \cap X_2) = A_X(\emptyset) = 0$
+	and
+	\begin{equation}
+	\left.s_1\right|_{X_1 \cap X_2} = 0 = 
+	\left.s_2\right|_{X_1 \cap X_2} 
+	.\end{equation} 
+	Then, if $A_X$ were a sheaf, we'd be able to glue the two sections together
+	and obtain a global section $s \in A_X(X) = A$ s.t.
+	\begin{equation}
+		s = id_A(s) = \left.s\right|_{X_1} = s_1 \neq
+		s_2 = \left.s\right|_{X_2} = id_A(s) = s
+	,\end{equation}
+	which is, clearly, impossible.
+\end{ex}
+
+\begin{defn}[Restriction sheaf]
+	Let $\mathcal{U} \subset X$ be an open subset of a topological space $X$,
+	and $\mathcal{F}$ a sheaf of abelian groups on $X$.
+	Then one can define the {\em restriction sheaf}
+	\begin{align}
+		\left.\mathcal{F}\right|_{\mathcal{U}}: \mathsf{Op}(\mathcal{U})^{op} &\longrightarrow 
+			\mathsf{Ab}\\
+			\left( \mathcal{V} \subset \mathcal{U} \right) &\longmapsto 
+			\mathcal{F}(\mathcal{V}) \nonumber
+	.\end{align} 
+	This functor acts the same way as $\mathcal{F}$, but only on open subsets of $\mathcal{U}$.
+	(Notice that, since $\mathcal{U} \subset X$ is open, then open subsets of $\mathcal{U}$
+	are already open in $X$).
+\end{defn}
+
+\begin{defn}[Basis for a topology]
+	Let's recall the definition for the {\em basis} of a topology.
+	Let $X$ be a topological space. A family of open subsets $\beta$
+	forms a basis for the topology on $X$ iff
+\begin{itemize}
+	\item every open subset $\mathcal{U} \subset X$ is the union of elements of $\beta$,
+		i.e.
+		\begin{equation}
+		\mathcal{U} = \bigcup_{i \in I} \mathcal{U}_i
+		\qquad \text{ s.t. } \qquad
+		\mathcal{U}_i \in \beta,\ \,\forall\, i \in I
+		;\end{equation} 
+	\item $\beta$ is closed under finite intersections, i.e.
+		given $\mathcal{U}_1, \ldots, \mathcal{U}_n \in \beta$, then
+		\begin{equation}
+		\bigcap_{i= 1}^n \mathcal{U}_i \in \beta
+		.\end{equation} 
+\end{itemize} 
+\end{defn}
+
+\begin{rem}[Category $\beta$]
+We can consider $\beta$ as a standalone category.
+In fact it is a full subcategory of $\mathsf{Op}(X)$.
+\end{rem}
+
+\begin{defn}[$\beta$-sheaf]
+Let $X \in \mathsf{Top}$ and $\beta$ a basis of open subsets for the topology on $X$.
+A $\beta$-preasheaf of abelian groups is, as one would expect, a functor
+\begin{equation}
+P\colon \beta^{op} \to \mathsf{Ab}
+.\end{equation} 
+A $\beta$-{\em sheaf} is a $\beta$-presheaf satisfying the sheaf conditions
+(only for subsets in $\beta$).
+\end{defn}
+
+\begin{rem}[]
+Every $\beta$-sheaf extends uniquely to a sheaf on $X$.
+Let, in fact, $\mathcal{F}_0$ be a $\beta$-sheaf of abelian groups
+and $\mathcal{U} \subset X$ be an open subset.
+Then there exists $\left\{ \mathcal{U}_i \right\}_{i \in I}$ a family in $\beta$
+s.t. $\mathcal{U} = \bigcup_{i \in I} \mathcal{U}_i$.
+We can now extend $\mathcal{F}_0$ to $\mathcal{U}$ by setting
+\begin{equation}
+	\mathcal{F}(\mathcal{U}) :=
+	\ker
+	\begin{pmatrix}
+		\prod_{i \in I} \mathcal{F}_0(\mathcal{U}_i) &\longrightarrow &
+		\prod_{\left(i, j\right) \in I^2} \mathcal{F}_0 \left( 
+		\mathcal{U}_i \cap \mathcal{U}_j \right) \\
+		\left( s_i \right)_{i \in I} &\longmapsto &
+		\left( \left.s_i\right|_{\mathcal{U}_i \cap \mathcal{U}_j} -
+		\left.s_j\right|_{\mathcal{U}_i \cap \mathcal{U}_j} \right)_{\left(i, j\right) \in I^2}
+	\end{pmatrix} 
+.\end{equation} 
+If, instead, $\mathcal{F}_0$ is a $\beta$-sheaf of sets, then
+\begin{equation}
+	\mathcal{F}(\mathcal{U}) = 
+	\varprojlim \left(  
+		\begin{tikzcd}
+		\prod_{i \in I} \mathcal{F}_0(\mathcal{U}_i)
+		\arrow[r, "", rightarrow, shift left=.5ex] \arrow[r, "", rightarrow, shift right=.5ex] &
+		\prod_{\left(i, j\right) \in I^2} \mathcal{F}_0 \left( 
+		\mathcal{U}_i \cap \mathcal{U}_j \right)
+		\end{tikzcd}
+	\right)
+.\end{equation} 
+\end{rem}
+
+\begin{defn}[Complex of groups]
+	A {\em complex of groups} is a sequence, indexed in $\mathbb{Z}$, 
+	of morphisms of abelian groups
+	\begin{equation}
+	\begin{tikzcd}
+		\ldots \arrow[r, "", rightarrow] &
+		A^{i-1} \arrow[r, "d^{i-1}", rightarrow] &
+		A^{i} \arrow[r, "d^{i}", rightarrow] &
+		A^{i+1} \arrow[r, "d^{i+1}", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	,\end{equation} 
+	s.t. $d^{i+1} \circ d^i = 0$.
+\end{defn}
+
+\begin{ex}[]
+	Let $\mathcal{U} \subset X$ be an open subset, 
+	and $\mathcal{U} = \bigcup_{i \in I} \mathcal{U}_i$ be an open cover.
+	Consider any presheaf of abelian groups $P$ on $X$;
+	Then one can define the complex $\mathcal{C} \left( \left( \mathcal{U}_i \right)_{i \in I}, P  \right)$
+	by
+	\begin{equation}
+	\begin{tikzcd}[row sep=0]
+		0 \arrow[r, "d^{-1}", rightarrow] &
+		P(\mathcal{U}) \arrow[r, "d^0", rightarrow] &
+		\prod_{i \in I} P(\mathcal{U}_i) \arrow[r, "d^1", rightarrow] &
+		\prod_{\left(i, j\right) \in I^2} P ( \mathcal{U}_{ij})\\
+									      &
+		s \arrow[r, "", mapsto] &
+		\left( \left.s\right|_{\mathcal{U}_i}  \right)_{i \in I} & \\
+		& &
+		\left( s_i \right)_{i \in I} \arrow[r, "", mapsto] &
+		\left( \left.s_i\right|_{\mathcal{U}_{ij}} -
+		\left.s_j\right|_{\mathcal{U}_{ij}} \right)_{\left(i, j\right) \in I^2}
+	\end{tikzcd}
+	,\end{equation} 
+	where $\mathcal{U}_{ij} := \mathcal{U}_i \cap \mathcal{U}_j$.
+	This is a complex, since 
+	\begin{align}
+	d^1 \circ d^0 (s) &= 
+	d^1 \left( \left( \left.s\right|_{\mathcal{U}_i}  \right)_{i \in I} \right) =\\
+	  &= \left.\left( \left.s\right|_{\mathcal{U}_i}  \right)\right|_{\mathcal{U}_{ij}} -
+	  \left.\left( \left.s\right|_{\mathcal{U}_j}  \right)\right|_{\mathcal{U}_{ij}} \nonumber\\
+	&= \left.s\right|_{\mathcal{U}_{ij}} - \left.s\right|_{\mathcal{U}_{ij}} = 0
+	.\end{align} 
+\end{ex}
+
+\begin{defn}[Exact complex]
+	A complex is said to be {\em exact} iff, for all $i \in \mathbb{Z}$,
+	\begin{equation}
+		\ima \left( d^{i-1} \right) =
+		\ker \left( d^i \right)
+	.\end{equation} 
+\end{defn}
+
+\begin{lem}
+	Let $P$ be a {\em presheaf} on $X$.
+	Then $P$ is a sheaf on $X$ iff, given any $\mathcal{U} \subset X$ and
+	any open cover $\mathcal{U} = \bigcup_{i \in I} \mathcal{U}_i$ of $\mathcal{U}$,
+	the complex $\mathcal{C}\left(\left( \mathcal{U}_i \right)_{i \in I}, P\right)$
+	is exact.
+	In other words iff $d^0$ is injective (uniqueness condition) and
+	$\ker d^1 = \ima d^0$ (gluing condition).
+\end{lem} 
+
+\begin{defn}[Stalk of a presheaf]
+	Let $P$ be a presheaf on $X$ and $x \in X$.
+	The stalk of $P$ at $x$ is defined to be the abelian group (resp. ring, set, ...)
+	\begin{equation}
+		P_x := \varinjlim_{\mathcal{U} \ni x} P(\mathcal{U})
+	.\end{equation} 
+\end{defn}
+
+\begin{rem}[Recall]
+	For sets
+	\begin{equation}
+	P_x = 
+	\varinjlim_{\mathcal{U} \ni x} P(\mathcal{U}) =
+	\coprod_{\mathcal{U} \ni x} P(\mathcal{U}) / \sim	
+	,\end{equation} 
+	where $\coprod$ denotes the disjoint union of sets, and the
+	equivalence relation is defined by
+	$\left(\mathcal{U}, s\right) \sim \left(\mathcal{V}, t\right)$, for $\mathcal{U}, \mathcal{V} \subset X$
+	open subsets and $s \in P(\mathcal{U})$, $t \in P(\mathcal{V})$, iff
+	there exists an open neighbourhood
+	$x \in \mathcal{W} \subset \mathcal{U} \cap \mathcal{V}$
+	s.t.
+	\begin{equation}
+	\left.s\right|_{\mathcal{W}}  = \left.t\right|_{\mathcal{W}} 
+	.\end{equation} 
+	We denote by $\left[ \mathcal{U}, s \right]$, or by $s_x$ the equivalence class
+	of $\left( \mathcal{U}, s \right)$.
+	For any $x \in X$ and any $x \in \mathcal{U}$ there is a canonical map
+	\begin{align}
+		\pi: P(\mathcal{U}) &\longrightarrow P_x \\
+		s &\longmapsto s_x
+	.\end{align} 
+	Finally $s_x$ is called the {\em germ} of $s$ at $x$.
+\end{rem}
+
+\begin{lem}
+	Let $\mathcal{F}$ be a sheaf on $X$, and $s,t \in \mathcal{F}(X)$ two global sections.
+	If, for every $x \in X$, $s_x = t_x$, then $s = t$.
+\end{lem}
+\begin{proof}
+	We know that $s_x = t_x$ iff there exists $x \in \mathcal{U}_x \neq \emptyset$ on which
+	$\left.s\right|_{\mathcal{U}_x} = \left.t\right|_{\mathcal{U}_x}$.
+	Clearly $X = \bigcup_{x \in X} \mathcal{U}_x$ is an open cover.
+	Then
+	\begin{equation}
+		\left.\left( s - t \right)\right|_{\mathcal{U}_x} =
+			\left.s\right|_{\mathcal{U}_x} - \left.t\right|_{\mathcal{U}_x} =
+					0
+	.\end{equation} 
+	This holds for any $x \in X$, i.e. on an open cover of $X$.
+	By uniqueness we obtain that $s-t = 0$, hence the desired global equality.
+\end{proof}
+
+\begin{defn}[Morphism of presheaves]
+	Let $\mathcal{F}$ and $\mathcal{G}$ be two presheaves of abelian groups
+	(resp. rings, sets, ...) on $X$.
+	A morphism of presheaves $\alpha\colon \mathcal{F} \to \mathcal{G}$ is simply
+	a morphism of functors, sometimes called natural transformation.
+	More explicitly it is the data, for any $\mathcal{U} \in \mathrm{Ob} \left(\mathsf{Op}(X)\right)$,
+	of a morphism in $\mathsf{Ab}$
+	\begin{equation}
+		\begin{tikzcd}
+			\alpha(\mathcal{U})\colon \mathcal{F}(\mathcal{U}) \arrow[r, "", rightarrow] &
+		\mathcal{G}(\mathcal{U})
+		\end{tikzcd}
+	.\end{equation} 
+	Moreover this family of morphisms has to satisfy the following naturality
+	(or functoriality)
+	condition: for any $\mathcal{V} \subset \mathcal{U}$ the diagram commutes
+	\begin{equation}
+	\begin{tikzcd}
+		\mathcal{F}(\mathcal{U}) \arrow[r, "\alpha(\mathcal{U})", rightarrow] 
+	\arrow[d, "\rho_{\mathcal{UV}}^{\mathcal{F}}"', rightarrow] &
+		\mathcal{G}(\mathcal{U}) \arrow[d, "\rho_{\mathcal{UV}}^{\mathcal{G}}", rightarrow] \\
+		\mathcal{F}(\mathcal{V}) \arrow[r, "\alpha(\mathcal{V})"', rightarrow] &
+		\mathcal{G}(\mathcal{V})
+	\end{tikzcd}
+	.\end{equation} 
+\end{defn}
+
+\begin{defn}[Injective, surjective, iso morphisms of presheaves]
+	A morphism $\alpha\colon \mathcal{F} \to \mathcal{G}$ of presheaves is
+	\begin{itemize}
+		\item {\em injective} iff $\alpha(\mathcal{U})$ is a monomorphism for every
+			$\mathcal{U} \subset X$ open,
+		\item {\em surjective} iff $\alpha(\mathcal{U})$ is an epimorphism for every
+			$\mathcal{U} \subset X$ open,
+		\item an {\em isomorphism} iff $\alpha(\mathcal{U})$ is an isomorphism for every
+			$\mathcal{U} \subset X$ open.
+	\end{itemize}
+	Notice that these coincide with the definitions of mono/epi/iso
+	morphism in the category of presheaves, viewed as the category of
+	functors from $\mathsf{Op}(X)$.
+\end{defn}
+
+\begin{rem}[Morphism at the level of stalks]
+	A morphism of presheaves $\alpha\colon \mathcal{F} \to \mathcal{G}$ induces,
+	for every $x \in X$ a morphism of abelian groups (resp. rings, sets, ...)
+	at the level of stalks
+	\begin{align}
+		\alpha_x: \mathcal{F}_x &\longrightarrow \mathcal{G}_x \\
+		s_x &\longmapsto \left[ \alpha(s) \right]_x \nonumber
+	.\end{align} 
+	The above definition is independent of the chosen representative of $\alpha_x$.
+\end{rem}
+
+\begin{defn}[Morphism of sheaves]
+	A morphism of sheaves is simply a morphism of the underlying presheaves.
+\end{defn}
+
+\begin{rem}[Forgetful functor]
+	The forgetful functor 
+	\begin{align}
+		\iota: \mathsf{Sh}(X) &\longrightarrow \mathsf{PSh}(X) \\
+		\mathcal{F} &\longmapsto \mathcal{F} \nonumber
+	,\end{align} 
+	assigning to every sheaf $\mathcal{F}$ itself, viewed as a presheaf,
+	is clearly fully faithful (in fact morphisms of sheaves are just morphisms
+	of presheaves among sheaves).
+\end{rem}
+
+\begin{defn}[Injective, surjective, iso morphisms of sheaves]
+	A morphism $\alpha\colon \mathcal{F} \to \mathcal{G}$ of sheaves is
+	\begin{itemize}
+		\item {\em injective} iff $\alpha_x$ is a mono for every
+			$x \in X$,
+		\item {\em surjective} iff $\alpha_x$ is epi for every
+			$x \in X$,
+		\item an {\em isomorphism} iff $\alpha_x$ is an iso for every
+			$x \in X$.
+	\end{itemize}
+	One can prove that this definition coincides with the notion
+	of mono/epi/iso in the category of sheaves.
+\end{defn}
+
+\begin{prop}
+	Let $\alpha\colon \mathcal{F} \to \mathcal{G}$ be a morphism of sheaves 
+	of abelian groups (or modules), then
+	\begin{itemize}
+		\item $\alpha$ is an isomorphism iff
+			\begin{equation}
+				\begin{tikzcd}
+					\alpha(\mathcal{U}) \colon \mathcal{F}(\mathcal{U}) \arrow[r, "", rightarrow] &
+				\mathcal{G}(\mathcal{U})
+				\end{tikzcd}
+			\end{equation} 
+			is an isomorphism for every $\mathcal{U} \subset X$ open,
+		\item $\alpha$ is a monomorphism iff
+			\begin{equation}
+				\begin{tikzcd}
+					\alpha(\mathcal{U}) \colon \mathcal{F}(\mathcal{U}) \arrow[r, "", rightarrow] &
+				\mathcal{G}(\mathcal{U})
+				\end{tikzcd}
+			\end{equation} 
+			is a monomorphism for every $\mathcal{U} \subset X$ open.
+	\end{itemize}
+\end{prop} 
+\begin{proof}
+	Let's prove it for isomorphisms:
+	\begin{description}
+		\item[$\Leftarrow$] Assume that $\alpha(\mathcal{U}) \colon \mathcal{F}(\mathcal{U}) \to 
+			\mathcal{G}(\mathcal{U})$ is an iso for all $\mathcal{U} \subset X$ open.
+			Then it is easy to check that the induced maps
+			\begin{equation}
+				\begin{tikzcd}
+					\alpha_x\colon \mathcal{F}_x \arrow[r, "", rightarrow] &
+			\mathcal{G}_x
+				\end{tikzcd}
+			\end{equation} 
+			are isomorphisms for every $x \in X$.
+		\item[$\Rightarrow$] Suppose that $\alpha_x$ is an isomorphism
+			for all $x \in X$.
+			Let's recall that, in abelian groups (and modules more in general),
+			a morphism is an isomorphism
+			iff it is both mono and epi.
+			\begin{itemize}
+				\item[mono] Consider $\mathcal{U} \subset X$ and
+					a section $s \in \mathcal{F}(\mathcal{U})$
+					s.t. $\alpha(\mathcal{U})(s) = 0 \in \mathcal{G}(\mathcal{U})$.
+					Consider $x \in \mathcal{U}$, then $\alpha_x (s_x) = \left[ 
+					\alpha(\mathcal{U})(s)\right]_x = 0$.
+					Since $\alpha_x$ is an iso, it is in particular mono, hence
+					$s_x = 0$ for all $x \in X$.
+					By uniqueness, for sheaves, we then have that $s = 0 \in
+					\mathcal{F}(\mathcal{U})$.
+					Then $\alpha(\mathcal{U})$ is mono for each $\mathcal{U}$.
+
+				\item[epi] Let $\mathcal{U} \subset X$ open and $t \in \mathcal{G}(\mathcal{U})$.
+					Consider $x \in \mathcal{U}$, then 
+					$\alpha_x \colon \mathcal{F}_x \to \mathcal{G}_x$ is an iso.
+					It follows that, for every $x \in \mathcal{U}$,
+					there exists $s_x \in \mathcal{F}_x$ s.t. $\alpha_x(s_x) = t_x$.
+					This means, in particular, that there exists
+					$\mathcal{U}' \subset \mathcal{U}$ open, and
+					$s \in \mathcal{F}(\mathcal{U}')$
+					s.t. $\alpha(\mathcal{U}')(s) = \left.t\right|_{\mathcal{U}'}$.
+
+					Let's extract an open cover $\left\{ \mathcal{U}_i \right\}_{i \in I}$
+					of $\mathcal{U}$ from the above construction.
+					In particular, for every $i \in I$, there exists
+					$s_i \in \mathcal{F}(\mathcal{U}_i)$ s.t.
+					$\alpha(\mathcal{U}_i)(s_i) = \left.t\right|_{\mathcal{U}_i}$.
+					Let's now concentrate on $\mathcal{U}_{ij} := 
+					\mathcal{U}_i \cap \mathcal{U}_j \neq \emptyset$,
+					then
+					\begin{align}
+						\alpha(\mathcal{U}_{ij})(\left.s_i\right|_{\mathcal{U}_{ij}}) &=
+						\left.\alpha(\mathcal{U}_i)(s_i)\right|_{\mathcal{U}_{ij}} =
+						\left.(\left.t\right|_{\mathcal{U}_i})\right|_{\mathcal{U}_{ij}} =
+						\left.t\right|_{\mathcal{U}_{ij}} =\\
+									  &=
+						\left.(\left.t\right|_{\mathcal{U}_j})\right|_{\mathcal{U}_{ij}} =
+						\alpha(\mathcal{U}_{ij})(\left.s_j\right|_{\mathcal{U}_{ij}}) =
+						\alpha(\mathcal{U}_{ij})(\left.s_j\right|_{\mathcal{U}_{ij}})
+					.\end{align} 
+					We have already proved injectivity of $\alpha(\mathcal{U})$
+					at any open subset, hence $\left.s_i\right|_{\mathcal{U}_{ij}} =
+					\left.s_j\right|_{\mathcal{U}_{ij}}$.
+					By gluing and uniqueness ($\mathcal{F}$ is a sheaf)
+					we obtain that there exists a unique $s \in \mathcal{F}(\mathcal{U})$
+					s.t. $\left.s\right|_{\mathcal{U}_i} = s_i$.
+
+					Again by uniqueness we obtain that $\alpha(\mathcal{U})(s) = t$,
+					in fact for any $i \in I$
+					\begin{equation}
+						\left.\alpha(\mathcal{U})(s)\right|_{\mathcal{U}_i} =
+							\alpha(\mathcal{U}_i)(\left.s\right|_{\mathcal{U}_i}) =
+						\alpha(\mathcal{U}_i)(s_i) = 
+					\left.t\right|_{\mathcal{U}_i}\qedhere 
+					.\end{equation} 
+			\end{itemize}
+	\end{description} 
+\end{proof}
+
+\begin{rem}[]
+	Let $\alpha\colon \mathcal{F} \to \mathcal{G}$ be a surjective morphism
+	of sheaves.
+	In general the induced morphism $\alpha \left( \mathcal{U} \right)\colon
+	\mathcal{F}(\mathcal{U})\to \mathcal{G}(\mathcal{U})$ is not epi.
+\end{rem}
+
+\subsection{Étalé space associated to a presheaf}
+Given a presheaf of abelian groups $P$ on $X$, topological space, we want
+to associate it an étalé space.
+Let's consider $\widetilde{P} := \coprod_{x \in X} P_x$,
+the disjoint union of the stalks of the presheaf $P$, viewed as a set.
+
+There is a canonical projection which can be easily defined
+\begin{align}
+	\pi: \coprod_{x \in X} P_x &\longrightarrow X \\
+	\left(x, s_x\right) &\longmapsto x \nonumber
+.\end{align} 
+Moreover, for any section of the presheaf $s \in P(\mathcal{U})$,
+we can define a map:
+\begin{align}
+	\tilde{s}: \mathcal{U} &\longrightarrow \coprod_{x \in X} P_x \\
+	x &\longmapsto \left(x, s_x\right) \nonumber
+.\end{align} 
+This map $\tilde{s}$ is, in fact, called a {\em section} of $\pi$ over $\mathcal{U}$.
+More explicitly we have
+\begin{equation}
+\begin{tikzcd}
+	\coprod_{x \in \mathcal{U}} P_x \arrow[rrd, "\pi_{\mathcal{U}}"', rightarrow] 
+	\arrow[r, "", hookrightarrow] &
+	\coprod_{x \in X} P_x \arrow[r, "\pi", rightarrow] &
+	X \\
+	&&
+	\mathcal{U} \arrow[u, "", hookrightarrow] 
+	\arrow[llu, "\tilde{s}", rightarrow, bend left] 
+\end{tikzcd}
+.\end{equation} 
+This diagram commutes, i.e. $\pi_{\mathcal{U}} \circ \tilde{s} = id_{\mathcal{U}}$.
+
+Moreover one defines on $\widetilde{P}$ the weakest topology making $\tilde{s}$ continuous
+for any $s \in P(\mathcal{U})$, with $\mathcal{U} \subset X$ open.
+More explicitly a subset $G \subset \widetilde{P}$ is open iff,
+for any open subset $\mathcal{U} \subset X$ and any local section $s \in P(\mathcal{U})$,
+the subset $\tilde{s}^{-1}(G) \subset X$ is open.
+
+\begin{exr}
+	Check that the above actually defines a topology.
+\end{exr} 
+
+\begin{prop}[]
+	The canonical projection $\pi\colon \widetilde{P} \to X$ is
+	a local homeomorphism, i.e. for any point $x \in X$ there exists a neighbourhood
+	$\mathcal{U}_x$ of $x$ on which $\pi$ restricts to a homeomorphism.
+\end{prop}
+\begin{proof}
+	Just some hints:
+	Fix a point $s_{x_0} \in P_{x_0} \subset \widetilde{P}$.
+	We need to find a subset $G \subset \widetilde{P}$, with $s_{x_0} \in G$ and s.t.
+	$\left.\pi\right|_{G} \colon G \to \mathcal{U} \subset X$, for 
+	$s_{x_0} = [\mathcal{U}, s]$, is a homemorphism.
+	Consider
+	\begin{equation}
+		G := \tilde{s}(\mathcal{U}) =
+		\left\{ s_x \ \middle|\ x \in \mathcal{U} \right\}
+	.\end{equation} 
+\end{proof}
+%\begin{exr}
+%	Check that the above definition satisfies the desired conditions.
+%\end{exr} 
+
+\begin{defn}[Sheaf associated to a presheaf]
+	Let $\mathcal{F}$ be a presheaf on $X$.
+	The sheaf associated to $\mathcal{F}$ is a sheaf $\mathcal{F}^\#$,
+	endowed with a morphism of presheaves
+	\begin{equation}
+		\begin{tikzcd}
+			\theta\colon \mathcal{F} \arrow[r, "", rightarrow] &
+	\mathcal{F}^\#
+		\end{tikzcd}
+	\end{equation} 
+	s.t. given any morphism of presheaves
+	$\alpha\colon \mathcal{F} \to \mathcal{G}$, where $\mathcal{G}$ is a sheaf,
+	there exists a unique morphism $\tilde{\alpha}\colon \mathcal{F}^\# \to \mathcal{G}$
+	making the following diagram commutative
+	\begin{equation}
+	\begin{tikzcd}
+		\mathcal{F} \arrow[rr, "\alpha", rightarrow] 
+		\arrow[rd, "\theta"', rightarrow] & &
+		\mathcal{G}\\
+		&
+		\mathcal{F}^\# \arrow[ru, "\tilde{\alpha}"', rightarrow] &
+	\end{tikzcd}
+	.\end{equation} 
+\end{defn}
+
+\begin{thm}[]
+	Given a presheaf $\mathcal{F}$, its associated sheaf $\mathcal{F}^\#$ exists and
+	is unique up to a unique isomorphism.
+	Moreover, for every $x \in X$, the associated morphism at the level of stalks is an isomorphism
+	\begin{equation}
+		\begin{tikzcd}
+			\theta_x\colon \mathcal{F}_x \arrow[r, "", rightarrow] &
+		\left( \mathcal{F}^\# \right)_x
+		\end{tikzcd}
+	.\end{equation} 
+\end{thm}
+\begin{proof}
+	Let's construct $F^\#$ and show that it actually is a sheaf.
+	Let $\mathcal{U} \subset X$ be an open subset of $X$.
+	We define, then
+	\begin{equation}
+		\mathcal{F}^\#(\mathcal{U}) :=
+		\left\{ f\colon \mathcal{U} \to \widetilde{\mathcal{F}} = \coprod_{x \in X} \mathcal{F}_x \ \middle|\ 
+		\,\forall\, x \in \mathcal{U}, \exists\, x \in \mathcal{V} \subset \mathcal{U} \text{ and } 
+		\exists\, s \in \mathcal{F}(\mathcal{V}) \text{ s.t. } \left.f\right|_{\mathcal{V}} = \tilde{s} \right\}
+	.\end{equation} 
+	Clearly this set belongs to the same category as the target of the original presheaf
+	(define sum and multiplication pointwise on stalks).
+	In fact
+	\begin{equation}
+		\mathcal{F}^\#(\mathcal{U}) = \left\{ 
+		f\colon \mathcal{U} \to \widetilde{\mathcal{F}} \ \middle|\ f  \text{ is continuous and }
+	\pi \circ f = id_{\mathcal{U}} \right\}
+	\end{equation} 
+	is the set of continuous sections of $\pi\colon \widetilde{\mathcal{F}} \to X$
+	over $\mathcal{U}$, i.e.
+	maps that make the following diagram commute:
+	\begin{equation}
+	\begin{tikzcd}
+		&
+		\widetilde{\mathcal{F}} \arrow[d, "\pi", rightarrow] \\
+		\mathcal{U} \arrow[ur, "f", rightarrow] \arrow[r, "", hookrightarrow] &
+		X
+	\end{tikzcd}
+	.\end{equation} 
+	There is a canonical map
+	\begin{align}
+		\theta(\mathcal{U}): \mathcal{F}(\mathcal{U}) &\longrightarrow \mathcal{F}^\#(\mathcal{U}) \\
+		s &\longmapsto \tilde{s} \nonumber
+	,\end{align} 
+	where, we recall, $\tilde{s}$ is defined as follows:
+	\begin{align}
+		\tilde{s}: \mathcal{U} &\longrightarrow \coprod_{x \in X}\mathcal{F}_x \\
+		x &\longmapsto s_x \nonumber
+	.\end{align} 
+	Clearly the family of maps $\theta(\mathcal{U})$ defines a morphism of sheaves.
+	In particular it satisfies the following:
+
+\begin{lem}
+	If $\mathcal{F}$ is a sheaf, then the above map 
+	\begin{equation}
+		\begin{tikzcd}
+			\theta\colon \mathcal{F} \arrow[r, "", rightarrow] &
+	\mathcal{F}^\#
+		\end{tikzcd}
+	\end{equation} 
+	is an isomorphism of sheaves.
+\end{lem} 	
+\begin{proof}
+	Consider $f \in \mathcal{F}^\#(\mathcal{U})$.
+	Then there exists an open cover $\mathcal{U} = \bigcup_{i \in I} \mathcal{U}_i$ s.t.,
+	for all $i \in I$, there is $s_i \in \mathcal{F}(\mathcal{U}_i)$
+	with $\left.f\right|_{\mathcal{U}_i} = \tilde{s}_i$
+	(above construction of $\mathcal{F}^\#$).
+	Let's prove that $\left.s_i\right|_{\mathcal{U}_{ij}} = \left.s_j\right|_{\mathcal{U}_{ij}}$
+	in order to glue the local sections together.
+	By definition we have
+	\begin{equation}
+	\widetilde{\left.s_i\right|_{\mathcal{U}_{ij}}} =
+	\left.\tilde{s}_i\right|_{\mathcal{U}_{ij}} =
+	\left.f\right|_{\mathcal{U}_{ij}} =
+	\left.\tilde{s}_j\right|_{\mathcal{U}_{ij}} =
+	\widetilde{\left.s_j\right|_{\mathcal{U}_{ij}}}
+	.\end{equation} 
+	Since $\mathcal{F}$ is a sheaf, then there exists a unique $s \in \mathcal{F}(\mathcal{U})$
+	s.t. $\left.s\right|_{\mathcal{U}_i} = s_i$.
+	Then, in particular, $s$ is the unique section s.t. $\tilde{s} = f$.
+	In particular $\theta(\mathcal{U})$ is an iso of abelian groups for all $\mathcal{U}$,
+	hence (as proved above) $\theta$ is an iso of sheaves.
+\end{proof}
+
+Let's now check that the above construction satisfies the required the universal property.
+We have to consider the following morphisms of presheaves
+\begin{equation}
+	\begin{tikzcd}
+		\alpha\colon \mathcal{F} \arrow[r, "", rightarrow] &
+\mathcal{G}
+	\end{tikzcd}
+,\end{equation} 
+for some $\mathcal{G} \in \mathsf{Sh}\left(X\right)$.
+Then $\alpha$ induces a family of maps 
+\begin{equation}
+\begin{tikzcd}
+	\widetilde{\mathcal{F}} = \coprod_{x \in X} \mathcal{F}_x
+	\arrow[rr, "\left( \alpha_x \right)_{x \in X}", rightarrow] 
+	\arrow[rd, "\pi_{\mathcal{F}}"', rightarrow] & &
+	\coprod_{x \in X} \mathcal{G}_x = \widetilde{\mathcal{G}} 
+	\arrow[ld, "\pi_{\mathcal{G}}", rightarrow] \\
+	&
+	X
+\end{tikzcd}
+.\end{equation} 
+In turn, this induces a map
+\begin{equation}
+	\begin{tikzcd}
+	\alpha^\#(\mathcal{U}): \mathcal{F}^\#(\mathcal{U}) \arrow[r, "", rightarrow] &
+	\mathcal{G}^\#(\mathcal{U})
+	\end{tikzcd}
+.\end{equation} 
+Recall the above construction of the associated sheaf:
+\begin{align}
+	\mathcal{F}^\#(\mathcal{U}) = \left\{ 
+	f\colon \mathcal{U} \to \widetilde{\mathcal{F}} \ \middle|\ 
+	\exists\, \mathcal{U} = \bigcup_{i \in I} \mathcal{U}_i,
+	\exists\, s_i \in \mathcal{F}(\mathcal{U}_i) \text{ s.t. } \left.f\right|_{\mathcal{U}_i} = \tilde{s}_i\right\}
+.\end{align} 
+Analogously for $\mathcal{G}^\#$.
+Then the map induced by $\alpha$
+maps $f \in \mathcal{F}^\#(\mathcal{U})$
+to the map $g \in \mathcal{G}^\#(\mathcal{U})$,
+i.e. $g\colon \mathcal{U} \to \coprod_{x \in X} \mathcal{G}_x$, s.t.
+\begin{equation}
+	\left.g\right|_{\mathcal{U}_i} = \widetilde{\alpha(\mathcal{U}_i)(s_i)}
+.\end{equation} 
+Clearly, if we call $\tilde{\alpha} := \left( \alpha_x \right)_{x \in X}$, then
+we have just constructed $g = \tilde{\alpha} \circ f$.
+
+Then we have a commutative diagram
+\begin{equation}
+\begin{tikzcd}
+	\mathcal{F} \arrow[r, "\alpha", rightarrow] 
+	\arrow[d, "\theta_{\mathcal{F}}"', rightarrow] &
+	\mathcal{G} \arrow[d, "\theta_{\mathcal{G}}", rightarrow] \\
+\mathcal{F}^\# \arrow[ru, "\hat{\alpha}", rightarrow] 
+	\arrow[r, "\alpha^\#"', rightarrow] &
+	\mathcal{G}^\#
+\end{tikzcd}
+.\end{equation} 
+Notice that, since $\theta_{\mathcal{G}}$ is an iso (hence admits inverse),
+we can define
+\begin{equation}
+	\hat{\alpha} = \theta_{\mathcal{G}}^{-1} \circ \alpha^\#
+,\end{equation} 
+which makes the diagram commute.
+Now, for exercise, check uniqueness, and we are done.
+\end{proof}
+
+\begin{defn}[Constant presheaf]
+	Consider $X$ a topological space, and $A$ an abelian group
+	(resp. ring, set, etc.).
+	One defines the constant presheaf
+	\begin{align}
+		P_A: \mathsf{Op}(X) &\longrightarrow \mathsf{Ab} \\
+		\mathcal{U} \subset X &\longmapsto A \nonumber \\
+		\mathcal{V} \subset \mathcal{U} &\longmapsto (id_A\colon A \to A) \nonumber
+	.\end{align} 
+\end{defn}
+\begin{rem}[]
+	Clearly the above is not a sheaf unless $A = 0$.
+\end{rem}
+
+\begin{defn}[Constant sheaf]
+	The constant sheaf, with values in $A$, is the sheaf $A_X$,
+	associated to the constant presheaf $P_A$.
+\end{defn}
+\begin{rem}[]
+	Given any $\mathcal{U} \subset X$ open, then we have
+	\begin{equation}
+		A_X(\mathcal{U}) = A^{\pi_0(\mathcal{U})}
+	,\end{equation} 
+	where $\pi_0(\mathcal{U})$ is the set of connected components of $\mathcal{U}$,
+	and
+	\begin{equation}
+		A^{\pi_0(\mathcal{U})} :=
+		\mathrm{Maps} \left( \pi_0(\mathcal{U}), A \right)
+	.\end{equation} 
+\end{rem}
+\begin{proof}
+	Let $P$ be the constant presheaf s.t., for all $\mathcal{U}\subset X$ open,
+	$P(\mathcal{U}) = A$.
+	Its stalks are:
+	\begin{align}
+		P_x &=
+		\varinjlim_{\mathcal{U} \ni x} P(\mathcal{U}) \\
+		    &= \varinjlim_{\mathcal{U} \ni x} A \simeq A
+	.\end{align} 
+	Moreover, the étalé space associated to $P$, as a set, is given by
+	\begin{equation}
+	\widetilde{P} = \coprod_{x \in X} P_x =
+	\coprod_{x \in X} A = A \cross X
+	.\end{equation} 
+	Then, in particular, the projection is given by
+	\begin{align}
+		\pi_P: \widetilde{P} = A \cross X &\longrightarrow X \\
+		\left(a, x\right) &\longmapsto x \nonumber
+	.\end{align} 
+	Moreover the basic open subsets of $\widetilde{P}$ are given by
+	\begin{equation}
+	\left\{ s_x \in \coprod_{x \in X} P_x \ \middle|\ 
+	x \in \mathcal{U}, \text{ for some } \mathcal{U} \subset X \text{ open and }
+s \in P(\mathcal{U}) \right\}
+	.\end{equation} 
+	Notice that the above is just $\ima(\tilde{s})$, for
+	\begin{align}
+		\tilde{s}: \mathcal{U} &\longrightarrow \widetilde{P} = \coprod_{x \in X}P_x \\
+		x &\longmapsto s_x \nonumber
+	.\end{align} 
+	Since $s \in P(\mathcal{U})$ is just an element $a \in A$, then 
+	for all $x \in \mathcal{U}$ we have $s_x = a$, hence
+	\begin{equation}
+		\ima(\tilde{s}) = \left\{ a \right\} \cross \mathcal{U}
+	.\end{equation} 
+	Then the topology on $\widetilde{P} = A \cross X$ is just
+	the product topology of the discrete topology on $A$ and
+	the given topology on $X$.
+	From this we obtain that
+	\begin{align}
+		P^\#(\mathcal{U}) &= \left\{ f\colon \mathcal{U} \to A \cross X \ \middle|\ 
+		f \text{ is continuous and } \pi_P \circ f = id_{\mathcal{U}}\right\} \\
+				  &= \left\{ f\colon \mathcal{U} \to A \ \middle|\ 
+				  f \text{ is continuous }\right\} = 
+				  A^{\pi_0(\mathcal{U})}
+	,\end{align} 
+	where the last equality holds, since $A$ has the discrete topology.
+	Let's now consider $\mathcal{V} \subset \mathcal{U}$ and construct the restriction map
+	\begin{equation}
+	\begin{tikzcd}
+		A_X(\mathcal{U}) \arrow[r, "\rho_{\mathcal{UV}}", rightarrow] 
+		\arrow[d, "", equals] &
+		A_X(\mathcal{V}) \arrow[d, "", equals] \\
+		A^{\pi_0(\mathcal{U})} \arrow[r, "", rightarrow] &
+		A^{\pi_0(\mathcal{V})}
+	\end{tikzcd}
+	.\end{equation} 
+	This is induced by the inclusion $\pi_0(\mathcal{V}) \hookrightarrow \pi_0(\mathcal{U})$,
+	which itself is induced by 
+	\begin{equation*}
+		\begin{tikzcd}
+			\mathrm{Map}\left( \pi_0(\mathcal{V}), A \right) \arrow[r, "", hookrightarrow] &
+		\mathrm{Map}(\pi_0(\mathcal{U}), A).
+		\end{tikzcd}\qedhere
+	\end{equation*} 
+\end{proof}
+
+\begin{rem}[]
+	Let $X = \left\{ * \right\}$ a singleton.
+	Let $\mathcal{F}$ be a sheaf on $X$, then
+	\begin{align}
+		\begin{cases}
+		\mathcal{F}(\emptyset) = 0\\
+		\mathcal{F}(X) = A
+		\end{cases} 
+	.\end{align} 
+	$\mathcal{F}$ is the constant sheaf associated to $A = \mathcal{F}(X)$.
+	There is a one to one correspondance between sheaves on
+	singletons and the objects of their target category.
+\end{rem}
+
+\begin{rem}[Adjunction]
+	The functors
+	$\iota\colon \mathsf{Sh}\left(X\right) \to \mathsf{PSh}\left(X\right)$ (forgetful)
+	and $\left( - \right)^\#\colon \mathsf{PSh}\left( X \right)  \to \mathsf{Sh}\left(X\right)$
+	(associated sheaf)
+	form the adjoint pair $(\left( - \right)^\#, \iota )$.
+	More explicitly, for any $\mathcal{F} \in \mathsf{PSh}\left( X \right)$
+	and $\mathcal{G} \in \mathsf{Sh}\left(X\right)$,
+	we have an isomorphism
+	\begin{equation}
+		\mathrm{Hom}_{\mathsf{Sh}(X)} \left( \mathcal{F}^\#, \mathcal{G} \right) \simeq
+	\mathrm{Hom}_{\mathsf{PSh}(X)} \left( \mathcal{F}, \iota(\mathcal{G}) \right)
+	,\end{equation} 
+	functorial in both $\mathcal{F}$ and $\mathcal{G}$.
+\end{rem}
+\end{document}

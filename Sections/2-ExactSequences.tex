@@ -1,0 +1,430 @@
+\documentclass[../Main]{subfiles}
+\begin{document}
+\subsection{Exact sequences of sheaves}
+Let's give the necessary definitions, required to speak about
+exact sequences of sheaves.
+Let's start with kernel and image for morphisms of sheaves:
+\begin{defn}[kernel and image]
+	Let $\alpha\colon \mathcal{F} \to \mathcal{G}$ be a morphism
+	of sheaves of abelian groups.
+	We define the {\em kernel} of $\alpha$
+	\begin{align}
+		\ker \alpha: \mathsf{Op}(X)^{op} &\longrightarrow \mathsf{Ab} \\
+		\mathcal{U} \subset X &\longmapsto \ker \left( \alpha(\mathcal{U})\colon
+		\mathcal{F}(\mathcal{U})\to \mathcal{G}(\mathcal{U}) \right) \nonumber
+	.\end{align} 
+	This clearly is a presheaf, due to the universal property of kernels.
+	Then we obtain the restriction morphisms
+	\begin{align}
+		\rho_{\mathcal{UV}}^{\ker \alpha}
+		\colon \ker \left( \alpha(\mathcal{U}) \right) &\longrightarrow 
+		\ker \left( \alpha(\mathcal{V}) \right)\\
+		s &\longmapsto \left.s\right|_{\mathcal{V}}  \nonumber
+	.\end{align} 
+	In fact this is a sheaf, since $\mathcal{F}$ is, and we denote this sheaf
+	by $\ker (\mathcal{F})$.
+
+	Analogously we define the presheaf
+	\begin{align}
+		\mathsf{Op}(X)^{op} &\longrightarrow \mathsf{Ab} \\
+		\mathcal{U} &\longmapsto \ima \left( \alpha(\mathcal{U})\colon
+		\mathcal{F}(\mathcal{U})\to \mathcal{G}(\mathcal{U}) \right) \nonumber
+	.\end{align} 
+	In general this is not a sheaf. Then we consider its associated sheaf,
+	and call that the {\em image} of $\alpha$, denoted by $\ima(\alpha)$.
+\end{defn}
+
+\begin{exr}
+	Check that there is a natural, injective morphism of sheaves
+	\begin{equation}
+		\begin{tikzcd}
+			\ima(\alpha) \arrow[r, "", rightarrow] &
+			\mathcal{G}
+		\end{tikzcd}
+	.\end{equation} 
+\end{exr} 
+
+\begin{defn}[Quotient of sheaves]
+Let now $\alpha\colon \mathcal{F} \to \mathcal{G}$ be an injective morphism of sheaves.
+Then the following is functorial in $\mathcal{U}$, hence a presheaf,
+\begin{align}
+	\mathsf{Op}(X)^{op} &\longrightarrow \mathsf{Ab} \\
+	\mathcal{U} &\longmapsto \mathcal{G}(\mathcal{U})/\mathcal{F}(\mathcal{U}) \nonumber
+.\end{align} 
+In general this is not a sheaf, but only a presheaf.
+Then we define the quotient $\mathcal{G}/\mathcal{F}$ to be its associated sheaf.
+\end{defn}
+
+\begin{rem}[]
+	Recall that $\mathcal{F}_x \simeq \left( \mathcal{F}^\# \right)_x$ for all $x \in X$.
+	It follows that
+	\begin{align}
+		\left( \ima(\alpha) \right)_x &\simeq \ima (\alpha_x)\\
+		\left( \mathcal{G}/\mathcal{F} \right)_x &\simeq \mathcal{G}_x / \mathcal{F}_x
+	\end{align} 
+	for all $x \in X$.
+	Pleasecheckit.
+\end{rem}
+
+\begin{defn}[Short exact sequence of sheaves]
+	Consider a sequence of sheaves
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}' \arrow[r, "\alpha", rightarrow] &
+		\mathcal{F} \arrow[r, "\beta", rightarrow] &
+		\mathcal{F}'' \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	We say that it is exact iff
+	\begin{itemize}
+		\item $\alpha$ is injective,
+		\item $\ker \beta = \ima \alpha$,
+		\item $\beta$ is surjective.
+	\end{itemize}
+\end{defn}
+
+\begin{prop}[]
+	The sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}' \arrow[r, "\alpha", rightarrow] &
+		\mathcal{F} \arrow[r, "\beta", rightarrow] &
+		\mathcal{F}'' \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	\end{equation} 
+	is an exact sequence of sheaves of abelian groups on $X$ iff
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}_x' \arrow[r, "\alpha_x", rightarrow] &
+		\mathcal{F}_x \arrow[r, "\beta_x", rightarrow] &
+		\mathcal{F}_x'' \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	\end{equation} 
+	is a short exact sequence of abelian groups for all $x \in X$.
+\end{prop}
+
+\begin{rem}[]
+	If the following is an exact sequence of sheaves of abelian groups
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}' \arrow[r, "\alpha", rightarrow] &
+		\mathcal{F} \arrow[r, "\beta", rightarrow] &
+		\mathcal{F}'' \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	,\end{equation} 
+	one can show that, for any $\mathcal{U} \subset X$ open,
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}'(\mathcal{U}) \arrow[r, "\alpha(\mathcal{U})", rightarrow] &
+		\mathcal{F}(\mathcal{U}) \arrow[r, "\beta(\mathcal{U})", rightarrow] &
+		\mathcal{F}''(\mathcal{U})
+	\end{tikzcd}
+	\end{equation} 
+	is still exact, but, in general, $\beta(\mathcal{U})$ is not surjective.
+\end{rem}
+
+\begin{ex}[]
+	tk: check the correctness of this sequence.
+	\begin{enumerate}
+		\item Let $X$ be a Riemann surface, for example $X = \mathbb{C}^{\cross}$.
+			Let $\mathcal{O}_X$ be the sheaf of holomorphic functions.
+			Let, now, $\mathcal{O}^*_X$ be the sheaf of invertible holomorphic functions.
+			Then $\mathcal{O}_X(\mathcal{U})$ and $\mathcal{O}^*_X(\mathcal{U})$
+			are both abelian groups (with respect to the sum of functions) 
+			for any $\mathcal{U} \subset X$ open.
+			Finally consider the constant sheaf $\left( 2i\pi \mathbb{Z} \right)_X$.
+			We have an exact sequence of sheaves of abelian groups:
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				\left( 2i\pi \mathbb{Z} \right)_X \arrow[r, "\alpha", rightarrow] &
+				\mathcal{O}_X \arrow[r, "\mathrm{exp}", rightarrow] &
+				\mathcal{O}^*_X \arrow[r, "", rightarrow] &
+				0
+			\end{tikzcd}
+			,\end{equation} 
+			where the maps are defined as follows:
+			\begin{align}
+				\alpha: \left( 2i\pi \mathbb{Z} \right)_X &\longrightarrow 
+				\mathcal{O}_X\\
+				2i\pi n &\longmapsto f \nonumber
+			,\end{align} 
+			s.t. $f(z) = 2i\pi n z$.
+			Moreover the $\mathrm{exp}$ function acts as $f \mapsto \mathrm{exp}(f)$.
+
+			Then the above sequence is indeed exact at the level of sheaves,
+			but the last map is not exact at the level of sections, in fact
+			$\mathrm{exp}\colon \mathcal{O}_{\mathbb{C}^*} \to \mathcal{O}^*_{\mathbb{C}^*}$
+			is not surjective.
+			In fact $\left.id\right|_{\mathbb{C}^*}$ does not admit an inverse image.
+	\end{enumerate}
+\end{ex}
+
+\subsection{Inverse and direct image}
+\begin{defn}[Inverse and direct image of sheaves]
+Let $f\colon X \to Y$ be a continuous map of topological spaces,
+$\mathcal{F} \in \mathsf{Sh}\left(X\right)$ and $\mathcal{G} \in \mathsf{Sh}\left(Y\right)$
+\begin{itemize}
+	\item The {\em direct image} of $\mathcal{F}$ is the sheaf $f_* \mathcal{F} \in \mathsf{Sh}\left(Y\right)$
+		defined as follows:
+		\begin{align}
+			f_* \mathcal{F}: \mathsf{Op}(Y)^{op} &\longrightarrow \mathsf{Ab} \\
+			\mathcal{V} \subset Y &\longmapsto \mathcal{F} \left( f^{-1}(\mathcal{V}) \right) \nonumber
+		.\end{align} 
+		Notice that $f^{-1}(\mathcal{V}) \subset X$ is open
+		by continuity of $f$.
+		Pleasecheck that it indeed is a sheaf.
+	\item The {\em inverse image} of $\mathcal{G}$ is the sheaf $f^*(\mathcal{G})$,
+		defined as the associated sheaf to the following presheaf:
+		\begin{align}
+			f^\dagger(\mathcal{G}): \mathsf{Op}(X)^{op} &\longrightarrow \mathsf{Ab} \\
+			\mathcal{U} \subset X &\longmapsto \varinjlim_{f(\mathcal{U}) \subset \mathcal{V}}
+			\mathcal{G}(\mathcal{V})\nonumber
+		,\end{align} 
+		where the limit is taken over $\mathcal{V} \subset Y$ open.
+\end{itemize} 
+\end{defn}
+\begin{prop}[]
+	For any $x \in X$ we know that
+	\begin{equation}
+		\left( f^*\mathcal{G} \right)_x \simeq 
+		\mathcal{G}_{f(x)}
+	.\end{equation} 
+\end{prop}
+\begin{proof}
+	By definition we have that
+	\begin{align}
+		\left( f^*\mathcal{G} \right)_x &\simeq
+		\left( f^\dagger\mathcal{G} \right)_x \simeq 
+		\varinjlim_{x \in \mathcal{U} \subset Y} \left[ \left( f^\dagger \mathcal{G} \right)\left( \mathcal{U} \right) \right]\\
+		&\simeq \varinjlim_{x \in \mathcal{U}}
+		\varinjlim_{f(\mathcal{U}) \subset \mathcal{V} \subset Y} \mathcal{G}(\mathcal{V})
+		\simeq \varinjlim_{f(x) \in \mathcal{V}} \mathcal{G}(\mathcal{V})
+	.\end{align} 
+	tk: complete the proof :sweat:
+	(look at d'Agnolo lecture notes :thinking:)
+\end{proof}
+
+\begin{rem}[Étalé space language]
+	In the language of étalé spaces, we can define the fibered product, 
+	given $\mathcal{G} \in \mathsf{Sh}\left(Y\right)$ and its associated
+	étalé space $\widetilde{\mathcal{G}}$, and a continuous map $f\colon X \to Y$,
+	\begin{equation}
+	\begin{tikzcd}
+		X \cross_Y \widetilde{\mathcal{G}} \arrow[r, "", rightarrow] 
+		\arrow[d, "", rightarrow] &
+		\widetilde{\mathcal{G}} \arrow[d, "\pi_Y", rightarrow] \\
+		X \arrow[r, "f"', rightarrow] &
+		Y
+	\end{tikzcd}
+	.\end{equation} 
+	This actually is a limit, in our categories, it can explicitly be described as:
+	\begin{equation}
+		X \cross_Y \widetilde{\mathcal{G}} = \left\{ \left( x, y \right) \ \middle|\ 
+		f(x) = \pi_Y(y)\right\} \subset X \cross \widetilde{\mathcal{G}}
+	.\end{equation} 
+	Then we have (pleasecheckit)
+	\begin{equation}
+		\widetilde{f^*\mathcal{G}} = \left( \pi\colon 
+		\widetilde{\mathcal{G}} \cross_Y X\to X \right)
+	.\end{equation} 
+\end{rem}
+
+\begin{prop}[]
+	Let $X \in \mathsf{Top}$, $\mathcal{F} \in \mathsf{Sh}\left(X\right)$ and $x \in X$.
+	Let $\iota_x\colon \left\{ x \right\} \to X$ be the inclusion of $\left\{ x \right\}$ in $X$.
+	Then $i_X^*(\mathcal{F})$ is the constant sheaf $\mathcal{F}_x$ on $\left\{ x \right\}$.
+\end{prop}
+\begin{proof}
+	It is clear, since $i_X^*(\mathcal{F})$ is the sheaf associated
+	the presheaf
+	\begin{align}
+		f^\dagger(\mathcal{F}): \mathsf{Op}(X)^{op} &\longrightarrow \mathsf{Ab} \\
+		\left\{ x \right\} &\longmapsto \varinjlim_{X \supset \mathcal{U} \supset \left\{ x \right\}}
+		\mathcal{F}(\mathcal{U}) = \mathcal{F}_x\nonumber\qedhere
+	.\end{align} 
+\end{proof}
+
+\begin{exr}
+	The following are functors
+	\begin{equation}
+		\begin{tikzcd}[row sep=0.05em]
+			f_*\colon \mathsf{Sh}\left(X\right) \arrow[r, "", rightarrow] &
+		\mathsf{Sh}\left(Y\right)\ \\
+			f^*\colon \mathsf{Sh}\left(Y\right) \arrow[r, "", rightarrow] &
+		\mathsf{Sh}\left(X\right).
+		\end{tikzcd}
+	\end{equation} 
+\end{exr} 
+
+\begin{cor}
+	$f^*$ is an exact functor.
+\end{cor} 
+\begin{proof}
+	Consider an exact sequence of sheaves of abelian groups
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}' \arrow[r, "\alpha", rightarrow] &
+		\mathcal{F} \arrow[r, "\beta", rightarrow] &
+		\mathcal{F}'' \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	Then it is exact at the level of stalks, i.e. for all $y \in Y$
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}_y' \arrow[r, "\alpha_y", rightarrow] &
+		\mathcal{F}_y \arrow[r, "\beta_y", rightarrow] &
+		\mathcal{F}_y'' \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	Now take any $x \in X$, we have the exact and commutative
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow]  &
+		\left( f^* \mathcal{F}' \right)_x \arrow[r, "\alpha_x", rightarrow] \arrow[d, "", equals] &
+		\left( f^* \mathcal{F} \right)_x \arrow[r, "\beta_x", rightarrow] \arrow[d, "", equals]  &
+		\left( f^* \mathcal{F} \right)_x \arrow[r, "", rightarrow] \arrow[d, "", equals]  &
+		0 \\
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}_{f(x)}' \arrow[r, "\alpha_{f(x)}", rightarrow] &
+		\mathcal{F}_{f(x)} \arrow[r, "\beta_{f(x)}", rightarrow] &
+		\mathcal{F}_{f(x)}'' \arrow[r, "", rightarrow] &
+		0.
+	\end{tikzcd}\qedhere
+	\end{equation} 
+\end{proof}
+
+\begin{prop}[]
+	Consider two continuous maps
+	\begin{equation}
+	\begin{tikzcd}
+		X \arrow[r, "f", rightarrow] &
+		Y \arrow[r, "g", rightarrow] &
+		Z
+	\end{tikzcd}
+	.\end{equation} 
+	Then $(-)_*$ is covariant and $(-)^*$ is contravariant, i.e. (tk)
+	\begin{align}
+		\left( g \circ f \right)_* &\simeq g_* \circ f_* \\
+		\left( g \circ f \right)^* &\simeq f^* \circ g^*
+	.\end{align} 
+\end{prop}
+\begin{proof}
+	Hint: use étalé spaces.
+\end{proof}
+
+\begin{prop}[Adjunction of inverse and direct image]
+	$\left( f^*, f_* \right)$ is an adjoint pair, i.e. we have a natural isomorphism
+	\begin{equation}
+		\mathrm{Hom}_{\mathsf{Sh}(X)} \left( f^* \mathcal{G}, \mathcal{F} \right) \simeq
+		\mathrm{Hom}_{\mathsf{Sh}(Y)} \left( \mathcal{G}, f_* \mathcal{F} \right)
+	.\end{equation} 
+\end{prop}
+
+\begin{exr}
+	Let $\alpha\colon \mathcal{F} \to \mathcal{G}$ be a morphism
+	of sheaves of abelian groups on $X \in \mathsf{Top}$.
+	Then $\alpha$ is surjective iff,
+	for any $\mathcal{U} \subset X$ open and any $t \in \mathcal{G}(\mathcal{U})$, 
+	there exists an open cover $\mathcal{U} = \bigcup_{i \in I} \mathcal{U}_i$ and
+	local sections $s_i \in \mathcal{F}(\mathcal{U}_i)$, s.t.
+	\begin{equation}
+		\alpha(\mathcal{U}_i)(s_i) = \left.t\right|_{\mathcal{U}_i} 
+	.\end{equation} 
+\end{exr} 
+
+\begin{defn}[Support of a section]
+	Let $P$ be a presheaf on $X$ and $\mathcal{U} \subset X$ be an open subset of $X$.
+	Consider a section $s \in \mathcal{F}(\mathcal{U})$, we define its support to be
+	\begin{equation}
+		\mathrm{Supp}(s) := \left\{ x \in \mathcal{U} \ \middle|\ s_x \neq 0 \right\}
+	.\end{equation} 
+\end{defn}
+
+\begin{exr}
+	Show that, for any $s \in \mathcal{F}(\mathcal{U})$, $\mathrm{Supp} (s)$ is closed in $\mathcal{U}$.
+\end{exr} 
+
+\begin{exr}
+	Let $\alpha\colon \mathcal{F} \to \mathcal{G}$ be an injective morphism of presheaves
+	over $X \in \mathsf{Top}$.
+	\begin{enumerate}
+		\item Show that, for every $x \in X$, the induced morphism at
+			the level of stalks is injective
+			\begin{equation}
+				\begin{tikzcd}
+					\alpha_x\colon \mathcal{F}_x \arrow[r, "", rightarrow] &
+				\mathcal{G}_x.
+				\end{tikzcd}
+			\end{equation} 
+		\item Show that the associated morphism of associated sheaves
+			\begin{equation}
+				\begin{tikzcd}
+					\alpha^\#\colon \mathcal{F}^\# \arrow[r, "", rightarrow] &
+			\mathcal{G}^\#
+				\end{tikzcd}
+			\end{equation} 
+			is injective.
+		\item Let $\mathcal{U} \subset X$ be an open subset of $X$.
+			What can one say about the morphism
+			\begin{equation}
+				\begin{tikzcd}
+					\alpha^\#(\mathcal{U})\colon \mathcal{F}^\#(\mathcal{U}) \arrow[r, "", rightarrow] &
+				\mathcal{G}^\#(\mathcal{U})?
+				\end{tikzcd}
+			\end{equation} 
+		\item Let $\alpha\colon \mathcal{F} \to \mathcal{G}$ be a morphism of sheaves.
+			Define an injective morphism of sheaves
+			\begin{equation}
+				\begin{tikzcd}
+					\ima(\alpha) \arrow[r, "", rightarrow] &
+					\mathcal{G}.
+				\end{tikzcd}
+			\end{equation} 
+	\end{enumerate}
+\end{exr} 
+
+\begin{exr}[Skyscraper sheaves]
+	Let $X \in \mathsf{Top}$ and $x \in X$.
+	Let $A \in \mathsf{Ab}$.
+	We define the presheaf $A_x$ on $X$ as follows:
+	\begin{equation}
+		A_x(\mathcal{U}) :=
+		\begin{cases}
+			A & \text{if } x \in \mathcal{U}\\
+			0 & \text{if } x \notin \mathcal{U}
+		\end{cases} 
+	\end{equation} 
+	and the obvious maps (i.e. identity and zero map).
+	\begin{enumerate}
+		\item Prove that $A_x$ is actually a sheaf.
+		\item Show that the stalks are given by
+			\begin{equation}
+				\left( A_x \right)_y =
+				\begin{cases}
+					A & \text{if } x \in \overline{\left\{ x \right\}} \\
+					0 & \text{if } x \notin \overline{\left\{ x \right\}}
+				\end{cases} 
+			.\end{equation} 
+		\item Consider the inclusion $\iota\colon \overline{\left\{ x \right\}} \to X$.
+			Then show that
+			\begin{equation}
+				i_*(A) \simeq A_x
+			,\end{equation} 
+			for $A$ the constant presheaf on $\overline{\left\{ x \right\}}$.
+	\end{enumerate}
+\end{exr} 
+\end{document}

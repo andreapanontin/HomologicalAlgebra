@@ -1,0 +1,475 @@
+\documentclass[../Main]{subfiles}
+\begin{document}
+\section{Resolutions}
+\subsection{Injective and projective objects}
+\begin{rem}[]
+	Let $\mathsf{C}$ be an abelian category, and $M \in \mathrm{Ob} \left(\mathsf{C}\right)$.
+	Then the covariant functors
+	\begin{align}
+		\mathrm{Hom}_{\mathsf{C}} \left( M, - \right)\colon \mathsf{C} &\longrightarrow \mathsf{Ab} \\
+		A &\longmapsto \mathrm{Hom}_{\mathsf{C}} \left( M, A \right) \nonumber
+	\end{align} 
+	and
+	\begin{align}
+		\mathrm{Hom}_{\mathsf{C}} \left( - ,M \right)\colon \mathsf{C}^{op} &\longrightarrow \mathsf{Ab} \\
+		A &\longmapsto \mathrm{Hom}_{\mathsf{C}} \left( A, M \right) \nonumber
+	\end{align} 
+	are both left exact.
+	Both of these are consequences of lemma \ref{lem:HomExactnessEquivalence}.
+\end{rem}
+
+Though general it is not true, 
+some objects make one of the two above functors (or both)
+also right exact.
+These are special objects, and we are going to study
+them in the following pages:
+
+\begin{defn}[Injective and projective objects]
+	Let $\mathsf{C}$ be an abelian category.
+	\begin{enumerate}
+		\item An object $I \in \mathrm{Ob} \left(\mathsf{C}\right)$ is {\em injective}
+			iff
+			\begin{align}
+				\mathrm{Hom}_{\mathsf{C}} \left( -, I \right)\colon \mathsf{C}^{op} &\longrightarrow \mathsf{Ab}
+			\end{align} 
+			is exact.
+		\item An object $P \in \mathrm{Ob} \left(\mathsf{C}\right)$ is {\em projective}
+			iff
+			\begin{align}
+				\mathrm{Hom}_{\mathsf{C}} \left( P, - \right) \colon \mathsf{C} &\longrightarrow \mathsf{Ab}
+			\end{align} 
+			is exact.
+	\end{enumerate}
+\end{defn}
+
+\begin{rem}[]\leavevmode\vspace{-.2\baselineskip}
+	\begin{itemize}
+		\item An object $I \in \mathrm{Ob} \left(\mathsf{C}\right)$ is injective iff,
+	given any monomorphism $i:A \hookrightarrow B$, then
+	the induced map
+	\begin{equation}
+	\begin{tikzcd}
+		\mathrm{Hom}_{\mathsf{C}} \left( B, I \right) \arrow[r, "", twoheadrightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( A, I \right)
+	\end{tikzcd}
+	\end{equation} 
+	is surjective.
+	In other words the following diagram commutes:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i", rightarrow] \arrow[d, "\alpha", rightarrow] &
+		B \arrow[ld, "\exists\, \tilde{\alpha}", dashrightarrow] \\
+		&
+		I &
+	\end{tikzcd}
+	.\end{equation} 
+	More explicitly, given any morphismh $\alpha\colon A \to I$,
+	one can lift it to $\tilde{\alpha}\colon B \to I$ s.t.
+	$\alpha = \tilde{\alpha} \circ i$.
+	(Notice that the lift might not be unique).
+
+		\item An object $P \in \mathrm{Ob} \left(\mathsf{C}\right)$ is projective iff,
+	given any epimorphism $p:B \twoheadrightarrow C$, then
+	the induced map
+	\begin{equation}
+	\begin{tikzcd}
+		\mathrm{Hom}_{\mathsf{C}} \left( P, B \right) \arrow[r, "", twoheadrightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( P, C \right)
+	\end{tikzcd}
+	\end{equation} 
+	is surjective.
+	In other words the following diagram commutes:
+	\begin{equation}
+	\begin{tikzcd}
+		B \arrow[r, "p", rightarrow] &
+		C \arrow[r, "", rightarrow] &
+		0\\
+		&
+		P \arrow[u, "\beta", rightarrow] \arrow[ul, "\exists\, \tilde{\beta}", dashrightarrow] &
+	\end{tikzcd}
+	.\end{equation} 
+	More explicitly, given any morphismh $\beta\colon P \to C$,
+	one can lift it to $\tilde{\beta}\colon P \to B$ s.t.
+	$\beta = p \circ \tilde{\beta}$.
+	(Notice that the lift might not be unique).
+	\end{itemize}
+\end{rem}
+
+\subsubsection{Injectives in $R\text{-}\mathsf{Mod}$}
+In the following we will assume $R$ is a commutative ring.
+Everything works also for non commutative rings, but in this case
+there are fewer notation problems.
+
+We will denote by $R\text{-}\mathsf{Mod}$
+the category of left $R$-modules.
+Clearly this is an {\em abelian} category.
+
+\begin{lem}[Baer]
+	A module $M \in R\text{-}\mathsf{Mod}$ is injective iff,
+	given an ideal $I \triangleleft R$, any $R$-linear map
+	\begin{align}
+		\alpha\colon I &\longrightarrow M
+	\end{align} 
+	extends to a morphism $\tilde{\alpha}\colon R \to M$.
+	In other words we have the following diagram:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		I \arrow[r, "i", rightarrow] \arrow[d, "\alpha", rightarrow] &
+		R \arrow[dl, "\tilde{\alpha}", dashrightarrow] \\
+		&
+		M &
+	\end{tikzcd}
+	.\end{equation} 
+\end{lem} 
+\begin{proof}
+	tk: read again the proof, there will obviously be quite a few things to fix...
+	The direct implication is obvious.
+	Let's prove the converse.
+	Let $A \subset B$ be a submodule of $B$, then the inclusion is a monomorphism.
+	Consider a map $\alpha\colon A \to M$, we want to extend it to $B$.
+	Let's consider the set
+	$\mathcal{S}$ of pairs $\left( A', \alpha' \right)$ s.t. $A' \subset B$ and
+	$\alpha'\colon A' \to M$ coincides with $\alpha$ on $A$,
+	i.e. $\left.\alpha'\right|_{A} = \alpha$.
+	This set is clearly endowed with a partial order:
+	$(A', \alpha') \leq (A'', \alpha'')$ iff $A' \subset A''$
+	and $\left.\alpha''\right|_{A'} = \alpha'$.
+
+	Consider now $T$ a totally ordered subset of $\mathcal{S}$.
+	\begin{equation}
+		T = \left\{ \left( A_a, \alpha_a \right) \right\}_{a \in \mathcal{A}} 
+	.\end{equation} 
+	We want to define $A_{\infty} := \bigcup_{a \in \mathcal{A}} A_a \subset B$
+	an $R$-submodule, and
+	\begin{align}
+		\alpha_{\infty}\colon A_{\infty} &\longrightarrow M 
+	\end{align} 
+	s.t. $\left.\alpha_{\infty}\right|_{A_a} = \alpha_a$ for all $a$.
+	Then $(A_\infty, \alpha_\infty) \in \mathcal{S}$ is an upper bound for $T$,
+	and by Zorn's lemma we obtain the existance of a maximal element $(C, \gamma) \in S$.
+	Suppose that $C \neq B$, then we can take $x \in B \setminus C \neq \emptyset$.
+	Let's define now
+	\begin{equation}
+	I := \left\{ r \in R \ \middle|\ r \cdot x \in C \right\} \triangleleft R
+	.\end{equation} 
+	Let's denote with $r_*$ the multiplication by $r \in R$.
+	Then we can define $\gamma \circ r_*\colon I \to M$.
+	By assumption we can extend this to a map $\psi \colon R \to M$, making the diagram (tk) commute.
+	In particular we can extend these two maps to $C \subsetneq C + R\cdot x \subset B$, by
+	\begin{align}
+		\tilde{\gamma}\colon C + R \cdot x &\longrightarrow M \\
+		c + r \cdot x &\longmapsto \gamma(c) + \psi(r) \nonumber
+	.\end{align} 
+	This map is $R$-linear, well defined (on the intersection $C \cap R \cdot x$ $\psi$ acts
+	exactly as $\gamma \circ r_*$), and extends $\gamma$.
+	Since $C \subsetneq C + R \cdot x$, we have a contradiction with maximality
+	of $(C, \gamma)$.
+	Then $C = B$.
+\end{proof}
+
+\begin{rem}[]
+	An element $r \in R$ is a non-zero-divisor
+	iff the multiplication map 
+	\begin{align}
+		r_*\colon R &\longrightarrow R \\
+		x &\longmapsto r \cdot x \nonumber
+	\end{align} 
+	is injective.
+\end{rem}
+
+\begin{defn}[Divisible $R$-Module]
+	Consider $M \in R\text{-}\mathsf{Mod}$.
+	We say that $M$ is {\em divisible} iff, for any $r \in R$ non-zero-divisor,
+	the multiplication map
+	\begin{align}
+		r_*\colon M &\longrightarrow M \\
+		x &\longmapsto r \cdot x \nonumber
+	\end{align} 
+	is surjective.
+\end{defn}
+
+\begin{prop}[]
+	Consider $M \in R\text{-}\mathsf{Mod}$.
+	\begin{enumerate}
+		\item If $M$ is an {\em injective} module, then it is also {\em divisible}.
+		\item If, moreover, $R$ is a PID, then we have also the converse,
+			i.e. $M$ is {\em injective} iff it is {\em divisible}.
+	\end{enumerate}
+\end{prop}
+\begin{proof}\leavevmode\vspace{-.2\baselineskip}
+	\begin{enumerate}
+		\item Consider a non-zero-divisor $r \in R$,
+			let $x \in M$.
+			Then, by injectivity, we can extend the map 
+			\begin{align}
+				\alpha\colon R &\longrightarrow M \\
+				r &\longmapsto r \cdot x \nonumber
+			\end{align} 
+			to a map $\tilde{\alpha}$ making the diagram commute:
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				R \arrow[r, "r_*", rightarrow] \arrow[d, "\alpha", rightarrow] &
+				R \arrow[dl, "\tilde{\alpha}", rightarrow] \\
+				&
+				M &
+			\end{tikzcd}
+			.\end{equation} 
+			In other words we know that $\alpha = \tilde{\alpha} \circ r_*$.
+			In particular $x = \alpha(1) = \tilde{\alpha} \circ r_* (1) = r \cdot \tilde{\alpha}(1)$,
+			i.e. $M$ is divisible.
+
+		\item Assume now that $R$ is a PID.
+			Let $J \triangleleft R$ be an ideal, then $J = (r)$ for some $r \in R$.
+			Let's use Baer's criterion:
+			consider a map $\alpha\colon (r) \to M$ any ideal, let's extend this to the whole
+			ring $R$.
+			Let $x := \alpha(r) \in M$.
+			Since $M$ is divisible, then there exists $y \in M$
+			s.t. $r \cdot y = x$.
+			We can now define $\tilde{\alpha}(1) := y$, then $\tilde{\alpha}$ is
+			uniquely defined.
+			Moreover it is clear that $\tilde{\alpha}$ extends $\alpha$, since
+			\begin{equation*}
+			\tilde{\alpha}(r \cdot 1) = r \cdot \tilde{\alpha}(1) = r \cdot y = x
+			= \alpha(r).\qedhere
+			\end{equation*} 
+	\end{enumerate}
+\end{proof}
+
+\begin{cor}
+	Let $R = \mathbb{Z}$, then in $\mathbb{Z}\text{-}\mathsf{Mod} \cong \mathsf{Ab}$, we have
+	\begin{enumerate}
+		\item $\mathbb{Q}$ and $\mathbb{Q}/\mathbb{Z}$ are both injective.
+		\item $\mathbb{Z}$ is not injective.
+	\end{enumerate}
+\end{cor} 
+
+\begin{rem}[]
+	For all $n \in \mathbb{Z}$, the multiplication by $n$ is an iso
+	between $\mathbb{Q}$ and $\mathbb{Q}$, but not
+	between $\mathbb{Q}/\mathbb{Z}$ and $\mathbb{Q}/\mathbb{Z}$.
+	In fact we have the following short exact sequence:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathbb{Z}/n\mathbb{Z} \arrow[r, "", rightarrow] &
+		\mathbb{Q}/\mathbb{Z} \arrow[r, "n\cdot", rightarrow] &
+		\mathbb{Q}/\mathbb{Z} \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	In other words $\mathbb{Q}$ is uniquely divisible,
+	i.e. the preimage of $x$ from the multiplication by $n$
+	is unique (for any $n$ and $x$).
+	On the other hand $\mathbb{Q}/\mathbb{Z}$ is not uniquely divisible.
+	Instead the preimage of the multiplication by $n$ is isomorphic to
+	$\mathbb{Z}/n\mathbb{Z}$.
+\end{rem}
+
+\begin{defn}[]
+	Let $\mathsf{C}$ be an abelian category.
+	\begin{enumerate}
+		\item We say that $\mathsf{C}$ has {\em enough injectives}
+			iff for every $A \in \mathrm{Ob} \left(\mathsf{C}\right)$
+			there is an injective $I \in \mathrm{Ob} \left(\mathsf{C}\right)$
+			and a monomorphism
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				A \arrow[r, "", rightarrow] &
+				I
+			\end{tikzcd}
+			.\end{equation} 
+		\item We say that $\mathsf{C}$ has {\em enough projectives}
+			iff for every $A \in \mathrm{Ob} \left(\mathsf{C}\right)$
+			there is a projective $P \in \mathrm{Ob} \left(\mathsf{C}\right)$
+			and an epimorphism
+			\begin{equation}
+			\begin{tikzcd}
+				P \arrow[r, "", rightarrow] &
+				A \arrow[r, "", rightarrow] &
+				0
+			\end{tikzcd}
+			.\end{equation} 
+	\end{enumerate}
+\end{defn}
+
+\begin{prop}[]
+	$\mathsf{Ab}$ has enough injectives.
+\end{prop}
+\begin{proof}
+	Let $A \in \mathsf{Ab}$ and $S \subset A$ be a
+	set of generators (not necessarily finite).
+	Then one gets a surjective map
+	\begin{equation}
+	\begin{tikzcd}
+		\bigoplus_{s \in S} \mathbb{Z}s \arrow[r, "p", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	This is clearly defined as the unique map induced by the inclusions $\mathbb{Z}s \hookrightarrow A$.
+	In general this map is not injective, let's denote by
+	\begin{equation}
+	K := \ker p
+	.\end{equation} 
+	Then, by the first isomorphism theorem
+	\begin{equation}
+	\bigoplus_{s \in S}\mathbb{Z}s / K \simeq A
+	.\end{equation} 
+	Moreover we clearly have an injection
+	(tk: define it explicitly)
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\bigoplus_{s \in S} \mathbb{Z}s/K \arrow[r, "", rightarrow] &
+		\bigoplus_{s \in S} \mathbb{Q}s/K
+	\end{tikzcd}
+	\end{equation} 
+	where $\bigoplus_{s \in S}\mathbb{Q}s/K$ is divisible, since it is the direct sum
+	of divisible modules.
+\end{proof}
+
+\begin{prop}
+	Let $R$ be a {\em commutative} ring.
+	Then $R\text{-}\mathsf{Mod}$ has enough injectives.
+\end{prop} 
+\begin{proof}
+	We have an adjucntion
+	\begin{equation}
+	\begin{tikzcd}
+		\mathrm{res}: R\text{-}\mathsf{Mod} \arrow[r, "", rightarrow, shift left] &
+		\mathbb{Z}\text{-}\mathsf{Mod} : \mathrm{Hom}_{\mathbb{Z}} \left( R, - \right)
+		\arrow[l, "", rightarrow, shift left] 
+	\end{tikzcd}
+	.\end{equation} 
+	Where $\mathrm{res}$ is the restricition of scalars.
+	fix $M \in R\text{-}\mathsf{Mod}$ and $A \in \mathbb{Z}\text{-}\mathsf{Mod}$.
+	Then we can let $R$ act on $\mathrm{Hom}_{\mathbb{Z}} \left( R, A \right)$
+	giving it a structure of $R$-module.
+
+	In particular the adjunction is given by the following isomorphism
+	\begin{equation}
+	\mathrm{Hom}_{R} \left( M, \mathrm{Hom}_{\mathbb{Z}} \left( R, A \right) \right) \simeq
+	\mathrm{Hom}_{\mathbb{Z}} \left( \mathrm{res}(M), A \right)
+	.\end{equation} 	
+	functorial in both variables.
+	Let's now fix $M \in R\text{-}\mathsf{Mod}$.
+	Clearly $\mathrm{res}(M) \in \mathsf{Ab}$.
+	By adjunction any morphism
+	\begin{align}
+		f\colon \mathrm{res}(M) &\longrightarrow I
+	,\end{align} 
+	for $I$ an injective abelian group, gets mapped to
+	\begin{align}
+		\tilde{f}\colon M &\longrightarrow \mathrm{Hom}_{\mathbb{Z}} \left( R, I \right) \\
+		m &\longmapsto 
+		\begin{pmatrix}
+			R \to I\\
+			r \mapsto f(r\cdot m)
+		\end{pmatrix} 
+		\nonumber
+	.\end{align} 
+	Then $\tilde{f}$ is both $R$-linear and injective.
+	We just need to show that $\mathrm{Hom}_{\mathbb{Z}} \left( R, I \right)$
+	is injective, i.e. that
+	\begin{equation}
+	\mathrm{Hom}_{\mathsf{C}} \left( -, \mathrm{Hom}_{\mathbb{Z}} \left( R, I \right) \right)
+	\end{equation} 
+	is exact. By adjunction this is isomorphic (tk: check this part)
+	to the functor
+	\begin{equation}
+		\mathrm{Hom}_{\mathbb{Z}} \left( \mathrm{res}(-), I \right):
+		R\text{-}\mathsf{Mod}^{op} \to \mathsf{Ab}		
+	.\end{equation} 
+	In particular
+	\begin{equation}
+		\mathrm{Hom}_{\mathbb{Z}} \left( \mathrm{res}(-), I \right) =
+		\mathrm{Hom}_{\mathbb{Z}} \left( -, I \right) \circ \mathrm{res}
+	\end{equation} 
+	is the composition of two exact functors, hence it is exact.
+\end{proof}
+
+\begin{prop}[]
+	Let $\mathsf{C}$ and $\mathsf{D}$ be abelian categories.
+	Consider an adjunction $(F,G)$.
+	Then
+	\begin{enumerate}
+		\item $F$ is right exact.
+		\item $G$ is left exact.
+		\item If $F$ is exact, then
+			$G$ preserves injectives.
+	\end{enumerate}
+\end{prop}
+
+\begin{proof}\leavevmode\vspace{-.2\baselineskip}
+\begin{enumerate}
+	\item See the following.
+	\item Take an exact sequence in $\mathsf{D}$:
+	       \begin{equation}
+	       \begin{tikzcd}
+		       0 \arrow[r, "", rightarrow] &
+		       A \arrow[r, "", rightarrow] &
+		       B \arrow[r, "", rightarrow] &
+		       C
+	       \end{tikzcd}
+	       .\end{equation} 
+	       Consider the image sequence in $\mathsf{C}$:
+	       \begin{equation}
+	       \begin{tikzcd}
+		       0 \arrow[r, "", rightarrow] &
+		       G(A) \arrow[r, "", rightarrow] &
+		       G(B) \arrow[r, "", rightarrow] &
+		       G(C)
+	       \end{tikzcd}
+	       .\end{equation} 
+	       In order to show
+	       that the above is exact 
+	       it's enough to show that, for any $M \in \mathrm{Ob} \left(\mathsf{C}\right)$,
+	       the following
+	       \begin{equation}
+	       \begin{tikzcd}
+		       0 \arrow[r, "", rightarrow] &
+		       \mathrm{Hom}_{\mathsf{C}} \left( M, G(A) \right) \arrow[r, "", rightarrow] &
+		       \mathrm{Hom}_{\mathsf{C}} \left( M, G(B) \right) \arrow[r, "", rightarrow] &
+		       \mathrm{Hom}_{\mathsf{C}} \left( M, G(C) \right)
+	       \end{tikzcd}
+	       \end{equation} 
+	       is exact.
+	       By adjunction (and functoriality of the isomorphism)
+	       the above is isomorphic (as a sequence) to
+	       \begin{equation}
+	       \begin{tikzcd}
+		       0 \arrow[r, "", rightarrow] &
+		       \mathrm{Hom}_{\mathsf{D}} \left( F(M), A \right) \arrow[r, "", rightarrow] &
+		       \mathrm{Hom}_{\mathsf{D}} \left( F(M), B \right) \arrow[r, "", rightarrow] &
+		       \mathrm{Hom}_{\mathsf{D}} \left( F(M), C \right)
+	       \end{tikzcd}
+	       \end{equation} 
+	       which is exact, by exacntess of the original sequence.
+       \item Let $I \in \mathrm{Ob} \left(\mathsf{D}\right)$ injective.
+	       We have a functorial isomorphism
+	       \begin{equation}
+		       \mathrm{Hom}_{\mathsf{C}} \left( -, G(I) \right) \simeq
+		       \mathrm{Hom}_{\mathsf{D}} \left( F(-), I \right)
+	       .\end{equation} 
+	       The last is exact since both $I$ is injective and $F$ is exact by hypothesis.
+	       Then $G(I)$ is injective, i.e. $G$ preserves injectivity.\qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{cor}
+	Let $f\colon X \to Y$ be a continuous map of topological spaces.
+	Then $f_*\colon \mathsf{Sh}(X) \to \mathsf{Sh}\left(Y\right)$
+	preserves injectives.
+\end{cor} 
+\begin{proof}
+	We have the adjunction $\left( f^*, f_* \right)$.
+	Since $f^*$ behaves well with stalks it is exact, hence $f_*$
+	preserves injectives.
+\end{proof}
+
+\end{document}

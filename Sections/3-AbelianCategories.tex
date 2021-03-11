@@ -1,0 +1,1553 @@
+\documentclass[../Main]{subfiles}
+\begin{document}
+\section{Abelian categories}
+\subsection{Preadditive categories}
+\begin{defn}[Preadditive category]
+	A category $\mathsf{C}$ is called \textbf{preadditive} iff it is a $\Z$ category, i.e. iff
+	given any pair $X,Y \in \mathrm{Ob} \left(\mathsf{C}\right)$ the set $\mathrm{Hom}_{\mathsf{C}} \left( X, Y \right)$ is a $\Z$-module (an abelian group) and the composition of morphisms is a bilinear map.
+\end{defn}
+
+\begin{lem}\label{lem:OppositeIsPreadditive}
+	Let $\mathsf{C}$ be a {\em preadditive} category, then $\mathsf{C}^{op}$ is a preadditive category.
+\end{lem} 
+\begin{proof}
+	By definition of opposite category we have
+	\begin{equation}
+	\mathrm{Hom}_{\mathsf{C}} \left( A, B \right) :=
+	\mathrm{Hom}_{\mathsf{C}^{op}} \left( B, A \right)
+	\end{equation} 
+	which is an abelian group. Moreover we have bilinearity of the composition,
+	since it just reverses the order of composition.
+\end{proof}
+
+\begin{rem}[]
+	We say that $\mathsf{C}$ has finite products iff
+	given $\left\{ X_i \right\}_{i = 1}^n \subset \mathrm{Ob} \left(\mathsf{C}\right)$,
+	any finite family,
+	we can define $\prod_{i = 1}^n X_i  \in \mathrm{Ob} \left(\mathsf{C}\right)$,
+	the universal representative of the projection maps.
+\end{rem}
+
+\begin{rem}[]\label{rem:EquivFiniteProd}
+	$\mathsf{C}$ has finite products iff it has a final object $T := \prod_{\emptyset} X$
+	and, for all $A, B \in \mathrm{Ob} \left(\mathsf{C}\right)$, 
+	their product $A \cross B$ exists in $\mathsf{C}$.
+
+	This is clearly enough by associativity of product.
+\end{rem}
+
+\begin{defn}[Final/initial/zero object]\leavevmode\vspace{-1\baselineskip}
+	\begin{itemize}
+		\item $T \in \mathrm{Ob} \left(\mathsf{C}\right)$ is a {\em final} or {\em terminal}
+	object of $\mathsf{C}$ iff, given any $X \in \mathrm{Ob} \left(\mathsf{C}\right)$, then
+	\begin{equation}
+	\mathrm{Hom}_{\mathsf{C}} \left( X, T \right) = \left\{ * \right\}
+	\end{equation} 
+	is a singleton.
+	Clearly $T$ is unique up to a unique isomorphism.
+
+\item $I \in \mathrm{Ob} \left(\mathsf{C}\right)$ is an {\em initial} object of $\mathsf{C}$ iff,
+	given any $X \in \mathrm{Ob} \left(\mathsf{C}\right)$, then
+	\begin{equation}
+	\mathrm{Hom}_{\mathsf{C}} \left( I, X \right) = \left\{ * \right\}
+	\end{equation} 
+	is a singleton.
+	Clearly $I$ is unique up to a unique isomorphism.
+
+\item $0 \in \mathrm{Ob} \left(\mathsf{C}\right)$ is a {\em zero} object iff it is both initial and terminal.
+	\end{itemize}
+\end{defn}
+
+\begin{ex}\leavevmode\vspace{-.2\baselineskip}
+	\begin{itemize}
+		\item It is clear that $\left\{ * \right\} \in \mathrm{Ob} (\mathsf{Sets})$
+			is a {\em final} object.
+		\item Analogously $\emptyset \in \mathrm{Ob} \left(\mathsf{Sets}\right)$
+			is an {\em initial} object.
+		\item In $\mathsf{Rings}$ we know that $\mathbb{Z}$ is 
+		{\em initial} and $\left\{ 0 \right\}$ is {\em final}.
+	\item In $\mathsf{Ab}$ we know that $\left\{ 0 \right\}$ is also {\em initial}.
+	\end{itemize}
+\end{ex} 
+
+\begin{rem}[Finite coproducts]
+	A category $\mathsf{C}$ admits finite coproducts iff
+	it admits an initial object $I =:\coprod_{\emptyset} X$
+	and, for any $X, Y \in \mathsf{C}$, 
+	their coproduct $X \coprod Y$ is an object of $\mathsf{C}$.
+\end{rem}
+
+\begin{lem}\label{lem:CoProdPreadditive}
+	Let $\mathsf{C}$ be a {\em preadditive} category, then
+	$\mathsf{C}$ has finite products iff it has finite coproducts.
+	In such case the product of a finite family of objects coincide
+	with its coproduct.
+\end{lem} 
+
+\begin{proof}
+	Finite products in $\mathsf{C}$ correspond to finite coproducts in $\mathsf{C}^{op}$.
+	Then we will prove only one direction, the other one follows by applying this proof
+	to the opposite category, which is also preadditive by lemma \ref{lem:OppositeIsPreadditive}.
+
+	Assume that $\mathsf{C}$ has finite products.
+	By remark \ref{rem:EquivFiniteProd} it has
+	$T \in \mathsf{C}$ a final object, and for any pair of objects $A,B \in \mathsf{C}$
+	it has their product, $A \cross B$.
+	\begin{enumerate}
+		\item Let's show that $T$ is an initial object:
+			for any $A \in \mathrm{Ob} \left(\mathsf{C}\right)$ we know that
+			\begin{equation}
+			\emptyset \neq \mathrm{Hom}_{\mathsf{C}} \left( T, A \right) \in \mathsf{Ab}
+			.\end{equation} 
+			This means it contains $0_{T,A}$ the zero morphism.
+			Moreover $T$ is terminal, then
+			\begin{equation}
+			\left\{ 0_{T,T} \right\} \in \mathrm{Hom}_{\mathsf{C}} \left( T, T \right)
+			= \left\{ * \right\}
+			,\end{equation} 
+			and also $id_T \in \mathrm{Hom}_{\mathsf{C}} \left( T, T \right)$.
+			Then $0_{T,T} = id_T$.
+			It follows that, given any $a\colon T \to A$,
+			\begin{equation}
+			a = a \circ id_T = a \circ 0_{T,T} = 0
+			,\end{equation} 
+			where the last equality follows from bilinearity of composition.
+
+		\item Let's now show that, 
+			for any pair of elements $A, B \in \mathrm{Ob} \left(\mathsf{C}\right)$,
+			we have the isomorphism
+			\begin{equation}
+			A \cross B \simeq A \coprod B
+			.\end{equation} 
+			Let's denote $0_{A,B} \in \mathrm{Hom}_{\mathsf{C}} \left( A, B \right)$
+			and $0_{B,A} \in \mathrm{Hom}_{\mathsf{C}} \left( B, A \right)$.
+			Let's define the embedding morphisms:
+			$i_A\colon A \to A \cross B$ as the unique map
+			induced by the pair $\left(id_A, 0_{A,B}\right)$ from $A$.
+			Analogously $i_B\colon B \to A \cross B$
+			is induced by $\left( 0_{B, A}, id_B \right)$.
+			Then the two maps correspond with the following commutative diagrams:
+			\begin{equation}
+			\begin{tikzcd}
+				&
+				A\\
+				A \arrow[ru, "id_A", rightarrow] \arrow[r, "i_A", rightarrow] 
+				\arrow[rd, "0_{A,B}"', rightarrow] &
+				A \cross B \arrow[u, "p_A"', rightarrow] \arrow[d, "p_B", rightarrow] \\
+				&
+				B
+			\end{tikzcd}
+			\qquad \text{ and } \qquad
+			\begin{tikzcd}
+				&
+				A\\
+				B \arrow[ru, "0_{B,A}", rightarrow] \arrow[r, "i_A", rightarrow] 
+				\arrow[rd, "id_B"', rightarrow] &
+				A \cross B \arrow[u, "p_A"', rightarrow] \arrow[d, "p_B", rightarrow] \\
+				&
+				B
+			\end{tikzcd}
+			.\end{equation} 
+
+			Let's now check the universal property of the coproduct
+			on $\left(A \cross B, i_A, i_B\right)$:
+			let $C \in \mathrm{Ob} \left(\mathsf{C}\right)$ and a pair of maps
+			$f\colon A \to C$ and $g\colon B \to C$.
+			One can define 
+			\begin{equation}
+				h := \left( f \circ p_A \right) +
+				\left( g \circ p_B \right)
+				\in \mathrm{Hom}_{\mathsf{C}} \left( A \cross B, C \right)
+			.\end{equation} 
+			This gives rise to a diagram and we want to show it is commutative, i.e.
+			\begin{equation}\label{diag:CoprodPreadd1}
+			\begin{tikzcd}
+				A \arrow[rd, "f", rightarrow] \arrow[d, "i_A"', rightarrow] &
+				\\
+				A \cross B \arrow[r, "h", rightarrow] &
+				C\\
+				B \arrow[ru, "g"', rightarrow] \arrow[u, "i_B", rightarrow] &
+			\end{tikzcd}
+			\end{equation} 
+			\begin{equation}
+			h \circ i_A = f \qquad \text{ and } \qquad
+			h \circ i_B = g
+			.\end{equation} 
+			In fact, from the definition and bilinearity, we obtain
+			\begin{equation}
+			h \circ i_A = 
+			\left( f \circ p_A + g \circ p_B \right) \circ i_A =
+			f \circ \underbrace{p_A \circ i_A}_{id_A} + 
+			g \circ \underbrace{p_B \circ i_A}_{0_{A,B}} =
+			f
+			.\end{equation} 
+			With almost a carbon copy of this argument one proves that $h \circ i_B = g$.
+
+			Let's now show uniqueness of $h$.
+			Let's, at first, show that
+			\begin{equation}
+			i_A \circ p_A + i_B \circ p_B = id_{A \cross B}
+			.\end{equation} 
+			By universal property of the product it enough to show that
+			\begin{equation}
+				p_A \circ (i_A \circ p_A + i_B \circ p_B) = p_A
+			,\end{equation} 
+			and analogously for $B$.
+			In fact we have
+			\begin{align}
+				p_A \circ (i_A \circ p_A + i_B \circ p_B) =
+				\underbrace{p_A \circ i_A}_{id_A} \circ p_A + 
+				\underbrace{p_A \circ i_B}_{0_{B, A}} \circ p_B =
+				p_A
+			.\end{align} 
+			Choose now $h' \colon A \cross B \to C$
+			making the diagram in \eqref{diag:CoprodPreadd1} commute.
+			Then
+			\begin{align}
+				h' &=
+				h' \circ id_{A \cross B} =
+				h' \circ \left( i_A \circ p_A +
+				i_B \circ p_B\right) \\
+				   &=
+				\underbrace{h' \circ i_A}_{f} \circ p_A +
+				\underbrace{h' \circ i_B}_{g} \circ p_B =
+				f \circ p_a + g \circ p_B = h \qedhere
+			.\end{align} 
+	\end{enumerate}
+\end{proof}
+
+\begin{rem}[]
+	The requirements in preadditive categories are crucial to have
+	equality between products and coproducts.
+	In $\mathsf{Sets}$, for example, products are cartesian products,
+	whereas coproducts are disjoint unions.
+\end{rem}
+
+\begin{rem}[]
+	Let $\mathsf{C}$ be a {\em preadditive} category and
+	$B \in \mathrm{Ob} \left(\mathsf{C}\right)$.
+	Suppose that $B \cross B$ exists, then there is a map
+	\begin{equation}
+		\begin{tikzcd}
+			\delta_B\colon B \cross B \simeq B \coprod B \arrow[r, "", rightarrow] &
+			B
+		\end{tikzcd}
+	,\end{equation} 
+	called {\em codiagonal},
+	defined to be the one making the following diagram commute
+	\begin{equation}
+	\begin{tikzcd}
+		B \arrow[rd, "id_B", rightarrow] \arrow[d, "\epsilon_B"', rightarrow] & \\
+		B \coprod B \arrow[r, "\delta_B", rightarrow] &
+		B\\
+		B \arrow[u, "\epsilon_B", rightarrow] \arrow[ru, "id_B"', rightarrow] 
+	\end{tikzcd}
+	.\end{equation} 
+	As one could guess the name {\em codiagonal} comes from the fact that
+	it satisfies the dual of the diagram for the {\em diagonal} morphism
+	in a product.
+\end{rem}
+
+\subsection{Additive categories}
+\begin{defn}[Additive category]
+	An {\em additive category}
+	is a {\em preadditive} category with finite products.
+\end{defn}
+
+\begin{rem}[]
+	In an additive category, as seen in lemma \ref{lem:CoProdPreadditive}, 
+	one has a zero element, since initial and terminal
+	elements coincide, being (co)products indexed by the empty set.
+\end{rem}
+
+In reality the structure of abelian group, for the hom sets in a additive category,
+does not depend on any external structure.
+It can be defined directly from the morphisms in the category itself.
+
+\begin{lem}\label{lem:MorphismSumAdditiveCat}
+	Let $\mathsf{C}$ be an {\em additive} category and
+	$B \in \mathrm{Ob} \left(\mathsf{C}\right)$.
+	Then, given any couple of morphisms 
+	$f,g \in \mathrm{Hom}_{\mathsf{C}} \left( A, B \right)$, 
+	for any $A \in \mathrm{Ob} \left(\mathsf{C}\right)$,
+	one has
+	\begin{equation}
+		f + g = \delta_B \circ \left( f, g \right)
+	,\end{equation} 
+	where $\left( f, g\right)\colon A \to B \cross B \simeq B \coprod B$
+	is the map induced by the pair $f$ and $g$.
+\end{lem} 
+\begin{proof}
+	We have already shown that
+	\begin{equation}
+	id_{B \cross B} = i_1 \circ p_1 + i_2 \circ p_2
+	.\end{equation} 
+	Then we have the commutative diagram
+	\begin{equation}
+	\begin{tikzcd}
+		&
+		B \arrow[rd, "id_B", rightarrow] \arrow[d, "i_1"', rightarrow] & \\
+		B \cross B \arrow[r, "\sim", rightarrow]
+		\arrow[ru, "p_1", rightarrow] \arrow[rd, "p_2"', rightarrow] &
+		B \coprod B \arrow[r, "\delta_B", rightarrow] &
+		B \\
+		&
+		B \arrow[u, "i_2", rightarrow] \arrow[ru, "id_B"', rightarrow] &
+	\end{tikzcd}
+	.\end{equation} 
+	From this we conclude, since
+	\begin{align}
+		\delta_B \circ \left( f,g \right) &=
+		\delta_B \circ \left( i_1 \circ p_1 + i_2 \circ p_2 \right) \circ \left( f, g \right) =
+		( \underbrace{\delta_B \circ i_1}_{id_B} \circ p_1 + 
+		\underbrace{\delta_B \circ i_2}_{id_B} \circ p_2) \circ ( f,g ) \nonumber \\
+		&=
+		p_1 \circ \left( f,g \right) + p_2 \circ \left( f, g \right) = f + g \qedhere
+	.\end{align} 
+\end{proof}
+
+\begin{rem}[Notation]
+	An additive category with finite products
+	has also coproducts and viceversa (reason in $\mathsf{C}^{op}$).
+	Then we denote them, since they are isomorphic, by
+	\begin{equation}
+	A \oplus B := A \cross B \simeq A \coprod B
+	.\end{equation} 
+\end{rem}
+
+\begin{rem}[Zero morphism]
+	Given any $A, B \in \mathrm{Ob} \left(\mathsf{C}\right)$ an additive category, one always has
+	\begin{equation}
+	0_{A,B} \in \mathrm{Hom}_{\mathsf{C}} \left( A, B \right)
+	.\end{equation} 
+	In particular this corresponds to the composition
+	\begin{equation}
+	\begin{tikzcd}
+		0_{A,B} :
+		A \arrow[r, "0", rightarrow] &
+		0_{\mathsf{C}} \arrow[r, "0", rightarrow] &
+		B
+	\end{tikzcd}
+	.\end{equation} 
+	In fact one needs no group structure on $\mathrm{Hom}_{\mathsf{C}} \left( A, B \right)$
+	to define a zero morphism between the two objects.
+\end{rem}
+
+\begin{defn}[Zero morphism]
+	Let $\mathsf{C}$ be a category with zero object.
+	Then, for all $A, B \in \mathrm{Ob} \left(\mathsf{C}\right)$,
+	one can define the zero morphism 
+	$0_{A,B} \in \mathrm{Hom}_{\mathsf{C}} \left( A, B \right)$ 
+	as the composition
+	\begin{equation}
+		\begin{tikzcd}
+		A \arrow[r, "", rightarrow] &
+		0 \arrow[r, "", rightarrow] &
+		B
+		\end{tikzcd}
+	.\end{equation} 
+\end{defn}
+
+\begin{lem}
+	Let $\mathsf{C}$ be a category with zero object,
+	finite products and coproducts
+	s.t. the map induced by the following diagram is an isomorphism
+	\begin{equation}
+	\begin{tikzcd}
+		B \arrow[rd, "(0\text{,} id_B)", rightarrow] \arrow[d, "i_B"', rightarrow] & \\
+		A \coprod B \arrow[r, "\sim", rightarrow] &
+		A \cross B \\
+		A \arrow[u, "i_A", rightarrow] \arrow[ru, "(id_A\text{,} 0)"', rightarrow] &
+	\end{tikzcd}
+	.\end{equation} 
+	Then $\mathrm{Hom}_{\mathsf{C}} \left( A, B \right)$ is a monoid:
+\end{lem} 
+\begin{proof}
+	Given $f,g \in \mathrm{Hom}_{\mathsf{C}} \left( A, B \right)$, then
+	one can set
+	\begin{equation}
+	\begin{tikzcd}
+		f+g : 
+		A \arrow[r, "(f\text{,} g)", rightarrow] &
+		B \oplus B \arrow[r, "\delta_B", rightarrow] &
+		B
+	\end{tikzcd}
+	\end{equation} 
+	and
+	\begin{equation}
+	\begin{tikzcd}
+		0_{A,B} :
+		A \arrow[r, "", rightarrow] &
+		0 \arrow[r, "", rightarrow] &
+		B
+	\end{tikzcd}
+	.\end{equation} 
+	One only need to check that this effectively gives rise to a monoid.
+\end{proof}
+
+\begin{defn}[Additive category, take 2]
+	An additive category $\mathsf{C}$ is a category with a zero object,
+	finite products and finite coproducts s.t.
+	\begin{itemize}
+		\item The map defined above is an iso
+			\begin{equation}
+			\begin{tikzcd}
+				A \coprod B \arrow[r, "\sim", rightarrow] &
+				A \cross B
+			\end{tikzcd}
+			,\end{equation} 
+		\item The abelian monoid $\mathrm{Hom}_{\mathsf{C}} \left( A, B \right)$
+			is an abelian group.
+	\end{itemize}
+\end{defn}
+
+\begin{rem}[]
+	The above definition makes clear that an additive category is
+	just a category satisfying certain properties,
+	with no additional structure.
+	In fact the group structure on $\mathrm{Hom}_{\mathsf{C}} \left( A, B \right)$
+	is determined by the underlying category $\mathsf{C}$.
+\end{rem}
+
+\begin{defn}[(Co)equalizer]
+	Let $f,g$ be two parallel morphisms $A \rightrightarrows B$ in a category $\mathsf{C}$.
+	\begin{itemize}
+		\item An \textbf{equalizer} of $f$ and $g$ is a pair $\left(C, e\right)$,
+			with $e\colon C \to A$, satisfying
+	\begin{description}
+		\item[eq1] $f \circ e = g \circ e$,
+		\item[eq2] for $\left(C', e'\right)$ with $C' \xrightarrow{e'} A$ s.t. $f \circ e' = g \circ e'$, then
+			$\exists\, ! \alpha: C' \to C$ s.t. $e \circ \alpha = e'$, i.e. the following diagram commutes
+			\begin{equation}
+			\begin{tikzcd}
+				C \arrow[r, "e", rightarrow] & A \arrow[r, "f", rightarrow, shift left=.5ex] \arrow[r, "g"', rightarrow, shift right=.5ex] & B\\
+				    & C' \arrow[lu, "\exists\, ! \alpha", dashrightarrow] \arrow[u, "e'"', rightarrow] & 
+			\end{tikzcd}
+			.\end{equation} 
+	\end{description}
+	\item A \textbf{coequalizer} of $f$ and $g$ is an equalizer of $f$ and $g$ in $\mathsf{C}^{op}$.
+		In other words it is a pair $\left(C, p\right)$, 
+		with $p\colon B \to C$ s.t.
+		\begin{description}
+			\item[coeq1] $p \circ f = p \circ g$,
+			\item[coeq2] for $\left(C', p'\right)$ with $B \xrightarrow{p'} C'$ s.t. $p' \circ f = p' \circ g$, then $\exists\, ! \gamma: C \to C'$, with $\gamma \circ p = p'$, i.e. s.t. the following diagram commutes
+			\begin{equation}
+			\begin{tikzcd}
+				A \arrow[r, "f", rightarrow, shift left=.5ex] \arrow[r, "g"', rightarrow, shift right=.5ex] & B \arrow[r, "P", rightarrow] \arrow[d, "p'", rightarrow] & C \arrow[dl, "\exists\, ! \gamma", dashrightarrow] \\
+				    & C' & 
+			\end{tikzcd}
+			.\end{equation} 
+		\end{description} 
+	\end{itemize}
+\end{defn}
+
+\begin{defn}[(Co)kernel]
+	Let $\mathsf{C}$ be a category with zero object.
+	Let $f\colon A \to B$ a morphism in $\mathsf{C}$.
+	One can define the kernel of $f$
+	as the equalizer of $f$ and $0$, which corresponds with
+	\begin{equation}
+		\ker f = 
+		\varprojlim \Bigg(
+			\begin{tikzcd}[row sep=0.60em, column sep=1.2em]
+			&
+			0 \arrow[d, "", rightarrow] \\
+			A \arrow[r, "f", rightarrow] &
+			B
+		\end{tikzcd} \Bigg)
+		= A \cross_B 0
+	.\end{equation} 
+	Analogously one defines the cokernel as the dual of the kernel, i.e.
+	\begin{equation}
+	\mathrm{coker}\, f = 
+		\varinjlim \Bigg(
+			\begin{tikzcd}[row sep=0.60em, column sep=1.2em]
+			A \arrow[r, "f", rightarrow] \arrow[d, "", rightarrow] &
+			B \\
+			0 &
+		\end{tikzcd} \Bigg) =
+	B \coprod_A 0
+	.\end{equation} 
+\end{defn}
+
+\begin{rem}[]
+	The object $\ker f$ is given with a map
+	\begin{equation}
+		\begin{tikzcd}
+			\ker f \arrow[r, "", rightarrow] &
+			A
+		\end{tikzcd}
+	\end{equation} 
+	and $\mathrm{coker}\, f$ with a map
+	\begin{equation}
+	\begin{tikzcd}
+		B \arrow[r, "", rightarrow] &
+		\mathrm{coker}\,  f
+	\end{tikzcd}
+	.\end{equation} 
+	Both of them satisfy a universal property.
+	In particular the kernel satisfies the following:
+	given any $g \in \mathrm{Hom}_{\mathsf{C}} \left( C, A \right)$
+	for any object $C \in \mathrm{Ob} \left(\mathsf{C}\right)$ s.t.
+	$f \circ g = 0$, then $g$ factorizes uniquely
+	through $\ker f$.
+	In pictures the diagram commutes:
+	\begin{equation}
+	\begin{tikzcd}
+		\ker f \arrow[r, "k", rightarrow] &
+		A \arrow[r, "f", rightarrow] &
+		B \\
+		&
+		C \arrow[lu, "\exists !\, \alpha", dashrightarrow] \arrow[u, "g", rightarrow] 
+		\arrow[ru, "0"', rightarrow] &
+	\end{tikzcd}
+	.\end{equation} 
+	The cokernel, instead, satisfies the following:
+	given any $g \in \mathrm{Hom}_{\mathsf{C}} \left( B, C \right)$
+	for any object $C \in \mathrm{Ob} \left(\mathsf{C}\right)$ s.t.
+	$g \circ f = 0$, then $g$ factorizes uniquely
+	through $\mathrm{coker}\,  f$.
+	In pictures the diagram commutes:
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[r, "f", rightarrow] \arrow[rd, "0"', rightarrow] &
+		B \arrow[r, "c", rightarrow]  \arrow[d, "g", rightarrow] &
+		\mathrm{coker}\, f \arrow[ld, "\exists !\, \gamma", dashrightarrow] \\
+		&
+		C &
+	\end{tikzcd}
+	.\end{equation} 
+\end{rem}
+\begin{rem}[]
+	It follows from the definition that 
+	\begin{equation}
+	\begin{tikzcd}
+		\ker f \arrow[r, "", rightarrowtail] &
+		A
+	\end{tikzcd}
+	\end{equation} 
+	is a monomorphism, whereas the morphism
+	\begin{equation}
+	\begin{tikzcd}
+		B \arrow[r, "", twoheadrightarrow] &
+		\mathrm{coker}\, f
+	\end{tikzcd}
+	\end{equation} 
+	is an epimorphism.
+\end{rem}
+\begin{proof}
+	Let's give $\alpha,\beta \colon A \to \ker f$, and denote
+	by $i\colon \ker f \to A$ the natural map.
+	Assume that $i \circ \alpha = i \circ \beta$.
+	Then $f \circ i \circ \alpha = f \circ i \circ \beta = 0$.
+	Then by universal property of the kernel there is a unique map
+	$\gamma\colon X \to \ker f$ s.t. $i \circ \alpha = i \circ \gamma$.
+	By uniqueness of $\gamma$ we have $\gamma = \alpha = \beta$.
+\end{proof}
+
+\begin{defn}[(Co)image]
+	Let $\mathsf{C}$ be a category with zero object and $f\colon A \to B$
+	be a morphism in $\mathsf{C}$.
+	One can define the {\em image} of $f$, if it exists, as
+	\begin{equation}
+		\ima f := \ker \left( B \longrightarrow \mathrm{coker}\, f \right)
+	.\end{equation} 
+	Analogously, if it exists, one defines the {\em coimage} of $f$ as
+	\begin{equation}
+		\mathrm{coim}\, f := \mathrm{coker}\, \left( \ker f \longrightarrow A \right)
+	.\end{equation} 
+\end{defn}
+
+\begin{rem}[]
+	From this definition one obtains natural maps
+	\begin{equation}
+		\begin{tikzcd}[row sep=tiny]
+			A \arrow[r, "", rightarrowtail] &
+		\mathrm{Coim}\, f \\
+			\ima f \arrow[r, "", twoheadrightarrow] & 
+		B.
+	\end{tikzcd}
+	\end{equation} 
+\end{rem}
+
+\begin{exr}
+	Let $\mathsf{C} := \mathsf{Ab}$ and $f\colon A \to B$ a morphism.
+	Show that
+	\begin{equation}
+	\ima f \simeq \left\{ b \in B \ \middle|\ 
+	\exists\, a \in A \text{ s.t. } f(a) = b \right\}
+	.\end{equation} 
+	Analogously show that
+	\begin{equation}
+	\mathrm{coim}\, f \simeq \frac{A}{\ker f}
+	,\end{equation} 
+	where the quotient is the usual quotient of abelian groups.
+	tk: what did I want to say?
+	Moreover check the commutativity of the required diagrams (i.e. the arrows from/to $A$, $B$).
+
+	Notice that in $\mathsf{Ab}$ we have
+	\begin{equation}
+	\mathrm{coim}\, f \simeq \ima f
+	.\end{equation} 
+\end{exr} 
+
+\begin{exr}
+	Let $\mathsf{C}$ be a category with a zero object, kernels and cokernels.
+	\begin{enumerate}
+		\item Show that there exists a canonical map
+			\begin{equation}
+				\begin{tikzcd}
+					\bar{f}\colon \mathrm{coim}\, f \arrow[r, "", rightarrow] &
+				\ima f
+				\end{tikzcd}
+			\end{equation} 
+			s.t. the following diagram commutes
+			\begin{equation}
+			\begin{tikzcd}
+				\ker f \arrow[r, "", rightarrowtail] &
+				A \arrow[r, "f", rightarrow] \arrow[d, "", twoheadrightarrow] &
+				B \arrow[r, "", twoheadrightarrow] &
+				\mathrm{coker}\, f\\
+				&
+				\mathrm{coim}\, f \arrow[r, "\bar{f}", rightarrow] &
+				\ima f \arrow[u, "", rightarrowtail] &
+			\end{tikzcd}
+			.\end{equation} 
+		\item Prove that $f = 0$ iff $\ker f = id_A$ iff
+			$\mathrm{coker}\, f = id_B$.
+		\item Prove that $f = id_A$ implies that
+			\begin{align}
+				\ker f &= \left( 0 \longrightarrow A \right)\\
+				\mathrm{coker}\, f &= \left( A \longrightarrow 0 \right)
+			.\end{align} 
+	\end{enumerate}
+\end{exr} 
+\begin{proof}
+	Since $\mathrm{coim}\, f = \mathrm{coker}\, \left( \ker f \right)$, 
+	by the universal property of cokernels,
+	there is a unique map $\alpha\colon \mathrm{coim}\, f \to B$ s.t.
+	$f = \alpha \circ \pi$, for $\pi$ the map $\pi\colon A \to \mathrm{coim}\, f$.
+	Then, since $\pi$ is epi, denoted $\theta\colon B \to \mathrm{coker}\, f$,
+	we have that $0 = \theta \circ f = \theta \circ \alpha \circ \pi = \theta \circ \alpha$.
+	This means that $\alpha$ factorizes through $\ima f$, i.e.
+	we have a map $\bar{f}\colon \mathrm{coim}\, f \to \ima f$ making the diagram commute.
+	Here is a diagram with all of the maps used in the proof:
+			\begin{equation}
+			\begin{tikzcd}
+				\ker f \arrow[r, "", rightarrowtail] &
+				A \arrow[r, "f", rightarrow] \arrow[d, "\pi"', twoheadrightarrow] &
+				B \arrow[r, "\theta", twoheadrightarrow] &
+				\mathrm{coker}\, f\\
+				&
+				\mathrm{coim}\, f \arrow[r, "\bar{f}"', rightarrow] 
+				\arrow[ru, "\alpha", dashrightarrow] &
+				\ima f \arrow[u, "", rightarrowtail]  &
+			\end{tikzcd}\qedhere
+			.\end{equation} 
+\end{proof}
+
+\begin{rem}[]
+	Clearly $\ker$ and $\mathrm{coker}\, $ in $\mathsf{C}$ correspond respectively to
+	$\mathrm{coker}\, $ and $\ker$ in $\mathsf{C}^{op}$.
+\end{rem}
+
+\begin{lem}
+	Let $\mathsf{C}$ be a category with zero object, kernels and cokernels.
+	Let $f\colon A \to B$ be a morphism, then
+	\begin{align}
+		\ker f &\simeq \ker \left( A \longrightarrow \mathrm{coim}\, f \right)\\
+		\mathrm{coker}\, f &\simeq \mathrm{coker} \left( \ima f \longrightarrow B \right)
+	.\end{align} 
+\end{lem} 
+\begin{proof}
+	It is enough to show the first one, then the second follows from
+	the same argument in the opposite category.
+	By definition
+	\begin{equation}
+		\mathrm{coim}\, f = \mathrm{coker}\,  \left( \ker f \to  A \right)
+	.\end{equation} 
+	In particular it follows that
+	\begin{equation}
+	\begin{tikzcd}
+		\ker f \arrow[r, "", rightarrow] \arrow[rr, bend right, "0"', rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		\mathrm{coim}\, f
+	\end{tikzcd}
+	.\end{equation} 
+	Let's show that $\ker f$ is universal with this property.
+	Let $C \in \mathsf{C}$ and consider a morphism $C \to A$ s.t.
+	\begin{equation}
+	\begin{tikzcd}
+		C \arrow[r, "", rightarrow] \arrow[rr, bend right, "0"', rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		\mathrm{coim}\, f
+	\end{tikzcd}
+	.\end{equation} 
+	Composing after this the map from the coimage to the image
+	and the monomorphism from the image to $B$, we have a composition which gives zero:
+	\begin{equation}
+	\begin{tikzcd}
+		C \arrow[r, "", rightarrow] \arrow[rrrr, bend right, "0"', rightarrow] &
+		A \arrow[r, "", rightarrow] \arrow[rrr, "f", bend left, rightarrow] &
+		\mathrm{coim}\, f \arrow[r, "\bar{f}", rightarrow] &
+		\ima f \arrow[r, "", rightarrowtail] &
+		B
+	\end{tikzcd}
+	.\end{equation} 
+	Then it factorizes through $\ker f$ and from the universal property of $\ker$ we have our result.
+\end{proof}
+
+\subsection{Abelian categories and complexes}
+\begin{defn}[Abelian category]
+An {\em abelian} category is an additive category s.t.
+	\begin{enumerate}
+		\item any morphism has a kernel and a cokernel,
+		\item given any morphism $f\colon A \to B$, the canonical map
+			\begin{equation}
+				\begin{tikzcd}
+				\bar{f}\colon \mathrm{coim}\, f \arrow[r, "\sim", rightarrow] &
+				\ima f
+				\end{tikzcd}
+			\end{equation} 
+			is an isomorphism.
+	\end{enumerate}
+	A {\em preabelian} category is an additive category satisfying only $1$.
+\end{defn}
+
+\begin{rem}[]
+	An abelian category behaves, in many ways, like the category of abelian groups
+	(in other words, of $\mathbb{Z}$-modules).
+	Actually there is a powerful theorem which states a similar result for small
+	abelian category, i.e. they can be embedded into a category of modules, over
+	a ring $R$, not necessairily $\mathbb{Z}$.
+\end{rem}
+
+\begin{rem}[]
+	Consider a pair of composable morphism $f, g$ in an abelian category.
+	Assume $g \circ f = 0$.
+	Then there exists a canonical map
+	\begin{equation}
+	\begin{tikzcd}
+		\ima f \arrow[r, "", rightarrow] &
+		\ker g
+	\end{tikzcd}
+	.\end{equation} 
+\end{rem}
+\begin{proof}
+	Since $\mathsf{C}$ is an abelian category,
+	any morphism $f\colon A \to B$ factors through
+	$\ima f$ as $f = \gamma \circ \delta$,
+	for an epimorphism $\delta\colon A \to \ima f$
+	(it is the composition of an epimorphism and an isomorphism).
+	Then
+	\begin{equation}
+	0 = g \circ f = g \circ \gamma \circ \delta = g \circ \gamma
+	,\end{equation} 
+	since $\delta$ is epi.
+	This means that $\gamma$ factors through $\ker g$, giving the desired
+	morphism $\tilde{\gamma}$.
+	In pictures we have the following commutative diagram:
+	\begin{equation}
+		\begin{tikzcd}
+		A \arrow[r, "f", rightarrow] 
+		\arrow[d, "\delta"', rightarrow] &
+		B \arrow[r, "g", rightarrow] & 
+		C\\
+		\ima f \arrow[ru, "\gamma", rightarrow] 
+		\arrow[r, "\tilde{\gamma}"', dashrightarrow] &
+		\ker g \arrow[u, "\epsilon"', rightarrow] &
+		&
+	\end{tikzcd}
+	\qedhere
+	.\end{equation} 
+%	Since the composition is $0$, we obtain that $g$
+%	factors through $\mathrm{coker}\, f$, giving
+%	$g = \tilde{f} \circ \pi$, for $\pi\colon B \to \mathrm{coker}\, f$.
+%	Finally $\pi \circ f = 0$ factorizes through $\ker \mathrm{coker}\, f$,
+%	which gives the desired factorization.
+\end{proof}
+
+\begin{defn}[]
+	A sequence in a (pre)abelian category
+	is a sequence of morphism
+	\begin{equation}
+	\begin{tikzcd}
+		A^{-1} \arrow[r, "d^{-1}", rightarrow] &
+		A^0 \arrow[r, "d^0", rightarrow] &
+		\dots \arrow[r, "d^{n-1}", rightarrow] &
+		A^n \arrow[r, "d^n", rightarrow]  &
+		\
+	\end{tikzcd}
+	.\end{equation} 
+	A sequence is called complex iff $d^{n+1} \circ d^n = 0$ for all $n$
+	(in the set of indices of the complex).
+
+	A complex is called {\em acyclic}, also called {\em exact sequence},
+	iff the canonical map induced by the above condition
+	\begin{equation}
+		\begin{tikzcd}
+			\ima d^n \arrow[r, "\sim", rightarrow] &
+			\ker d^{n+1}
+		\end{tikzcd}
+	\end{equation} 
+	is an isomorphism for all $n$.
+\end{defn}
+
+\begin{ex}
+	The following is an exact sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathbb{Z} \arrow[r, "\cdot n", rightarrow] &
+		\mathbb{Z} \arrow[r, "", rightarrow] &
+		\mathbb{Z}/n\mathbb{Z} \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+\end{ex} 
+
+\begin{exr}
+	Let $\mathsf{C}$ be a (pre)abelian category and
+	$f\colon A \to B$ a morphism in $\mathsf{C}$.
+	\begin{enumerate}
+		\item The following are equivalent
+			\begin{enumerate}
+				\item $f$ is a monomorphism,
+				\item $\ker f = 0_{\mathsf{C}}$,
+				\item the following is an exact sequence
+					\begin{equation}
+					\begin{tikzcd}
+						0 \arrow[r, "", rightarrow] &
+						A \arrow[r, "f", rightarrow] &
+						B
+					\end{tikzcd}
+					.\end{equation} 
+			\end{enumerate}
+		\item The following are equivalent
+			\begin{enumerate}
+				\item $f$ is an epimorphism,
+				\item $\mathrm{coker}\, f = 0_{\mathsf{C}}$,
+				\item the following is an exact sequence
+					\begin{equation}
+					\begin{tikzcd}
+						A \arrow[r, "f", rightarrow] &
+						B \arrow[r, "", rightarrow] &
+						0
+					\end{tikzcd}
+					.\end{equation} 
+			\end{enumerate}
+	\end{enumerate}
+\end{exr} 
+\begin{proof}
+	Let's only prove the first point.
+	The second follows applying the first in the opposite category.
+
+	Let $f$ be a monomorphism, $C \in \mathsf{C}$ and $g\colon C \to A$
+	s.t. $f \circ g = 0$.
+	Then 
+	\begin{equation}
+	f \circ g = 0_{C,B} = f \circ 0_{C,A}
+	.\end{equation} 
+	Since $f$ is a mono we obtain that $g = 0_{C,A}$,
+	i.e. $g$ factors through $0 = \ker f$ (uniqueness of
+	the factorization, then, is obvious).
+
+	Let's prove the converse, $\ker f = 0$.
+	Let $C \in \mathsf{C}$ and consider two maps $g_0, g_1\colon C \to A$
+	equalized by $f \circ g_0 = f \circ g_1$.
+	Let's take the difference
+	\begin{equation}
+		0 = f \circ g_0 - f \circ g_1 = f \circ (g_0 - g_1)
+	.\end{equation} 
+	Then $g_0 - g_1$ factors through $\ker f = 0$, hence $g_0 - g_1 = 0$, 
+	i.e. $g_0 = g_1$.
+\end{proof}
+
+\begin{exr}
+	Let $\mathsf{C}$ be an abelian category.
+	Let $f\colon A \to B$ be a morphism. Then
+	\begin{enumerate}
+		\item $f$ is a monomorphism iff $f = \ima f$,
+		\item $f$ is an epimorphism iff $f = \mathrm{coim}\, f$,
+		\item $f$ is an isomorphism iff $f$ is both a mono and an epimorphism.
+	\end{enumerate}
+\end{exr} 
+
+\begin{lem}
+	Let $\mathsf{C}$ be an {\em abelian} category and
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[r, "f", rightarrow] &
+		B \arrow[r, "g", rightarrow] &
+		C
+	\end{tikzcd}
+	\end{equation} 
+	a sequence in $\mathsf{C}$.
+	TFAE:
+	\begin{enumerate}
+		\item The sequence is exact.
+		\item The following is exact in $\mathsf{C}^{op}$:
+			\begin{equation}
+			\begin{tikzcd}
+				C \arrow[r, "g^{op}", rightarrow] &
+				B \arrow[r, "f^{op}", rightarrow] &
+				A
+			\end{tikzcd}
+			.\end{equation} 
+		\item $\mathrm{coker}\, f = \mathrm{coim}\,  g$.
+	\end{enumerate}
+\end{lem} 
+\begin{proof}\leavevmode\vspace{-.2\baselineskip}
+	\begin{description}
+		\item[1 $\implies$ 3:]
+			Notice that exactness is equivalent to $\ima f = \ker g$.
+			Then
+			\begin{equation}
+			\begin{tikzcd}
+				\mathrm{coker} \left( \ima f \right) \arrow[r, "", equals]
+				\arrow[d, "", equals] &
+				\mathrm{coker} \left( \ker g \right) \arrow[d, "", equals] \\
+				\mathrm{coker}\, f \arrow[r, "", equals] &
+				\mathrm{coim}\, g
+			\end{tikzcd}
+			.\end{equation} 
+
+		\item[3 $\implies$ 1:] By hypothesis
+			\begin{align}
+				\mathrm{coker} \left( \ima f \right) &\simeq
+				\mathrm{coker} \left( \ker g \right)\\
+				\ker \left( \mathrm{coker} \left( \ima f \right) \right) &\simeq
+				\ker \left( \mathrm{coker} \left( \ker g \right) \right)\\
+				\ima \left( \ima f \right) &\simeq \ima \left( \ker g \right)
+			.\end{align} 
+			By exercise $3$, if $h$ is a monomorphism, $\ima h = h$.
+			Then
+			\begin{equation}
+			\ima f = \ker g
+			.\end{equation} 
+
+		\item[3 $\iff$ 2:] We know that images and kernels, in the opposite category, correspond
+			(respectively) to coimages and cokernels, hence the following two lines are equivalent:
+			\begin{align}
+				\ima \left( g^{op} \right) &\simeq \ker \left( g^{op} \right)\\
+				\mathrm{coim}\, g &\simeq \mathrm{coker}\, f\nonumber\qedhere
+			.\end{align} 
+	\end{description} 
+\end{proof}
+
+\begin{lem}
+	Let $\mathsf{C}$ be an {\em abelian} category. TFAE:
+	\begin{enumerate}
+		\item $f \simeq \ker g$ iff the following is exact
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				A \arrow[r, "f", rightarrow] &
+				B \arrow[r, "g", rightarrow] &
+				C
+			\end{tikzcd}
+			.\end{equation} 
+		\item $g \simeq \coker f$ iff the following is exact
+			\begin{equation}
+			\begin{tikzcd}
+				A \arrow[r, "f", rightarrow] &
+				B \arrow[r, "g", rightarrow] &
+				C \arrow[r, "", rightarrow] &
+				0
+			\end{tikzcd}
+			.\end{equation} 
+	\end{enumerate}
+\end{lem} 
+\begin{proof}
+	The second point follows from the first, applied in $\mathsf{C}^{op}$.
+	Let's show the first one, then.
+	Let's recall the definition of exactness.
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				A \arrow[r, "f", rightarrow] &
+				B \arrow[r, "g", rightarrow] &
+				C
+			\end{tikzcd}
+			\end{equation} 
+	is exact iff $f$ is a monomorphism and $\ima f \simeq \ker g$,
+	but then, since $f$ is a monomorphism we know that $\ima f = f$, and we have proved one direction.
+	The other is also clear, since $\ker g$ is a monomorphism, hence
+	$f \simeq \ima f$ and we have recovered the definition of exactness.
+\end{proof}
+
+\begin{rem}[Hom functor]
+	Fix a category $\mathsf{C}$, then the hom functor
+	\begin{align}
+		\mathrm{Hom}_{\mathsf{C}} \colon \mathsf{C}^{op} \cross \mathsf{C} &\longrightarrow \mathsf{Sets} \\
+		\left(X, Y\right) &\longmapsto \mathrm{Hom}_{\mathsf{C}} \left( X, Y \right) \nonumber \\
+	\end{align} 
+	is contravariant in the first entry, and covariant in the second one.
+	In particolar, on morphisms, it acts as follows:
+	let $g \in \mathrm{Hom}_{\mathsf{C}} \left( Y, Z \right)$, then
+	\begin{align}
+		g_* := \mathrm{Hom}_{\mathsf{C}} \left( X, g \right) \colon 
+		\mathrm{Hom}_{\mathsf{C}} \left( X, Y \right) 
+		&\longrightarrow \mathrm{Hom}_{\mathsf{C}} \left( X, Z \right) \\
+		h &\longmapsto g \circ h \nonumber
+	.\end{align} 
+	For $f \in \mathrm{Hom}_{\mathsf{C}} \left( Z, X \right)$, instead
+	\begin{align}
+		f^* := \mathrm{Hom}_{\mathsf{C}} \left( f, Y \right) \colon 
+		\mathrm{Hom}_{\mathsf{C}} \left( X, Y \right) 
+		&\longrightarrow \mathrm{Hom}_{\mathsf{C}} \left( Z, Y \right) \\
+		h &\longmapsto h \circ f \nonumber
+	.\end{align} 
+\end{rem}
+
+\begin{lem}\label{lem:HomExactnessEquivalence}
+	Let $\mathsf{C}$ be an {\em abelian} category.
+	\begin{enumerate}
+		\item A sequence in $\mathsf{C}$
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				A \arrow[r, "", rightarrow] &
+				B \arrow[r, "", rightarrow] &
+				C
+			\end{tikzcd}
+			\end{equation} 
+			is exact iff, for any $M \in \mathrm{Ob} \left(\mathsf{C}\right)$,
+			the image sequence
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				\mathrm{Hom}_{\mathsf{C}} \left( M, A \right) \arrow[r, "", rightarrow] &
+				\mathrm{Hom}_{\mathsf{C}} \left( M, B \right) \arrow[r, "", rightarrow] &
+				\mathrm{Hom}_{\mathsf{C}} \left( M, C \right)
+			\end{tikzcd}
+			\end{equation} 
+			is exact in $\mathsf{Ab}$.
+
+		\item A sequence in $\mathsf{C}$
+			\begin{equation}
+			\begin{tikzcd}
+				A \arrow[r, "", rightarrow] &
+				B \arrow[r, "", rightarrow] &
+				C \arrow[r, "", rightarrow] &
+				0
+			\end{tikzcd}
+			\end{equation} 
+			is exact iff, for any $M \in \mathrm{Ob} \left(\mathsf{C}\right)$,
+			the image sequence
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				\mathrm{Hom}_{\mathsf{C}} \left( C, M \right) \arrow[r, "", rightarrow] &
+				\mathrm{Hom}_{\mathsf{C}} \left( B, M \right) \arrow[r, "", rightarrow] &
+				\mathrm{Hom}_{\mathsf{C}} \left( A, M \right)
+			\end{tikzcd}
+			\end{equation} 
+			is exact in $\mathsf{Ab}$.
+	\end{enumerate}
+\end{lem} 
+\begin{proof}
+	$2$ follows from $1$. In fact the sequence
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[r, "", rightarrow] &
+		B \arrow[r, "", rightarrow] &
+		C \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	\end{equation} 
+	is exact in $\mathsf{C}$ iff
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		B \arrow[r, "", rightarrow] &
+		C
+	\end{tikzcd}
+	\end{equation} 
+	is exact in $\mathsf{C}^{op}$.
+	Then one can apply $\mathrm{Hom}_{\mathsf{C}^{op}} \left( M, - \right)$,
+	obtaining
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}^{op}} \left( M, C \right) \arrow[r, "", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}^{op}} \left( M, B \right) \arrow[r, "", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}^{op}} \left( M, A \right)
+	\end{tikzcd}
+	,\end{equation} 
+	which is exact iff it is exact in the opposite category, i.e. iff
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( C, M \right) \arrow[r, "", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( B, M \right) \arrow[r, "", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( A, M \right)
+	\end{tikzcd}
+	\end{equation} 
+	is exact in $\mathsf{C}$.
+	In other words $1$ is equivalent to $2$, thanks to the previous lemma.
+
+	Let's now prove $1$.
+	Assume 
+	\begin{equation}
+		\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i", rightarrow] &
+		B \arrow[r, "f", rightarrow] &
+		C
+		\end{tikzcd}
+	\end{equation} 
+	is exact, i.e. $i = \ker f$, by the above proposition.
+	But the universal property of $\ker f$ is equivalent to the exactness of the desired
+	sequence.
+	In fact, fixed $M \in \mathrm{Ob} \left(\mathsf{C}\right)$, one obtains the sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, A \right) \arrow[r, "i_*", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, B \right) \arrow[r, "f_*", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, C \right)
+	\end{tikzcd}
+	.\end{equation} 
+	Then, given any $h \in \mathrm{Hom}_{\mathsf{C}} \left( M, A \right)$, one
+	has $f_* \circ i_* (h) = f \circ i \circ h = 0$, since $f \circ i = 0$.
+	In other words $f _* \circ i_* = 0$.
+	Then, by universal property of $\ker$, on obtains a morphism
+	\begin{equation}\label{eq:IsoImaiKerf*}
+	\begin{tikzcd}[row sep=tiny]
+		\mathrm{Hom}_{\mathsf{C}} \left( M, A \right) \arrow[r, "", rightarrow] &
+		\ker f_*\\
+		\beta \arrow[r, "", mapsto] &
+		i \circ \beta \in \mathrm{Hom}_{\mathsf{C}} \left( M, B \right)
+	\end{tikzcd}
+	.\end{equation} 
+	Moreover, let $\alpha \in \ker f_*$, i.e. $f \circ \alpha = 0$
+	then, since $i = \ker f$, $\alpha$ factorizes through $A$,
+	i.e. there exists a unique $\tilde{\alpha}\colon M \to A$
+	s.t. $\alpha = i \circ \tilde{\alpha}$.
+	\begin{equation}
+	\begin{tikzcd}
+		M \arrow[r, "\exists\, ! \tilde{\alpha}", rightarrow] 
+		\arrow[rd, "\alpha"', rightarrow] &
+		A \arrow[d, "i", rightarrow] \\
+		&
+		B
+	\end{tikzcd}
+	.\end{equation} 
+	In other words the map in \eqref{eq:IsoImaiKerf*} is an isomorphism of abelian groups.
+
+	Let's prove the converse.
+	Consider, at first, $M = A$. Then the following is exact
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( A, A \right) \arrow[r, "i_*", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( A, B \right) \arrow[r, "f_*", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( A, C \right)
+	\end{tikzcd}
+	.\end{equation} 
+	By exactness $f_* \circ i_* = 0$.
+	In particular, taken $id_A \in \mathrm{Hom}_{\mathsf{C}} \left( A, A \right)$,
+	we have $f \circ i \circ id_A = f \circ i = 0$.
+
+	Let's now consider a generic $M \in \mathsf{C}$.
+	Given $\alpha\colon M \to B$ s.t. $f \circ \alpha = 0$, then
+	there exists a unique $\tilde{a}\colon M \to A$ s.t. $\alpha = i \circ \tilde{\alpha}$.
+	In fact this is true by injectivity of $i_*$ and the fact that
+	$\ima i_* = \ker f_*$ (notice that we are working in $\mathsf{Ab}$).
+	Then $i$ satisfies the universal property of the kernel of $f$, and
+	we have exactness of the sequence in $\mathsf{C}$.
+\end{proof}
+
+\begin{cor}
+	Consider a commutative diagram in an {\em abelian} category $\mathsf{C}$:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i", rightarrow] \arrow[d, "f_A", rightarrow] &
+		B \arrow[r, "p", rightarrow] \arrow[d, "f_B", rightarrow] &
+		C \arrow[r, "", rightarrow] \arrow[d, "f_C", rightarrow] &
+		0 \\
+		0 \arrow[r, "", rightarrow] &
+		A' \arrow[r, "i'", rightarrow] &
+		B' \arrow[r, "p'", rightarrow] &
+		C' \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	\end{equation} 
+	s.t. the rows are exact and $f_A$ and $f_C$ are isomorphisms.
+	Then also $f_B$ is an isomorphism.
+\end{cor} 
+\begin{proof}
+	Let's start by showing that $f_B$ is a monomorphism.
+	For any $M \in \mathrm{Ob} \left(\mathsf{C}\right)$ we have a commuative diagram
+	with exact rows:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, A \right) \arrow[r, "i_*", rightarrow] 
+		\arrow[d, "(f_A)_*", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, B \right) \arrow[r, "p_*", rightarrow] 
+		\arrow[d, "(f_B)_*", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, C \right)
+		\arrow[d, "(f_C)_*", rightarrow] \\
+		0 \arrow[r, "", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, A' \right) \arrow[r, "i'_*", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, B' \right) \arrow[r, "p'_*", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, C' \right)
+	\end{tikzcd}
+	.\end{equation} 
+	Exactness of the rows follows from the previous lemma, whereas commutativity from
+	the fact that $\mathrm{Hom}_{\mathsf{C}} \left( M, - \right)$ is a functor.
+	Notice, moreover, that any functor sends isomorphisms to isomorphisms, hence
+	both $(f_A)_*$ and $(f_C)_*$ are isomorphisms.
+
+	With a simple diagram chase we can prove that
+	$\left( f_B \right)_*$ is injective for all $M \in \mathrm{Ob} \left(\mathsf{C}\right)$.
+	In fact, consider $x \in \mathrm{Hom}_{\mathsf{C}} \left( M, B \right)$
+	s.t. $f_B \circ x = 0$.
+	Then 
+	\begin{equation}
+	(f_C)_* \circ p_* (x) = p'_* \circ (f_B)_* (x) = 0
+	.\end{equation} 
+	Since $\left( f_C \right)_*$ is an isomorphism, it means that $p_*(x) = 0$, i.e.
+	$x \in \ker p_* = \ima i_*$, hence $x = i_*(y)$ for $y \in \mathrm{Hom}_{\mathsf{C}} \left( M, A \right)$.
+	Moreover $\left( f_B \right)_* (x) = 0$ implies that $p'_* \circ (f_B)_* (x) = 0$,
+	i.e. $(f_B)_*(x) \in \ker p'_* = \ima i'_*$.
+	Moreover $i'_*$ is injective, its only inverse image is $0$.
+	Then $(f_A)_*(y) = 0 \in \mathrm{Hom}_{\mathsf{C}} \left( M, A' \right)$.
+	Since $\left( f_A \right)_*$ is an isomorphism by hypothesis, we have $y = 0$, hence $x = 0$.
+
+	But $\left( f_B \right)_*$ injective means, exactly, that $f_B$ is a monomorphism.
+	In fact, given $\alpha, \beta \in \mathrm{Hom}_{\mathsf{C}} \left( M, B \right)$
+	on has that $f_B \circ \alpha = f_B \circ \beta$ iff
+	$\left( f_B \right)_* (\alpha) = \left( f_B \right)_* (\beta)$.
+	Being $(f_B)_*$ injective this implies $\alpha = \beta$, i.e. $f_B$ is a mono.
+
+	Reasoning with a similar diagram chase one proves that $(f_B)_*$
+	is also an epimorphism.
+	(tk: copy the proof of epimorphism)
+
+	Finally we can conclude, since $\left( f_B \right)_*$ is both a monomorphism
+	and an epimorphism
+	which, in an abelian category, is equivalent to being an isomorphism.
+\end{proof}
+
+\begin{defn}[Split sequence]
+	An exact sequence in an abelian category
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i", rightarrow] &
+		B \arrow[r, "p", rightarrow] &
+		C \arrow[r, "", rightarrow] \arrow[l, "s", bend left, rightarrow] &
+		0
+	\end{tikzcd}
+	\end{equation} 
+	is said to {\em split} iff there exists a morphism $s\colon C \to B$
+	s.t. $p \circ s = id_C$.
+	Such morphism is called a {\em splitting} of $p$.
+\end{defn}
+
+\begin{lem}
+	Let $\mathsf{C}$ be an abelian category, and consider an exact sequence in $\mathsf{C}$.
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i", rightarrow] &
+		B \arrow[r, "p", rightarrow] &
+		C \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	TFAE:
+	\begin{enumerate}
+		\item The sequence splits.
+		\item We have an isomorphism $\varphi\colon A \oplus C \to B$
+			making the following diagram commute:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i", rightarrow] \arrow[d, "", equals] &
+		B \arrow[r, "p", rightarrow] &
+		C \arrow[r, "", rightarrow] \arrow[d, "", equals] &
+		0 \\
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i_A", rightarrow] &
+		A \oplus C \arrow[r, "p_C", rightarrow] \arrow[u, "\varphi", rightarrow] &
+		C \arrow[r, "", rightarrow] &
+		0 
+	\end{tikzcd}
+	.\end{equation} 
+
+		\item There exists a map $a\colon B \to A$ s.t. $s \circ i = id_A$.
+	\end{enumerate}
+\end{lem} 
+\begin{proof}\leavevmode\vspace{-.2\baselineskip}
+	\begin{description}
+		\item[1 $\implies$ 2:]
+			\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i_A", rightarrow] \arrow[d, "", equals] \arrow[rd, "i", rightarrow] &
+		A \oplus C \arrow[r, "p_C", rightarrow]
+		\arrow[d, "f =(i s)" near start, rightarrow] &
+		C \arrow[r, "", rightarrow] \arrow[d, "", equals] \arrow[ld, "s", rightarrow] &
+		0 \\
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i", rightarrow] &
+		B \arrow[r, "p", rightarrow] &
+		C \arrow[r, "", rightarrow]  \arrow[l, "s", bend left, rightarrow] &
+		0 
+	\end{tikzcd}
+	.\end{equation} 
+	We want to show that $f$ is an isomorphism and the above diagram commutes.
+
+	Let's start by tackling commutativity of the diagram.
+	By definition of $f$ and direct sum we clearly have that $i = f \circ i_A$.
+	Then we only need to check that $p_C = p \circ f$.
+	To check the above equality we need to compute the composition with $i_A$ and $i_C$.
+	They clearly are given by:
+	\begin{align}
+		p \circ f \circ i_C &= p \circ \left( f \circ i_C \right) = p \circ s = id_C\\
+		p \circ f \circ i_A &= p \circ i = 0
+	.\end{align} 
+	Then, by universal property of coproduct, we have $p \circ f = p_C$ as desired.
+
+	Exactness is also clear: the second row is exact by assumption,
+	whereas the first is exact by definition of direct sum: $i_A = \ker p_C$,
+	one can explicitly check that it satisfies the universal property.
+
+	Then we can conclude applying the five lemma.
+\item[2 $\implies$ 1:]
+	It is obvious from the identity $p_C \circ i_C = id_C$
+	and commutativity of the diagram, i.e. $p_C = p \circ f$.
+	In fact
+	\begin{equation}
+	p \circ f \circ i_C = p_C \circ i_C = id_C
+	.\end{equation} 
+\item[2 $\iff$ 3:] This is proved almost in the exact same way as the above two implications.
+	\qedhere
+	\end{description} 
+\end{proof}
+
+\begin{rem}[]
+	The above lemma says that an exact sequence splits iff
+	it is isomorphic, as exact sequence, to
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i_A", rightarrow] &
+		A \oplus C \arrow[r, "p_C", rightarrow] &
+		C \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+\end{rem}
+
+\begin{defn}[]
+	Let $R$ be a ring. We define the category
+	$R\text{-}\mathsf{Mod}$ to be the category of right $R$-modules.
+\end{defn}
+
+\begin{rem}[]
+	$R\text{-}\mathsf{Mod}$ is an {\em abelian} category.
+\end{rem}
+
+\begin{lem}[Snake lemma]
+	Consider the commutative diagram in $R\text{-}\mathsf{Mod}$ with exact rows
+	\begin{equation}
+	\begin{tikzcd}
+		&
+		A \arrow[r, "\alpha", rightarrow] \arrow[d, "u"', rightarrow] &
+		B \arrow[r, "\beta", rightarrow] \arrow[d, "v"', rightarrow] &
+		C \arrow[r, "", rightarrow] \arrow[d, "w"', rightarrow] &
+		0 \\
+		0 \arrow[r, "", rightarrow] &
+		A' \arrow[r, "\alpha'", rightarrow] &
+		B' \arrow[r, "\beta'", rightarrow] &
+		C' &
+	\end{tikzcd}
+	.\end{equation}
+	Then there is a canonical exact sequence
+	\begin{equation}
+	\begin{tikzcd}
+		\ker u \arrow[r, "\underline{\alpha}", rightarrow] &
+		\ker v \arrow[r, "\underline{\beta}", rightarrow] &
+		\ker w \arrow[r, "\delta", rightarrow] &
+		\mathrm{coker}\, u \arrow[r, "\overline{\alpha'}", rightarrow] &
+		\mathrm{coker}\, v \arrow[r, "\overline{\beta'}", rightarrow] &
+		\mathrm{coker}\, w
+	\end{tikzcd}
+	,\end{equation} 
+	where $\underline{\alpha}$ and $\underline{\beta}$ are the restrictions to the kernels,
+	whereas $\overline{\alpha'}$ and $\overline{\beta'}$ the induced maps on the quotients.
+\end{lem} 
+\begin{proof}\leavevmode\vspace{-.2\baselineskip}
+	\begin{enumerate}
+		\item $\underline{\alpha}\colon \ker u \to \ker v$ is well defined,
+			since $\alpha(x) \in \ker v$ for all $x \in \ker u$.
+			In fact, since the diagram commutes, and $x \in \ker u$, we have
+			\begin{equation}
+				v \left( \alpha(x) \right) = \alpha' (u(x)) = 0
+			.\end{equation} 
+			Analogously for $\beta$. In fact, for any commutative diagram, the kernel
+			of a vertical arrow gets mapped to the kernel of the following one, by the horizontal one.
+
+		\item $\overline{\alpha'}\colon \mathrm{coker}\, u \to \mathrm{coker}\, v$ is well define.
+			In fact consider $x' \in A'/\ima u$, then $\overline{\alpha'}(x') \in B'/\ima v$.
+			Clearly $x' \in \ima u$ means that there exists $a \in A$ s.t. $u(a) = x'$.
+			Then
+			\begin{equation}
+				\alpha'(x') = \alpha'(u(a)) = v(\alpha(a)) \in \ima v
+			.\end{equation} 
+			By the universal property of the quotient we obtain that $\overline{\alpha'}$ is well defined.
+			Analogously one argues that $\overline{\beta'}$ is well defined.
+
+		\item Let's define $\delta\colon \ker w \to \mathrm{coker}\, u$.
+			Consider $x \in \ker w$, then $w(x) = 0$.
+			By exactness $\beta$ is surjective, hence there exists $b \in B$
+			s.t. $\beta(b) = x$.
+			Then we obtain $v(b) \in B'$ s.t. 
+			\begin{equation}
+			\beta'(v(b)) = w(\beta(b)) = w(x) = 0
+			,\end{equation} 
+			i.e. $v(b) \in \ker \beta'$.
+			Then, by exactness of the second row, there exists $a \in A'$
+			s.t. $\alpha'(a) = b$.
+			We define $\delta(x) := \overline{a} \in \mathrm{coker}\, u$.
+			Notice that $\alpha'$ is injective, hence we can identify $A' \simeq \ima \alpha'$.
+
+			Let's show that this is a good definition, i.e. $a$ is defined up to $\ima u$:
+			Consider $b_1, b_2 \in B$ s.t. $\beta(b_1) = \beta(b_2) = x \in \ker w$.
+			Then, by commutativity and exacntess $v(b_1), v(b_2) \in \ima \alpha'$.
+			In particular $\beta(b_1 - b_2) = x - x = 0$.
+			By exactness there exists $a \in A$ s.t. $\alpha(a) = b_1 - b_2$.
+			Then by commutativity of the diagram
+			\begin{equation}
+				v(b_1 - b_2) = v ( \alpha(a)) = \alpha'(u(a))
+			.\end{equation} 
+			In particular, being $\alpha'$ injective, $v(b_1)$ and
+			$v(b_2)$ differ by an element in $\ima u$, i.e. $\delta$ is well defined.
+
+		\item The sequence is exact:
+
+			Let's start by checking exactness at $\ker v$.
+			Clearly $\underline{\beta} \circ \underline{\alpha} = 0$, they are just the restrictions.
+			Let $x \in \ker \underline{\beta}$,
+			then there exists $a \in A$ s.t. $\alpha(a) = x$.
+			Since $x \in \ker v$, $0 = v(x) = v(\alpha(a)) = \alpha'(u(a))$,
+			By injectivity of $\alpha'$ we obtain that $u(a) = 0$, hence $a \in \ker u$.
+			In other words $x \in \ima \underline{\alpha}$.
+
+			Let's now check exactness at $\mathrm{coker}\, v$.
+			Again the composition $\overline{\beta'} \circ \overline{\alpha'}$ is trivial,
+			since it is induced by the trivial composition
+			$\beta' \circ \alpha' = 0$.
+			Consider now $\overline{b'} \in \ker \overline{\beta'}$, i.e.
+			\begin{equation}
+				\overline{\beta'}\left( \overline{b'} \right) =
+				\overline{\beta'(b')} = 0 \in \mathrm{coker}\, w
+			.\end{equation} 
+			In other words $\beta'(b') \in \ima w$, i.e. there exists
+			$c \in C$ s.t. $w(c) = \beta'(b')$.
+			By surjectivity of $\beta$ there is $b \in B$ s.t. $\beta(b) = c$.
+			Then
+			\begin{equation}
+				\beta'(v(b)) = w(c) = \beta'(b')
+			.\end{equation} 
+			Then $b' - v(b) \in \ker \beta' = \ima \alpha'$, i.e.
+			there exists $a' \in A'$ s.t. $\alpha'(a') = b' - v(b)$.
+			Then
+			\begin{equation}
+				\overline{\alpha'}(\overline{a'} =
+				\overline{\alpha'(a')} = \overline{b' - v(b)} = \overline{b'}
+				\in \mathrm{coker}\, v
+			.\end{equation} 
+			Then $\overline{b'} \in \ima \overline{\alpha'}$.
+
+			Exactness at $\ker w$:
+			Let $c \in \ker \delta$, i.e. $\delta(c) = 0$.
+			By definition $\delta(c) = \alpha'^{-1}(v(b)) =: a'$ in the quotient.
+			In particular it is zero iff $a' \in \ima (u)$, i.e. $a' = u(a)$
+			for $a \in A$.
+			Then $v(\alpha(a)) = v(b)$, i.e. $\alpha(a) - b \in \ker v$.
+			Then $\underline{\beta}(b - \alpha(a)) = \beta(b) - \beta(\alpha(a)) = \beta(b) = c$.
+
+			$\delta \circ \underline{\beta} = 0$: in fact $x \in \ker v$ clearly implies
+			$v(x) = 0$, and $\delta(\underline{\beta}(x)) = 0$ by definition of $\delta$.
+
+			Exactness at $\mathrm{coker}\, u$:
+			Let $\overline{a'} \in \ker \overline{\alpha'}$, then
+			$\alpha'(a') \in \ima v$, i.e. there is $b \in B$ s.t. $v(b) = \alpha'(a')$.
+			By commutativity of the diagram (and exactness) we obtain that $\beta(b) \in \ker w$,
+			since
+			\begin{equation}
+				w(\beta(b)) = \beta'(v(b)) = \beta'(\alpha'(a')) = 0
+			.\end{equation} 
+			And $\beta(b)$ gets mapped, by $\delta$, to $\overline{a'}$.
+			In fact $\delta(\beta(b)) = \overline{v(b)} = \overline{a'}$.\qedhere
+	\end{enumerate}
+\end{proof}
+
+\begin{rem}[]
+	If $\alpha$ is injective and $\beta'$ is surjective, and we have a morphism of exact sequences
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] \arrow[d, "u", rightarrow] &
+		B \arrow[r, "", rightarrow] \arrow[d, "v", rightarrow] &
+		C \arrow[r, "", rightarrow] \arrow[d, "w", rightarrow] &
+		0 \\
+		0 \arrow[r, "", rightarrow] &
+		A' \arrow[r, "", rightarrow] &
+		B' \arrow[r, "", rightarrow] &
+		C' \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	,\end{equation} 
+	then we obtain the exact sequence:
+	\begin{equation}
+	\begin{tikzcd}[column sep=1.5em]
+		0 \arrow[r, "", rightarrow] &
+		\ker u \arrow[r, "\underline{\alpha}", rightarrow] &
+		\ker v \arrow[r, "\underline{\beta}", rightarrow] &
+		\ker w \arrow[r, "\delta", rightarrow] &
+		\mathrm{coker}\, u \arrow[r, "\overline{\alpha'}", rightarrow] &
+		\mathrm{coker}\, v \arrow[r, "\overline{\beta'}", rightarrow] &
+		\mathrm{coker}\, w \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	,\end{equation} 
+\end{rem}
+
+\begin{thm}[Freyd-Mitchell]
+	Let $\mathsf{A}$ be a small abelian category.
+	Then there exists a ring $R$ and a fully faithful exact functor
+	\begin{align}
+		\iota\colon \mathsf{A} &\longrightarrow R\text{-}\mathsf{Mod}
+	.\end{align} 
+\end{thm}
+
+\begin{rem}[]
+	Notice that any fully faithful and exact functor reflects exactness.
+	This allows us to check exactness of sequences in any abelian category
+	by using diagram chasing in an appropriate category of modules.
+\end{rem}
+
+\begin{cor}
+	Snake lemma holds also for an arbitrary abelian category $\mathsf{A}$.
+\end{cor} 
+\begin{proof}
+	One needs to apply Freyd-Mitchell to the full subcategory of $\mathsf{A}$
+	given by the only objects of $\mathsf{A}$ appearing in the snake lemma diagram.
+
+	By exactness of $\iota$ the image of the diagram satisfies the hypothesis for snake
+	lemma in $R\text{-}\mathsf{Mod}$, hence we can apply it, 
+	obtain our result, and come back to $\mathsf{A}$.
+	Notice that we need to recall the last remark in order to come back
+	to $\mathsf{A}$.
+\end{proof}
+
+\end{document}

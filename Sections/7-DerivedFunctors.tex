@@ -1,0 +1,1854 @@
+\documentclass[../Main]{subfiles}
+\begin{document}
+
+\section{Derived functors}
+In the following assume that $\mathsf{C}$ and $\mathsf{D}$ are abelian categories
+s.t. $\mathsf{C}$ has enough injectives.
+We now want to define the family of right derived functors associated to a left exact
+functor $F\colon \mathsf{C} \to \mathsf{D}$.
+
+\begin{defn}[Right derived functors]
+	Let $F\colon \mathsf{C} \to \mathsf{D}$ be a left exact functors,
+	we define the family of morphisms 
+	\begin{equation}
+	\begin{tikzcd}
+		R^nF\colon \mathsf{C} \arrow[r, "", rightarrow] &
+		\mathsf{D}
+	\end{tikzcd}
+	\end{equation} 
+	in the following way:
+	fix $A \in \mathrm{Ob} \left(\mathsf{C}\right)$, chose any injective resolution
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[r, "", rightarrow] &
+		I^\bullet
+	\end{tikzcd}
+	.\end{equation} 
+	Then applying $F$ to $I^\bullet$ one obtains the complex
+	(which, in general, is no longer exact)
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		F(I^0) \arrow[r, "F(d^0)", rightarrow] &
+		F(I^1) \arrow[r, "F(d^1)", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	\end{equation} 
+	denoted by $F(I^\bullet) \in \mathrm{Ch}(\mathsf{D})$.
+	One defines 
+	\begin{equation}
+		R^n F(A) := H^{n} \left( F(I^\bullet) \right)
+	.\end{equation} 
+\end{defn}
+It is not obvious that this is a good definition, it could depend on the chosen injective resolution,
+but we will shortly prove this is not the case.
+Before doing so a couple of important remarks:
+
+\begin{rem}[]
+	From this definition we immediately obtain that $R^0 F \simeq F$.
+	In fact $F$ is left exact, hence it preserves kernels.
+	In particular, since $I^\bullet$ is zero at any negative degree,
+	and since $A \to  I^\bullet$ is a quasi isomorphism, we obtain that
+	\begin{equation}
+	\ker d^0_I \simeq
+	H^{0} \left( I^\bullet \right) \simeq 
+	H^{0} \left( A \right) \simeq A
+	.\end{equation} 
+	Applying the definition of right derived functor we obtain
+	\begin{equation}
+		R^{0}F \left( A \right) := 
+		H^{0} \left( F (I^\bullet) \right) \simeq 
+		\ker (F d^0_I) \simeq 
+		F (\ker d^0_I) \simeq F(A)
+	.\end{equation} 
+\end{rem}
+
+\begin{rem}[Case of exact functor]
+	Assume $F$ is exact.
+	Then $R^nF = 0$ for all $n > 0$.
+\end{rem}
+\begin{proof}
+	Consider the injective resolution
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		I^0 \arrow[r, "", rightarrow] &
+		I^1 \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+	If we apply the functor $F$ we obtain an exact sequence in $\mathsf{D}$:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		F(A) \arrow[r, "", rightarrow] &
+		F(I^0) \arrow[r, "", rightarrow] &
+		F(I^1) \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+	Then computing the cohomology we obtain that, for all $n > 0$, 
+	$H^n(F(I^\bullet)) = 0$.
+\end{proof}
+These above remarks will actually be useful later on, since we want to prove that
+the family of morphism $\left( R^nF \right)_{n \in \mathbb{N}}$ is universal with
+respect to the families with $R^0 F \simeq F$.
+Morever they give us the intuition that the
+right derived functors $(R^nF)_{n \in \mathbb{N}}$
+measure how far is $F$ from being exact.
+
+Let's now prove good definition and functoriality of the
+construction of right derived functors:
+
+\begin{prop}[Good definition of derived functors]
+	Assume that $\mathsf{C}$ and $\mathsf{D}$ are abelian categories,
+	and $\mathsf{C}$ has enough injectives.
+	Consider a left exact functor $F\colon \mathsf{C} \to \mathsf{D}$.
+\begin{enumerate}
+	\item 
+	Consider $A \in \mathrm{Ob} \left(\mathsf{C}\right)$
+	and two injective resolutions
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		I^\bullet &
+		\text{and} &
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		J^\bullet
+	\end{tikzcd}
+	\end{equation} 
+	of $A$.
+	Then for all $n \geq 0$ there is a canonical isomorphism
+	\begin{equation}
+		H^n(F(I^\bullet)) \simeq
+		H^n(F(J^\bullet))
+	.\end{equation} 
+\item
+	Given injective resolutions of $A, B \in \mathrm{Ob} \left(\mathsf{X}\right)$
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		I^\bullet &
+		\text{and} &
+		0 \arrow[r, "", rightarrow] &
+		B \arrow[r, "", rightarrow] &
+		J^\bullet
+	\end{tikzcd}
+	\end{equation} 
+	and a morphism
+	\begin{equation}
+	\begin{tikzcd}
+		f\colon A \arrow[r, "", rightarrow] &
+		B,
+	\end{tikzcd}
+	\end{equation} 
+	we can construct a canonical morphism
+	\begin{equation}
+	\begin{tikzcd}
+		H^{n} \left( F(f^\bullet) \right)\colon
+		H^n(F(I^\bullet)) \arrow[r, "", rightarrow] &
+		H^n(F(J^\bullet))
+	\end{tikzcd}
+	.\end{equation} 
+\item
+	Given composable morphisms
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[r, "f", rightarrow] &
+		B \arrow[r, "g", rightarrow] &
+		C
+	\end{tikzcd}
+	\end{equation} 
+	and respective resolutions $A \to I^\bullet, B \to J^\bullet$
+	and $C \to K^\bullet$, then the traingle commutes:
+	\begin{equation}
+	\begin{tikzcd}
+		H^{n} \left( F(I^\bullet) \right) 
+		\arrow[rr, "H^{n} \left( F(g^\bullet \circ f^\bullet) \right)", rightarrow] 
+		\arrow[rd, "H^{n} \left( F(f^\bullet) \right)"', rightarrow] & &
+		H^{n} \left( F(K^\bullet) \right) \\
+		&
+		H^{n} \left( F(J^\bullet) \right) 
+		\arrow[ru, "H^{n} \left( F(g^\bullet) \right)"', rightarrow] &
+	\end{tikzcd}
+	.\end{equation} 
+\end{enumerate}
+\end{prop}
+\begin{proof}\leavevmode\vspace{-.2\baselineskip}
+\begin{enumerate}
+	\item[2.] Given the two resolutions, by proposition
+		\ref{prop:ExistanceUniquenessLift}.
+		there is a lift
+		\begin{equation}
+		\begin{tikzcd}
+			f^\bullet\colon I^\bullet \arrow[r, "", rightarrow] &
+			J^\bullet
+		\end{tikzcd}
+		\end{equation} 
+		extending $f\colon A \to B$, unique up to homotopy.
+		This induces, for all $n \in \mathbb{N}$ a map
+		\begin{equation}
+		\begin{tikzcd}
+			H^n(F(f^\bullet))\colon H^n(F(I^\bullet)) \arrow[r, "", rightarrow] &
+			H^n(F(J^\bullet))
+		\end{tikzcd}
+		.\end{equation} 
+		Uniqueness up to homotopy means that any other lift of $f$
+		\begin{equation}
+		\begin{tikzcd}
+			g^\bullet\colon I^\bullet \arrow[r, "", rightarrow] &
+			J^\bullet
+		\end{tikzcd}
+		\end{equation} 
+		satisfies $f \sim g$.
+		More explicitly there exists a homotopy $\left\{ h^n \right\}_{n \in \mathbb{N}}$
+		s.t.
+		\begin{equation}
+		f^n - g^n = d^{n-1} \circ h^n + h^{n+1} \circ d^n
+		.\end{equation} 
+		Since $F$ is left exact it is also additive,
+		then it preserves sums and compositions, i.e.
+		\begin{equation}
+			F(f^n) - F(g^n) =
+			F(d^{n-1}) \circ F(h^n) + F(h^{n+1}) \circ F(d^n)
+		.\end{equation} 
+		Which means that $F(f^\bullet) \sim F(g^\bullet)$, hence
+		$F$ sends homotopic morphism of complexes
+		to homotopic morphisms of complexes.
+		Then $H^n(F(f)) = H^n(F(g))$ does not depend on the chosen extension of $f$.
+
+	\item[3.] Let $f^\bullet$ and $g^\bullet$ be lifts of $f$ and $g$ respectively.
+		Then $g^\bullet \circ f^\bullet$ clearly is an extension of $g \circ f$.
+		Since $H^n$, for any $n \geq 0$, and $F$ are all functors, we have
+		\begin{align}
+			H^{n} \left( F(g^\bullet \circ f^\bullet) \right) = 
+			H^{n} \left( F(g^\bullet) \circ F(f^\bullet) \right) = 
+			H^{n} \left( F(g^\bullet)\right) \circ H^{n} \left( \circ F(f^\bullet) \right)
+		.\end{align} 
+	\item[1.] Given the two resolutions $A \to I^\bullet$ and $A \to B^\bullet$, 
+		proposition \ref{prop:ExistanceUniquenessLift} grants that
+		we can lift $id_A$ to two maps
+		\begin{equation}
+			\begin{tikzcd}[row sep=tiny]
+			f^\bullet\colon I^\bullet \arrow[r, "", rightarrow] &
+			J^\bullet\\
+			g^\bullet\colon J^\bullet \arrow[r, "", rightarrow] &
+			I^\bullet.
+		\end{tikzcd}
+		\end{equation} 
+		Moreover, evidently, 
+		$id_{I^\bullet}\colon I^\bullet \to I^\bullet$
+		is and extension of $id_A$.
+		By uniqueness up to homotopy, still from proposition
+		\ref{prop:ExistanceUniquenessLift}, we obtain
+		\begin{equation}
+			H^{n} \left( F(g^\bullet \circ f^\bullet) \right) =
+			H^{n} \left( F(id_{I^\bullet}) \right)
+		.\end{equation} 
+		Then functoriality grants
+		\begin{equation}
+			H^{n} \left( F(g^\bullet) \right) \circ H^{n} \left( F(f^\bullet) \right) =
+			id_{H^{n} \left( F(I^\bullet) \right)}
+		.\end{equation} 
+		Arguing in the same way for $f^\bullet \circ g^\bullet$ one obtains that
+		$H^{n} \left( F(f^\bullet) \right)$ and 
+		$H^{n} \left( F(g^\bullet) \right)$ are isomorphism for all $n \geq 0$, hence
+		\begin{equation}
+			H^{n} \left( F(I^\bullet) \right) \simeq H^{n} \left( F(J^\bullet) \right)
+		.\qedhere\end{equation} 
+\end{enumerate}
+\end{proof}
+
+\begin{rem}[]
+	This proposition grants that $R^{n}F$ is well defined, and moreover it is a functor.
+	Actually this functor has quite a few interesting properties: let's investigate them.
+\end{rem}
+
+tk: decide whether to repeat the now correct definition of right derived functor.
+
+\begin{prop}[]
+	Let $F\colon \mathsf{C} \longrightarrow \mathsf{D}$ be a left exact functor between
+	abelian categories, and let $\mathsf{C}$ have enough injectives.
+	Then
+	\begin{enumerate}
+		\item $R^nF\colon \mathsf{C} \longrightarrow \mathsf{D}$ is additive for all $n \geq 0$.
+		\item If $I \in \mathrm{Ob} \left(\mathsf{C}\right)$ is injective,
+			then for all $n > 0$
+			\begin{equation}
+				R^nF(I) = 0
+			.\end{equation} 
+		\item Consider a short exact sequence in $\mathsf{C}$:
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				A \arrow[r, "", rightarrow] &
+				B \arrow[r, "", rightarrow] &
+				C \arrow[r, "", rightarrow] &
+				0
+			\end{tikzcd}
+			.\end{equation} 
+			Then there exist canonical maps
+			$\delta^n\colon R^nF(C) \to R^{n+1}F(A)$ for all $n$
+			s.t. the following is an exact sequence:
+			\begin{equation}
+			\begin{tikzcd}[row sep=tiny]
+				0 \arrow[r, "", rightarrow] &
+				R^{0}F \left( A \right) \arrow[r, "", rightarrow] &
+				R^{0}F \left( B \right) \arrow[r, "", rightarrow]
+				\arrow[d, phantom, ""{coordinate, name=Z}] &
+				R^{0}F \left( C \right) \arrow[r, "\ \delta^0"', phantom, rightarrow]
+				\arrow[dll, "", rounded corners, bend left = 100,
+				to path={ -- ([xshift=2ex]\tikztostart.east)\tikztonodes
+					|- (Z) [near end]
+					-| ([xshift=-2ex]\tikztotarget.west)
+					-- (\tikztotarget)}] &
+					\phantom{a} \\
+							     &
+				R^{1}F \left( A \right) \arrow[r, "", rightarrow] &
+				R^{1}F \left( B \right) \arrow[r, "", rightarrow]
+				\arrow[d, phantom, ""{coordinate, name=Z}] &
+				R^{1}F \left( C \right) \arrow[r, "\ \delta^1"', phantom, rightarrow]
+				\arrow[dll, "", rounded corners, bend left = 100,
+				to path={ -- ([xshift=2ex]\tikztostart.east)\tikztonodes
+					|- (Z) [near end]
+					-| ([xshift=-2ex]\tikztotarget.west)
+					-- (\tikztotarget)}] &
+					\phantom{a} \\
+							     &
+				R^{2}F \left( A \right)\arrow[r, "", rightarrow] &
+				R^{2}F \left( B \right) \arrow[r, "", rightarrow] &
+				R^{2}F \left( C \right) \arrow[r, "", rightarrow] &
+				\ldots
+			\end{tikzcd}
+			.\end{equation}
+			Moreover the above construction is functorial, i.e. given
+			any morphism of short exact sequences in $\mathsf{C}$:
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				A \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+				B \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+				C \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+				0\\
+				0 \arrow[r, "", rightarrow] &
+				A' \arrow[r, "", rightarrow] &
+				B' \arrow[r, "", rightarrow] &
+				C' \arrow[r, "", rightarrow] &
+				0
+			\end{tikzcd}
+			,\end{equation} 
+			one can define a morphism of long exact sequences:
+			\begin{equation*}
+			\begin{tikzcd}
+				R^{0}F \left( A \right) \arrow[r, "", rightarrow] 
+				\arrow[d, "", rightarrow] &
+				R^{0}F \left( B \right) \arrow[r, "", rightarrow] 
+				\arrow[d, "", rightarrow] &
+				R^{0}F \left( C \right) \arrow[r, "\delta^0", rightarrow] 
+				\arrow[d, "", rightarrow] &
+				R^{1}F \left( A \right) \arrow[r, "", rightarrow] 
+				\arrow[d, "", rightarrow] &
+				\ldots \\
+				R^{0}F \left( A' \right) \arrow[r, "", rightarrow] &
+				R^{0}F \left( B' \right) \arrow[r, "", rightarrow] &
+				R^{0}F \left( C' \right) \arrow[r, "\delta'^0", rightarrow] &
+				R^{1}F \left( A' \right) \arrow[r, "", rightarrow] &
+				\ldots
+			\end{tikzcd}
+			.\end{equation*} 
+			In particular the following square commutes for all $n \geq 0$:
+			\begin{equation}
+			\begin{tikzcd}	
+				R^{n}F \left( C \right) \arrow[r, "\delta^n", rightarrow] 
+				\arrow[d, "", rightarrow] &
+				R^{n+1}F \left( A \right) \arrow[d, "", rightarrow] \\
+				R^{n}F \left( C' \right) \arrow[r, "\delta'^n"', rightarrow] &
+				R^{n+1}F \left( A' \right)
+			\end{tikzcd}
+			.\end{equation} 
+	\end{enumerate}
+\end{prop}
+\begin{proof}\leavevmode\vspace{-.2\baselineskip}
+\begin{enumerate}
+	\item It is enough to prove that $R^nF$ preserves preserves coproduct.
+		To do so one need to check that given two resolutions
+		\begin{equation}
+		\begin{tikzcd}
+				A \arrow[r, "", rightarrow] &
+				I^\bullet &
+				\qquad \text{ and } \qquad &
+				B \arrow[r, "", rightarrow] &
+				J^\bullet 
+		\end{tikzcd}
+		.\end{equation} 
+		One can combine them to obtain the following resolution of $A \oplus B$:
+		\begin{equation}
+		\begin{tikzcd}
+			A \oplus B \arrow[r, "", rightarrow] &
+			I^\bullet \oplus J^\bullet
+		\end{tikzcd}
+		.\end{equation} 
+		In particular the direct sum of two injective objects is still injective.
+		More generally the direct sum of two functors is exact iff each of the two is.
+		Moreover direct sum is an exact functor, hence the above is an exact sequence.
+		Moreover, by left exactness of $F$, one obtains
+		\begin{equation}
+			F(I^\bullet \oplus J^\bullet) \simeq
+			F(I^\bullet) \oplus F(J^\bullet)
+		.\end{equation} 
+		Then, since $H^n$ is an additive functor (it is defined as a cokernel),
+		one has:
+		\begin{align}
+			R^{n}F \left( A \oplus B\right) &\simeq
+		H^n(F(I^\bullet) \oplus F(J^\bullet)) \\
+					&\simeq
+		H^n(F(I^\bullet)) \oplus H^n(F(J^\bullet)) \simeq
+		R^{n}F \left( A \right) \oplus R^{n}F \left( B \right)
+		.\end{align} 
+
+	\item Notice that the following is an injective resolution:
+		\begin{equation}
+		\begin{tikzcd}
+			0 \arrow[r, "", rightarrow] &
+			I \arrow[r, "\sim", rightarrow] &
+			I \arrow[r, "", rightarrow] &
+			0 \arrow[r, "", rightarrow] &
+			\ldots
+		\end{tikzcd}
+		.\end{equation} 
+		More explicitly we have
+		\begin{equation}
+		\begin{tikzcd}
+			I^\bullet := I \arrow[r, "", rightarrow] &
+			0 \arrow[r, "", rightarrow] &
+			0 \arrow[r, "", rightarrow] &
+			\ldots
+		\end{tikzcd}
+		.\end{equation} 
+		Then, for all $n > 0$, $F(I^\bullet)^n = 0$, hence
+		\begin{equation}
+			R^{n}F \left( I \right) :=
+			H^{n} \left( F(I^\bullet)\right) = 0
+		.\end{equation} 
+		In fact $F(I)$ appears at degree $0$.
+
+	\item Consider the following injective resolutions for $A$ and $C$:
+		\begin{equation}
+		\begin{tikzcd}
+				A \arrow[r, "", rightarrow] &
+				I^\bullet &
+				\qquad \text{ and } \qquad &
+				C \arrow[r, "", rightarrow] &
+				K^\bullet 
+		\end{tikzcd}
+		.\end{equation} 
+		We now want to combine them into an injective resolution for $B$.
+		Let's define $J^n := I^n \oplus K^n$. This is an injective object
+		as remarked before.
+		Moreover one can prove that in an additive category, the structural
+		morphism for a product are epimorphisms, whereas the structural morphisms
+		for coproducts are monomorphisms.
+		Then, since direct sums in additive categories are both products and coproducts,
+		one obtains, for all $n \geq 0$, the exact sequence:
+		\begin{equation}
+		\begin{tikzcd}
+			0 \arrow[r, "", rightarrow] &
+			I^n \arrow[r, "", rightarrow] &
+			J^n \arrow[r, "", rightarrow] &
+			K^n \arrow[r, "", rightarrow] &
+			0.
+		\end{tikzcd}
+		\end{equation} 
+		Then let's start at degree zero.
+		We have the following commutative diagram:
+		\begin{equation}
+		\begin{tikzcd}
+			&
+			0 \arrow[d, "", rightarrow] & &
+			0 \arrow[d, "", rightarrow] & \\
+			0 \arrow[r, "", rightarrow] &
+			A \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+			B \arrow[r, "", rightarrow] \arrow[ld, "\alpha^0"', rightarrow] 
+			\arrow[d, "", dashrightarrow] \arrow[rd, "\beta^0", rightarrow] &
+			C \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+			0 \\
+			0 \arrow[r, "", rightarrow] &
+			I^0 \arrow[r, "", rightarrow] &
+			J^0 \arrow[r, "", rightarrow] &
+			K^0 \arrow[r, "", rightarrow] &
+			0
+		\end{tikzcd}
+		.\end{equation} 
+		Here $\alpha^0$ exists since $I^0$ is injective and $A \to B$ is a mono.
+		The map $\beta^0$, instead, is just the composite $B \to C \to K^0$.
+		Then the dashed arrow is $\left(\alpha^0, \beta^0\right)$, defined
+		viewing $J^0 = I^0 \oplus K^0$ as a product.
+		Notice that the above diagram has both exact rows and columns.
+		This implies that we can apply the snake lemma and obtain
+		\begin{equation}
+		\begin{tikzcd}[column sep=small]
+			0 \arrow[r, "", rightarrow] &
+			0 \arrow[r, "", rightarrow] &
+			\ker \left(\alpha^0, \beta^0\right) \arrow[r, "", rightarrow] &
+			0 \arrow[r, "", rightarrow] &
+			I^0/A \arrow[r, "", rightarrow] &
+			J^0/B \arrow[r, "", rightarrow] &
+			K^0/C \arrow[r, "", rightarrow] &
+			0.
+		\end{tikzcd}
+		\end{equation} 
+		As a consequence we obtain that $B \to J^0$ is a monomorphism, and moreover
+		we have the short exact sequence
+		\begin{equation}
+		\begin{tikzcd}
+			0 \arrow[r, "", rightarrow] &
+			I^0/A \arrow[r, "", rightarrow] &
+			J^0/B \arrow[r, "", rightarrow] &
+			K^0/C \arrow[r, "", rightarrow] &
+			0.
+		\end{tikzcd}
+		\end{equation} 
+		Now, recalling the construction in proposition \ref{prop:ExistanceUniquenessLift},
+		we see that $d^0_I$ can be decomposed in $I^0 \twoheadrightarrow I^0/A \hookrightarrow I^1$.
+		Analogously for $d^0_K$ and $d^n_I, d^n_K$, for all $n$, substituting $I^0/A$ with
+		$\coker d^{n-1}$.
+		Instead, for $d^n_J$ we will define it to be such composition.
+
+		Then, combining the information we have obtained so far, we can
+		construct the following commutative diagram with exact rows and columns:
+		\begin{equation}
+		\begin{tikzcd}
+			&
+			0 \arrow[d, "", rightarrow] & &
+			0 \arrow[d, "", rightarrow] & \\
+			0 \arrow[r, "", rightarrow] &
+			I^0/A \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+			J^0/B \arrow[r, "", rightarrow] \arrow[ld, "\alpha^1"', rightarrow] 
+			\arrow[d, "", dashrightarrow] \arrow[rd, "\beta^1", rightarrow] &
+			K^0/C \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+			0 \\
+			0 \arrow[r, "", rightarrow] &
+			I^1 \arrow[r, "", rightarrow] &
+			J^1 \arrow[r, "", rightarrow] &
+			K^1 \arrow[r, "", rightarrow] &
+			0
+		\end{tikzcd}
+		.\end{equation} 
+		Again $\alpha^1$ exists since $I^1$ is injective, and the dashed arrow
+		is constructed by universal property of products.
+		Then, applying the snake lemma to the diagram, from exactness of the columns, we obtain
+		that $J^0/B \to J^1$ is injective and
+		\begin{equation}
+		\begin{tikzcd}[column sep=small]
+			0 \arrow[r, "", rightarrow] &
+			\coker \left( I^0/A \to I^1 \right) \arrow[r, "", rightarrow] &
+			\coker \left( J^0/B \to J^1 \right) \arrow[r, "", rightarrow] &
+			\coker \left( K^0/C \to K^1 \right) \arrow[r, "", rightarrow] &
+			0
+		\end{tikzcd}
+		.\end{equation} 
+		Then we can put $d^0_J := J^0 \twoheadrightarrow J^0/B \hookrightarrow J^1$.
+		Now it is important to notice that $\coker (\beta \circ \nu) \simeq \coker \nu$ for
+		any composition of $\beta$ epi and $\nu$ mono, and we are going to prove it right
+		after this theorem.
+		Then, in our situation, we obtain 
+		$\coker \left( I^0/A \to I^1 \right) \simeq \coker d^0_I$, and analogously for
+		all sequences.
+		This translates in the exact sequence
+		\begin{equation}
+		\begin{tikzcd}
+			0 \arrow[r, "", rightarrow] &
+			\coker \left( d^0_I\right) \arrow[r, "", rightarrow] &
+			\coker \left( d^0_J \right) \arrow[r, "", rightarrow] &
+			\coker \left( d^0_K \right) \arrow[r, "", rightarrow] &
+			0
+		\end{tikzcd}
+		.\end{equation} 
+		This, combined with injectivity of all the sequences and the above mentioned
+		factorization $d^n = \coker d^{n-1} \circ \nu^n$ for a mono $\nu^n$,
+		let's us procede by induction in this construction.
+		
+		Now one can observe that kernels and cokernels commute with direc sums, granting
+		that $B \to J^\bullet$ is exact, hence it is an injective resolution of $B$.
+		Finally we can notice that $F$ is left exact, hence additive.
+		Then $F(J^\bullet) \simeq F(I^\bullet) \oplus F(K^\bullet)$ and this implies
+		that $F$ sends split exact seqeunces to split exact sequences.
+		As a conseguence the following is an exact sequence of complexes:
+		\begin{equation}
+		\begin{tikzcd}
+			0 \arrow[r, "", rightarrow] &
+			F(I^\bullet) \arrow[r, "", rightarrow] &
+			F(J^\bullet) \arrow[r, "", rightarrow] &
+			F(K^\bullet) \arrow[r, "", rightarrow] &
+			0
+		\end{tikzcd}
+		.\end{equation} 
+		Then the fundamental theorem in cohomology let's us construct the desired
+		exact sequence in cohomology.
+		Notice that $H^{-1} \left( F(K^\bullet) \right) = 0$, hence the zero at the beginning.
+		Moreover this whole construction is functorial in
+		short exact sequence, hence the last statements hold.\qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{lem}
+	Consider a preadditive category $\mathsf{C}$ and $f$
+	a morphism in $\mathsf{C}$.
+	Assume that $f = \beta \circ \nu$, with $\beta$ epi and $\nu$ mono.
+	Then $\ker f \simeq \ker \beta$ and $\coker f \simeq \coker \nu$.
+\end{lem} 
+\begin{proof}
+	We'll prove it only for kernels, for cokernels one just needs to dualize the construction.
+	Let $i\colon \ker f \to A$ be a kernel for $f$, we want to prove that
+	it is also a kernel for $\beta$. In fact
+	$0 = f \circ i = \nu \circ \beta \circ i$ implies that
+	$\beta \circ i = 0$, since $\nu$ is mono.
+	Moreover, for any $g\colon D \to A$ s.t. $\beta \circ g = 0$, by bilinearity of
+	composition we obtain $f \circ g = \nu \circ \beta \circ g = 0$, hence
+	$g$ factors uniquely through $\ker f$, i.e. $\ker f$ is a kernel for $\beta$.
+\end{proof}
+
+We will now show that the family $\left( R^{n}F \right)_{n \in \mathbb{N}}$ together
+with $\left( \delta^n \right)_{n \in \mathbb{N}}$
+satisfy a universal property among a class of similar functors.
+This point of view goes back to Grothendieck.
+
+\begin{defn}[Cohomological functor]
+	Let $\mathsf{C}$ and $\mathsf{D}$ be abelian categories.
+	We define a {\em cohomological} functor, sometimes called
+	an exact $\delta$-functor, from $\mathsf{C}$ to $\mathsf{D}$,
+	as:
+	\begin{enumerate}
+		\item a family of additive functors, for $n \in \mathbb{N}$,
+			\begin{equation}
+			\begin{tikzcd}
+				T^n\colon \mathsf{C} \arrow[r, "", rightarrow] &
+				\mathsf{D}
+			\end{tikzcd}
+			,\end{equation} 
+		\item for all $n \geq 0$, and for all short exact sequences
+			in $\mathsf{C}$
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				A \arrow[r, "", rightarrow] &
+				B \arrow[r, "", rightarrow] &
+				C \arrow[r, "", rightarrow] &
+				0
+			\end{tikzcd}
+			\end{equation} 
+			a family of morphisms
+			\begin{equation}
+			\begin{tikzcd}
+				T^n(C) \arrow[r, "\delta^n", rightarrow] &
+				T^{n+1}(A)
+			\end{tikzcd}
+			\end{equation} 
+			making the following sequence exact in $\mathsf{D}$:
+			\begin{equation}
+		\begin{tikzcd}[row sep=tiny]
+			T^{0} \left( A \right) \arrow[r, "", rightarrow] &
+			T^{0} \left( B \right) \arrow[r, "", rightarrow]
+			\arrow[d, phantom, ""{coordinate, name=Z1}] &
+			T^{0} \left( C \right) \arrow[r, "\ \ \delta^0"', phantom, rightarrow]
+			\arrow[dll, "", rounded corners, bend left = 100,
+			to path={ -- ([xshift=2ex]\tikztostart.east)
+				|- (Z1) [near end]\tikztonodes
+				-| ([xshift=-2ex]\tikztotarget.west)
+				-- (\tikztotarget)}] & 
+			\phantom{a}\\
+			T^{1} \left( A \right) \arrow[r, "", rightarrow] &
+			T^{1} \left( B \right) \arrow[r, "", rightarrow]
+			\arrow[d, phantom, ""{coordinate, name=Z2}] &
+			T^{1} \left( C \right) \arrow[r, "\ \ \delta^1"', phantom, rightarrow]
+			\arrow[dll, "", rounded corners, bend left = 100,
+			to path={ -- ([xshift=2ex]\tikztostart.east)
+				|- (Z2) [near end]\tikztonodes
+				-| ([xshift=-2ex]\tikztotarget.west)
+				-- (\tikztotarget)}] & 
+			\phantom{a}\\
+			T^{2} \left( A \right) \arrow[r, "", rightarrow] &
+			\ldots &
+		\end{tikzcd}
+		.\end{equation}
+			Moreover we require this construction to be functorial, i.e. for all
+			morphisms of short exact sequences in $\mathsf{C}$
+			\begin{equation}
+			\begin{tikzcd}
+				0 \arrow[r, "", rightarrow] &
+				A \arrow[r, "", rightarrow] 
+				\arrow[d, "", rightarrow] &
+				B \arrow[r, "", rightarrow] 
+				\arrow[d, "", rightarrow] &
+				C \arrow[r, "", rightarrow] 
+			  \arrow[d, "", rightarrow] &
+				0\\
+				0 \arrow[r, "", rightarrow] &
+				A' \arrow[r, "", rightarrow] &
+				B' \arrow[r, "", rightarrow] &
+				C' \arrow[r, "", rightarrow] &
+				0
+			\end{tikzcd}
+			\end{equation} 
+			then, for all $n \geq 0$, the square commutes:
+			\begin{equation}
+			\begin{tikzcd}
+				T^n(C) \arrow[r, "\delta^n", rightarrow] 
+				\arrow[d, "", rightarrow] &
+				T^{n+1}(A) \arrow[d, "", rightarrow] \\
+				T^n(C') \arrow[r, "\delta^n", rightarrow] &
+				T^{n+1}(A')
+			\end{tikzcd}
+			.\end{equation} 
+	\end{enumerate}
+\end{defn}
+\begin{defn}[Morphism of cohomological functors]
+	A morphism of cohomological functors is the data of
+	a family of atural transformations:
+	\begin{equation}
+	\begin{tikzcd}
+		(f^n)_{n \in \mathbb{N}}\colon
+		\left(T^n, \delta^n\right)_{n \in \mathbb{N}} \arrow[r, "", rightarrow] &
+		\left(T'^n, \delta'^n\right)
+	\end{tikzcd}
+	\end{equation} 
+	s.t. for all $n \geq 0$, the following square commutes:
+			\begin{equation}
+			\begin{tikzcd}
+				T^n(C) \arrow[r, "\delta^n", rightarrow] 
+				\arrow[d, "f^n(C)", rightarrow] &
+				T^{n+1}(A) \arrow[d, "f^{n+1}(A)", rightarrow] \\
+				T^n(C') \arrow[r, "\delta'^n", rightarrow] &
+				T^{n+1}(A')
+			\end{tikzcd}
+			.\end{equation} 
+\end{defn}
+
+\begin{rem}[]
+	$T^0$ is not supposed to be left exact.
+	Moreover we do not ask $\mathsf{C}$ to have enough injectives.
+\end{rem}
+
+\begin{defn}[Universal cohomological functor]
+	Let $\mathsf{C}$ and $\mathsf{D}$ be abelian categories.
+	Then a cohomological functor $\left(T^n, \delta^n\right)_{n \in \mathbb{N}}$
+	is said to be universal iff
+	for any $\left(T'^n, \delta'^n\right)_{n \in \mathbb{N}}$
+	cohomological functor and
+	any morphism of functors
+	\begin{equation}
+	\begin{tikzcd}
+		g\colon T^0 \arrow[r, "", rightarrow] &
+		T'^0
+	\end{tikzcd}
+	\end{equation}
+	there exists a unique morphism of cohomological functors
+	\begin{equation}
+	\begin{tikzcd}
+		f\colon T \arrow[r, "", rightarrow] &
+		T'
+	\end{tikzcd}
+	\end{equation}
+	s.t. $f^0 = g$.
+\end{defn}
+
+\begin{lem}
+	If $F\colon \mathsf{C} \to \mathsf{D}$ is an additive functor, then
+	there exists at most one universal cohomological functor $T$,
+	up to canonical isomorphism,
+	s.t. $T^0 \simeq F$.
+\end{lem} 
+\begin{proof}
+	Consider $T$ and $T'$ cohomological functors satisfying the
+	above condition.
+	In particular $T^0 \simeq T'^0 \simeq F$.
+	Since $T$ is universal, there is a unique morphism
+	\begin{equation}
+	\begin{tikzcd}
+		f\colon T \arrow[r, "", rightarrow] &
+		T'
+	\end{tikzcd}
+	\end{equation} 
+	s.t. $f^0 = id_F$.
+	Analogously there is a unique morphism
+	\begin{equation}
+	\begin{tikzcd}
+		g\colon T' \arrow[r, "", rightarrow] &
+		T
+	\end{tikzcd}
+	\end{equation} 
+	s.t. $g^0 = id_F$.
+	Then $g \circ f$ is the unique morphism of cohomological functors
+	\begin{equation}
+	\begin{tikzcd}
+		g \circ f\colon T \arrow[r, "", rightarrow] &
+		T
+	\end{tikzcd}
+	\end{equation} 
+	s.t. $(g \circ f)^0 = g^0 \circ f^0 = id_F$.
+	Then $id_T$ also has this property, hence $g \circ f = id_T$.
+	Analogously we prove that $f \circ g = id_{T'}$ and we are done.
+\end{proof}
+
+\begin{defn}[]
+	Let $\mathsf{C}$ and $\mathsf{D}$ be abelian categories.
+	We say that an additive functor $F\colon \mathsf{C} \to \mathsf{D}$
+	is {\em effaceable} iff
+	for any $A \in \mathrm{Ob} \left(\mathsf{C}\right)$ there exists
+	a monomorphism
+	\begin{equation}
+	\begin{tikzcd}
+		i\colon A \arrow[r, "", rightarrowtail] &
+		M
+	\end{tikzcd}
+	\end{equation} 
+	s.t. $F(i) = 0$.
+\end{defn}
+
+\begin{prop}[]
+	Suppose that $\mathsf{C}$ has enough injectives.
+	Then $F\colon \mathsf{C} \to \mathsf{D}$ is effaceable iff
+	$F(I) = 0$ for any injective $I \in \mathrm{Ob} \left(\mathsf{C}\right)$.
+\end{prop}
+\begin{proof}
+\begin{description}
+	\item[$\Leftarrow$]
+		Let $A \in \mathrm{Ob} \left(\mathsf{C}\right)$, then
+		there exist $I \in \mathrm{Ob} \left(\mathsf{C}\right)$
+		injective with a mono
+		\begin{equation}
+		\begin{tikzcd}
+			0 \arrow[r, "", rightarrow] &
+			A \arrow[r, "i", rightarrow] &
+			I
+		\end{tikzcd}
+		.\end{equation} 
+		Then we obtain that
+		\begin{equation}
+		\begin{tikzcd}
+			F(A) \arrow[r, "F(i)", rightarrow] &
+			F(I) = 0
+		\end{tikzcd}
+		\end{equation} 
+		implies that $F(i) = 0$.
+	\item[$\Rightarrow$] Let $I \in \mathrm{Ob} \left(\mathsf{C}\right)$ injective.
+		There is a mono
+		\begin{equation}
+		\begin{tikzcd}
+			0 \arrow[r, "", rightarrow] &
+			I \arrow[r, "i", rightarrow] &
+			M
+		\end{tikzcd}
+		\end{equation} 
+		s.t. $F(i) = 0$.
+		By injectivity of $I$ we can obtain the commutative
+		\begin{equation}
+		\begin{tikzcd}
+			I \arrow[r, "i", rightarrow] 
+			\arrow[d, "id_I", rightarrow] &
+			M \arrow[dl, "r", rightarrow] \\
+			I &
+		\end{tikzcd}
+		.\end{equation} 
+		This means that $r \circ i = id_I$.
+		Then $F(r) \circ F(i) = if_{F(I)}$, i.e.
+		$id_{F(I)} = 0$.
+		Check that this implies that $F(I) = 0 \in \mathrm{Ob} \left(\mathsf{D}\right)$.
+\end{description} 
+\end{proof}
+
+\begin{rem}[]
+	Consider $F\colon \mathsf{C} \to \mathsf{D}$ a left exact functor, from
+	$\mathsf{C}$ with enough injectives.
+	Then $R^nF\colon \mathsf{C} \to \mathsf{D}$ is effaceable for all $n > 0$,
+	since $R^{n}F \left( I \right) = 0$ for all injectives $I$.
+\end{rem}
+
+
+\begin{thm}[]
+	Let $\mathsf{C}$ and $\mathsf{D}$ be abelian categories.
+	let $T = \left(T^n, \delta^n\right)_{n \in \mathbb{N}}$ be a cohomological
+	functor from $\mathsf{C}$ to $\mathsf{D}$.
+	If $T^n$ is effaceable for all $n > 0$, then $T$
+	is a universal functor.
+\end{thm}
+
+
+\begin{cor}
+	Suppose that $\mathsf{C}$ has enough injectives,
+	and $F\colon \mathsf{C} \to \mathsf{D}$ is a left exact functors.
+	Then $\left(R^{n}F, \delta^n\right)_{n \in \mathbb{N}}$ is a universal
+	cohomological functor.
+\end{cor} 
+
+\begin{rem}[]
+	$\left(R^nF, \delta^n\right)_{n \in \mathbb{N}}$, together
+	with $F \simeq R^0F$ is an {\em initial}
+	object in the category of cohomological functors
+	\begin{equation}
+	\begin{tikzcd}
+		T = \left(T^n, \delta^n\right)_{n \in \mathbb{N}}\colon \mathsf{C} 
+		\arrow[r, "", rightarrow] &
+		\mathsf{D}
+	\end{tikzcd}
+	\end{equation} 
+	endowed with a morphism $f \to  T^0$.
+\end{rem}
+\begin{proof}
+	$T^n$ is effaceable for all $n > 0$.
+	Consider $T' := \left(T'^n, \delta'^n\right)_{n \in \mathbb{N}}$
+	another cohomological functor
+	and $g\colon T^0 \to T'^0$ be a natural transformation.
+	Let's define by induction the family
+	\begin{equation}
+		\begin{tikzcd}
+			f^n\colon T^n  \arrow[r, "", rightarrow] &
+			T'^n
+		\end{tikzcd}
+	.\end{equation} 
+	FOr $n = 0$ we already have the unique $f^0 = g$.
+	Suppose we are given 
+	\begin{equation}
+		\begin{tikzcd}
+			f^i\colon T^i  \arrow[r, "", rightarrow] &
+			T'^i
+		\end{tikzcd}
+	\end{equation} 
+	compatible with $\delta^i, \delta'^i$ for all $i \leq n$.
+	Let's define $f^n$: consider $A \in \mathrm{Ob} \left(\mathsf{C}\right)$.
+	Since $T^n$ is effaceable, there is a mono
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i", rightarrow] &
+		M
+	\end{tikzcd}
+	\end{equation} 
+	s.t. $T^n(i) = 0$.
+	Then we can consider the exact sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		M \arrow[r, "", rightarrow] &
+		M/A \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	Since $T$ is a cohomological functor
+	and by definition of $f^i$ we get the commutative diagram with exact rows:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		T^{n}(M) \arrow[r, "", rightarrow] 
+		\arrow[d, "f^n(M)", rightarrow] &
+		T^{n}(M) \arrow[r, "", rightarrow] 
+		\arrow[d, "f^n(M/A)", rightarrow] &
+		T^{n}(M) \arrow[r, "", rightarrow] 
+		\arrow[d, "\exists !\, f^{n+1}(A)", dashrightarrow] &
+		0\\
+		T^{n}(A) \arrow[r, "", rightarrow] 
+						  \arrow[rr, "0"', rightarrow, bend right] &
+		T^{n}(M) \arrow[r, "", rightarrow] &
+		T^{n}(M) \arrow[r, "", rightarrow] &
+		T^{n}(M) \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	Notice that $f^{n+1}(A)$ exists by universal property
+	of cokernels.
+	Let's check that $f^{n+1}(A)$ does not depend on $M$:
+	Let
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i'", rightarrow] &
+		M'
+	\end{tikzcd}
+	\end{equation} 
+	with $F(i') = 0$.
+	Take the pushout
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[r, "i", rightarrowtail] 
+		\arrow[d, "i'", rightarrowtail] &
+		M \arrow[d, "", rightarrow] \\
+		M' \arrow[r, "", rightarrow] &
+		M \coprod_A M'
+	\end{tikzcd}
+	.\end{equation} 
+	Then we have
+	\begin{equation}
+		\begin{tikzcd}
+			A &
+	M \arrow[d, "\alpha", rightarrowtail] \\
+	&
+	M \coprod_A M'
+		\end{tikzcd}
+	,\end{equation}
+	which gives (see remarkable):
+\end{proof}
+
+\begin{defn}[]
+	Consider $F\colon \mathsf{C} \to \mathsf{D}$ a left exact functor between
+	abelian categories.
+	Assume that $\mathsf{C}$ has enough injectives.
+	We say that $C \in \mathrm{Ob} \left(\mathsf{C}\right)$ is $F$-acyclic iff,
+	for all $n \geq 1$,
+	\begin{equation}
+		R^n(F)(C) = 0_{\mathsf{D}}.
+	\end{equation}
+\end{defn}
+\begin{rem}[]
+	Any $I \in \mathrm{Ob} \left(\mathsf{C}\right)$ injective is 
+	$F$-acyclic for any left exact functor.
+\end{rem}
+
+Let's define $F$-acyclic resolutions, hoping to use the to compute
+derived functors.
+
+\begin{defn}[$F$-acyclic resolution]
+	Let $A \in \mathrm{Ob} \left(\mathsf{C}\right)$.
+	An $F$-acyclic resolution of $A$ is an exact sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		C^0 \arrow[r, "", rightarrow] &
+		C^1 \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+	s.t. $C^i$ is $F$-acyclic for all $i \geq 0$.
+\end{defn}
+
+\begin{prop}[]
+	Let $A \in \mathrm{Ob} \left(\mathsf{C}\right)$.
+	Consider an $F$-acyclic resolution and an injective resolution
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		C^\bullet
+	\end{tikzcd}
+	\qquad \text{ and } \qquad
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		I^\bullet
+	\end{tikzcd}
+	.\end{equation} 
+	Then there is a morphism of complexes $C^\bullet \to  I^\bullet$
+	extending the identity of $id_A\colon A \to A$,
+	which is unique up to homotopy.
+\end{prop}
+\begin{proof}
+	COnsider the morphism $F(C^\bullet) \to  F(I^\bullet)$, in $\mathrm{Ch}(\mathsf{D})$.
+	It is a quasi isomorphism. 
+	In other words it acts as an iso at the level of cohomologies:
+	for all $n \geq 0$
+	\begin{equation}
+		H^{n} \left( F(C^\bullet) \right) \simeq
+		H^{n} \left( F(I^\bullet) \right) = R^{n}F \left( A \right)
+	.\end{equation} 
+\end{proof}
+
+\subsection{Spectral sequences}
+
+\section{Cohomology of sheaves}
+Let $X \in \mathsf{Top}$.
+We denote by $\mathsf{PSh}\left( X \right)$ the category of abelian presheaves and
+by $\mathsf{Sh}\left( X \right)$ the category of abelian sheaves.
+
+\begin{prop}[]
+	Limits and colimits in $\mathsf{PSh}\left( X \right)$ are computed
+	component-wise.
+	More explicitly, for a functor $\beta\colon \mathsf{I} \to \mathsf{PSh}\left( X \right)$,
+	from a small category $\mathsf{I}$, then we have
+	\begin{align}
+		\left( \varinjlim \beta \right) \left( \mathcal{U} \right) &\simeq
+		\varinjlim \left( \beta(\mathcal{U}) \right)\\
+		\left( \varprojlim \beta \right) \left( \mathcal{U} \right) &\simeq
+		\varprojlim \left( \beta(\mathcal{U}) \right)\\
+	.\end{align} 
+	In particular arbitrary limits and colimits exist in $\mathsf{PSh}\left( X \right)$,
+	since they do in $\mathsf{Ab}$.
+\end{prop}
+\begin{proof}
+	Just a sketch:
+\end{proof}
+\begin{cor}
+	$\mathsf{PSh}\left( X \right)$ is an abelian category, since it can be expressed
+	in terms of limits and colimits.
+\end{cor} 
+\begin{proof}
+	The zero presheaf is a zero object in the category of presheaves, by the above proposition.
+	Then, again thanks to the above, one can define the coproduct and products.
+	Then one obtains a morphism
+	\begin{equation}
+	\begin{tikzcd}
+		F \coprod G \arrow[r, "\sim", rightarrow] &
+		F \prod G,
+	\end{tikzcd}
+	\end{equation} 
+	which is an iso, because it is sectionwise.
+	Again one checks that the map
+	\begin{equation}
+	\begin{tikzcd}
+		\mathrm{coim}\, f \arrow[r, "\sim", rightarrow] &
+		\ima f
+	\end{tikzcd}
+	\end{equation} 
+	is an isomorphism, since it is sectionwise.
+\end{proof}
+
+\begin{cor}
+	The category $\mathsf{Sh}\left(X\right)$ is an abelian category.
+\end{cor} 
+\begin{proof}
+	Recall the adjunction $\left(\iota, (-)^\#\right)$
+	\begin{equation}
+	\begin{tikzcd}
+		\mathsf{PSh}\left( X \right) \arrow[r, "", rightarrow] &
+		\mathsf{Sh}\left(X\right)
+	\end{tikzcd}
+	\end{equation} 
+	s.t. $\left( \iota\mathcal{F} \right)^\# \simeq \mathcal{F}$.
+	Recall that left adjoints preserve limits and right adjoint preserve colimits.
+	Actually one functor is a right adjoint iff it preserves colimits.
+	Consider a functor
+	\begin{align}
+		\phi\colon \Lambda &\longrightarrow \mathsf{Sh}\left(X\right) \\
+		\lambda &\longmapsto F_\lambda \nonumber
+	.\end{align} 
+	Then $\phi \circ \iota$ sends $\lambda \mapsto \iota F_\lambda$.
+	Here we can compute limits, and one can check that
+	$\varprojlim \iota F_\lambda$ is already a sheaf (since the definition of
+	sheaf only requires limits, hence should commute).
+	Then 
+	\begin{equation}
+	\varprojlim F_\lambda :=  
+	\left( \varprojlim \iota F_\lambda \right)^\#	
+	\in \mathsf{Sh}\left(X\right) 
+	\end{equation} 
+	is the limit of
+	the considered family.
+	It follows that $\left( 0_{\mathsf{PSh}\left( X \right)} \right)^\# = 0_{\mathsf{Sh}\left(X\right)}$
+	is a zero object (it is both initial and final, we are computing limits and colimits
+	on appropriate categories).
+	Then one can define 
+	\begin{equation}
+		\left( \iota \mathcal{F} \oplus \iota \mathcal{G} \right)^\# \in \mathsf{Sh}\left(X\right)
+	\end{equation} 
+	which is both a product and a coproduct in $\mathsf{Sh}\left(X\right)$ by the above remark.
+	The same holds for cokernels and cokernel:
+	\begin{equation}
+		\left( \ker \iota f \right)^\# = \ker \left( \left( \iota f \right)^\# \right) = \ker f
+	,\end{equation} 
+	since $\left( - \right)^\# \circ \iota = id_{\mathsf{Sh}\left(X\right)}$.
+	Finally, since $\mathsf{Sh}\left(X\right) \subset \mathsf{PSh}\left( X \right)$
+	is a full subcategry and $\mathsf{PSh}\left( X \right)$ is abelian, then the hom
+	set is always an abelian group.
+
+	For the parallel morphism is always the same thing.
+\end{proof}
+
+\begin{rem}[]
+	One can prove this result in other way.
+\end{rem}
+
+\begin{prop}[]
+	Let $X \in \mathsf{Top}$ and $\mathcal{U} \subset X$ an open subset.
+	Then the functor
+	\begin{align}
+		\Gamma_{\mathcal{U}}\colon \mathsf{Sh}\left(X\right) &\longrightarrow \mathsf{Ab} \\
+		\mathcal{F} &\longmapsto \mathcal{F}(\mathcal{U}) \nonumber
+	\end{align} 
+	is {\em left} exact.
+\end{prop}
+\begin{proof}
+	Consider an exact sequence in $\mathsf{Sh}\left(X\right)$
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}' \arrow[r, "\alpha", rightarrow] &
+		\mathcal{F} \arrow[r, "\beta", rightarrow] &
+		\mathcal{F}''
+	\end{tikzcd}
+	.\end{equation} 
+	Then this induces an exact sequence in $\mathsf{Ab}$, at the level of stalks, for
+	all $x \in X$:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}'_x \arrow[r, "\alpha_x", rightarrow] &
+		\mathcal{F} \arrow[r, "\beta_x", rightarrow] &
+		\mathcal{F}''_x
+	\end{tikzcd}
+	.\end{equation} 
+	In particular we want to look at sections, i.e. prove exactness of
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}'(\mathcal{U}) \arrow[r, "\alpha(\mathcal{U})", rightarrow] &
+		\mathcal{F}(\mathcal{U}) \arrow[r, "\beta(\mathcal{U})", rightarrow] &
+		\mathcal{F}''(\mathcal{U})
+	.\end{tikzcd}
+	\end{equation} 
+	We have proved that $\alpha(\mathcal{U})$ is injective.
+	We are left to prove that
+	\begin{equation}
+		\ima \left( \alpha(\mathcal{U}) \right) \simeq
+		\ker \left( \beta(\mathcal{U}) \right)
+	.\end{equation} 
+	Since $\beta(\mathcal{U}) \circ \alpha(\mathcal{U}) = 0$ we obtain
+	that $\ima \left( \alpha(\mathcal{U}) \right) \subset \ker \left( \beta(\mathcal{U}) \right)$.
+	Consider now $s \in \ker \beta(\mathcal{U}) \subset \mathcal{F}(\mathcal{U})$.
+	Let $x \in \mathcal{U}$, then $s_x = \left[ \mathcal{U}_x, s \right] \in \ker \beta_x$.
+	This, by exacntess of the sequence at the level of stalks, implies that
+	there is $s'_x \in \mathcal{F}'_{x}$ s.t. $\alpha_x(s'_x) = s_x$.
+	In particualr there is an open subset $x \in \mathcal{U}_x$ s.t.
+	$s'_x = \left[ \mathcal{U}_x, s' \right]$ and
+	\begin{equation}
+		\left.s\right|_{\mathcal{U}_x} = \alpha(\mathcal{U}_x)(s')
+	.\end{equation} 
+	Then we can find an open covering $\mathcal{U} = \bigcup_{i \in I} \mathcal{U}_i$
+	and $s'_i \in \mathcal{F}'(\mathcal{U}_i)$ s.t.
+	\begin{equation}
+		\alpha(\mathcal{U}_i)(s'_i) = \left.s\right|_{\mathcal{U}_i} 
+	.\end{equation} 
+	Let's look at intersections:
+	\begin{equation}
+		\alpha(\mathcal{U}_{ij})(\left.s'_i\right|_{\mathcal{U}_{ij}}) =
+			\left.s\right|_{\mathcal{U}_{ij}} =
+				\alpha(\mathcal{U}_{ij})(\left.s'_j\right|_{\mathcal{U}_{ij}}) =
+	.\end{equation} 
+	By injectivity of $\alpha(\mathcal{U}_{ij})$
+	we obtain that the family $\left\{ s'_i \right\}_{i \in I}$ is
+	compatible on intersections, hence by sheaf properties one
+	can find a unique $s' \in \mathcal{F}'(\mathcal{U})$ s.t.
+	$\left.s'\right|_{\mathcal{U}_i} = s'_i$ for all $i$.
+	Then
+	\begin{equation}
+		\alpha(\mathcal{U})(s')|_{\mathcal{U}_i} =
+		\alpha(\mathcal{U}_i)(\left.s'\right|_{\mathcal{U}_i} ) =
+		\alpha(\mathcal{U}_i)(s'_i)
+		\left.s\right|_{\mathcal{U}_i} 
+	.\end{equation} 
+	By sheaf properties of $\mathcal{F}$ we obtain that $\alpha(\mathcal{U})(s') = s$.
+\end{proof}
+\begin{rem}[Another proof]
+	One can factor the above functor by
+	\begin{equation}
+	\begin{tikzcd}
+		\mathsf{Sh}\left(X\right) \arrow[rr, "\Gamma_{\mathcal{U}}", rightarrow] 
+		\arrow[rd, "\iota", rightarrow] & &
+		\mathsf{Ab}\\
+		&
+		\mathsf{PSh}\left( X \right) \arrow[ru, "\widetilde{\Gamma}_{\mathcal{U}}", rightarrow] &
+	\end{tikzcd}
+	.\end{equation} 
+	One can conclude since, by construction, $\widetilde{\Gamma}_{\mathcal{U}}$ is
+	exact (hence left exact), whereas $\iota$ is a right adjoint,
+	hence a left exact functor.
+\end{rem}
+
+\begin{prop}[]
+	$\mathsf{Sh}\left(X\right)$ has enough injectives.
+\end{prop}
+
+\begin{defn}[Cohomology]
+	Let $\mathcal{F} \in \mathsf{Sh}\left(X\right)$.
+	The cohomology groups of $X$, with coefficients in $\mathcal{F}$,
+	are defined as
+	\begin{equation}
+	H^{n} \left( X, \mathcal{F} \right) := R^{n} \Gamma_X \left( \mathcal{F} \right)
+	\end{equation} 
+	for all $n \geq 0$.
+	More generally, given $\mathcal{U} \subset X$ open, one defines:
+	\begin{equation}
+	H^{n} \left( \mathcal{U}, \mathcal{F} \right) := R^{n} \Gamma_{\mathcal{U}} \left( \mathcal{F} \right)
+	.\end{equation} 
+\end{defn}
+
+\begin{rem}[]
+	The cohomology of a t.s. $X$ with coefficients in $\mathcal{F}$,
+	$H^{n} \left( X, \mathcal{F} \right)$ is defined as the homology of the complex
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		I^0 \arrow[r, "", rightarrow] &
+		I^1 \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	,\end{equation} 
+	for an injective resolution $0 \to \mathcal{F} \to I^\bullet$ of $\mathcal{F}$.
+	One could actually choose to take the cohomology of
+	a $\Gamma_{\mathcal{U}}$-acyclic resolution of $\mathcal{F}$
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		C^0 \arrow[r, "", rightarrow] &
+		C^1 \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+\end{rem}
+
+\begin{defn}[Flasque sheaf]
+	A sheaf $\mathcal{F} \in \mathsf{Sh}\left(X\right)$ is said to 
+	be {\em flasque} or {\em falbby} iff, for all $\mathcal{V} \subset \mathcal{U} \subset X$
+	open subsets, then restriction map
+	\begin{equation}
+	\begin{tikzcd}
+		\mathcal{F}(\mathcal{U}) \arrow[r, "\rho^{\mathcal{F}}_{\mathcal{UV}}", rightarrow] &
+		\mathcal{F}(\mathcal{V})
+	\end{tikzcd}
+	\end{equation} 
+	is an epimorphism.
+\end{defn}
+\begin{rem}[]
+	We shall prove that flasque sheaves are $\Gamma_X$-acyclic.
+	Moreover each sheaf admits a falsque resolution.
+\end{rem}
+
+\begin{prop}[]
+	Consider an exact sequence in $\mathsf{Sh}\left(X\right)$
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}' \arrow[r, "", rightarrow] &
+		\mathcal{F} \arrow[r, "", rightarrow] &
+		\mathcal{F}'' \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	,\end{equation} 
+	where $\mathcal{F}'$ is flasque.
+	Then, for all $\mathcal{U} \subset X$ open, the sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}'(\mathcal{U}) \arrow[r, "", rightarrow] &
+		\mathcal{F}(\mathcal{U}) \arrow[r, "", rightarrow] &
+		\mathcal{F}''(\mathcal{U}) \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	\end{equation} 
+	is still exact.
+\end{prop}
+
+\begin{rem}
+	Assuming the above remark one obtains the following exact sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		H^{0} \left( \mathcal{U}, \mathcal{F}' \right) \arrow[r, "", rightarrow] &
+		H^{0} \left( \mathcal{U}, \mathcal{F} \right) \arrow[r, "", rightarrow] &
+		H^{0} \left( \mathcal{U}, \mathcal{F}'' \right) \arrow[r, "", rightarrow] & 
+		H^{1} \left( \mathcal{U}, \mathcal{F}' \right) \arrow[r, "", rightarrow] &`
+		\ldots
+	\end{tikzcd}
+	\end{equation} 
+	and $H^{n} \left( \mathcal{U}, \mathcal{F} \right) = 0$ for all $n$.
+\end{rem}
+
+\begin{proof}
+	\begin{enumerate}
+	\item {\em Let $s'' \in \mathcal{F}''(\mathcal{U})$.}
+		{\em Consider the set $\mathcal{S}$ defined by}
+		\begin{equation}
+		\mathcal{S} := \left\{ \left(  \mathcal{U}_i, s_i\right) \ \middle|\
+		\mathcal{U}_i \subset \mathcal{U} \text{ is open, }
+		s_i \in \mathcal{F}(\mathcal{U}_i) \text{ s.t. }
+		g(\mathcal{U}_i)(s_i) = \left.s''\right|_{\mathcal{U}_i} \right\}
+		.\end{equation}
+		{\em Define a partial order on $\mathcal{S}$ by}
+		\begin{equation}
+		\left(\mathcal{U}_i, s_i\right) \leq \left( \mathcal{U}_j, s_j\right) \iff
+		\mathcal{U}_i \subset \mathcal{U}_j
+		\text{ and }
+		\left.s_j\right|_{\mathcal{U}_i} = s_i
+		.\end{equation}
+		{\em Show that $\mathcal{S}$ admits a maximal element.}
+
+		Consider a totally ordered subset
+		$T = \left\{ \left(\mathcal{U}_i, s_i\right) \right\}_{i \in I} \subset \mathcal{S}$.
+		We now want to apply Zorn's lemma to conclude, hence we need to construct an
+		upper bound for $T$ in $\mathcal{S}$.
+		Then we define $\mathcal{V} := \bigcup_{i \in I} \mathcal{U}_i$, an open subset of
+		$X$ (union of open subsets of $X$).
+		Moreover $\mathcal{V}$ is covered by $\mathcal{U}_i$. Then we can define
+		$s \in \mathcal{F}(\mathcal{V})$ as the unique section s.t.
+		$\left.s\right|_{\mathcal{U}_i} = s_i$ by the gluing properties of the sheaf $\mathcal{F}$.
+		This can be done since $T$ is totally ordered, hence for any $i,j$ either
+		$\mathcal{U}_i \subset \mathcal{U}_j$ or the inverse. WLOG we assume the latter,
+		hence $\mathcal{U}_i \cap \mathcal{U}_j = \mathcal{U}_j$.
+		Then, since $T$ is totally ordered, we have $\left.s_i\right|_{\mathcal{U}_j} = s_j$,
+		hence the family $\left\{ s_i \right\}_{i \in I}$ defines a family compatible
+		on intersections and we can glue it to $s$.
+
+		We are only left to prove that $g(\mathcal{V})(s) = \left.s''\right|_{\mathcal{V}}$.
+		Also this follows from the gluing properties of sheaves, in fact we know that,
+		for each $i$,
+		\begin{equation}
+			\left.g(\mathcal{V})(s)\right|_{\mathcal{U}_i} =
+			g(\mathcal{U}_i)(\left.s\right|_{\mathcal{U}_i}) =
+			g(\mathcal{U}_i)(s_i) =
+			\left.s''\right|_{\mathcal{U}_i} =
+			\left.\left(\left.s''\right|_{\mathcal{V}}\right) \right|_{\mathcal{U}_i}
+		.\end{equation}
+		Then $g(\mathcal{V})(s)$ and $\left.s''\right|_{\mathcal{V}}$
+		coincide on an open cover of $\mathcal{V}$, hence they coincide on $\mathcal{V}$
+		($\mathcal{F}''$ is a sheaf).
+
+		We have then constructed an upper bound to $T$ in $\mathcal{S}$, then we can
+		apply Zorn's lemma and conclude that $\mathcal{S}$ admits a maximal element.
+
+
+	\item {\em Assume that $\mathcal{F}'$ is flasque. Show that, for any $\mathcal{U} \subset X$}
+		{\em open subset, the sequence of abelian group}
+		\begin{equation}
+		\begin{tikzcd}
+			0 \arrow[r, "", rightarrow] &
+			\mathcal{F}'(\mathcal{U}) \arrow[r, "f(\mathcal{U})", rightarrow] &
+			\mathcal{F}(\mathcal{U}) \arrow[r, "g(\mathcal{U})", rightarrow] &
+			\mathcal{F}''(\mathcal{U}) \arrow[r, "", rightarrow] &
+			0
+		\end{tikzcd}
+		\end{equation}
+		{\em is exact.}
+
+		As proven in exercise $2$ the functor $\Gamma_{\mathcal{U}}$ is left exact,
+		then exactness of
+		\begin{equation}
+		\begin{tikzcd}
+			0 \arrow[r, "", rightarrow] &
+			\mathcal{F}'(\mathcal{U}) \arrow[r, "f(\mathcal{U})", rightarrow] &
+			\mathcal{F}(\mathcal{U}) \arrow[r, "g(\mathcal{U})", rightarrow] &
+			\mathcal{F}''(\mathcal{U})
+		\end{tikzcd}
+		\end{equation}
+		follows from that.
+		We are only left to prove that $g(\mathcal{U})$ is an epimorphism
+		in $\mathsf{Ab}$, i.e. that it is surjective.
+		Let's now use the previous point: fix $s'' \in \mathcal{F}''(\mathcal{U})$, then
+		the corresponding set $\mathcal{S}$ admits a maximal element
+		\begin{equation}
+		\left( \mathcal{V}, s\right)
+		.\end{equation}
+		Our aim is to prove that $\mathcal{V} = \mathcal{U}$, in such case we have
+		$g(\mathcal{U})(s) = s''$, hence surjectivity of $g(\mathcal{U})$, since we have not
+		imposed any restrictions on $s'' \in \mathcal{F}''(\mathcal{U})$.
+
+		Assume, by contradiction, that this is not the case,
+		i.e. that there exists $x \in \mathcal{U} \setminus \mathcal{V}$.
+		Since $g$ is an epimorphism, we obtain that there is $t_x \in \mathcal{F}_x$
+		s.t.
+		\begin{equation}
+		\begin{tikzcd}
+			t_x \arrow[r, "g_x", mapsto] & s''_x
+		\end{tikzcd}
+		.\end{equation}
+		More explicitly there exist $\mathcal{U}_x \subset X$ open, and
+		$t \in \mathcal{F}(\mathcal{U}_x)$ s.t.
+		$g(\mathcal{U}_x)(t) = \left.s''\right|_{\mathcal{U}_x}$.
+		Then we can concentrate on $\mathcal{U}_x \cap \mathcal{V}$.
+		In case this is empty we can clearly glue together $t$ and $s$ to a section
+		$u \in \mathcal{F}(\mathcal{V}\cup \mathcal{U}_x)$, getting mapped to
+		$\left.s''\right|_{\mathcal{V}\cup \mathcal{U}_x}$
+		(reasoning as in the previous point, $\mathcal{F}''$ is a sheaf).
+		This would make
+		\begin{equation}
+		\left(\mathcal{V} \cup \mathcal{U}_x, u \right) >
+		\left(\mathcal{V}, s\right)
+		,\end{equation}
+		contradicting maximality of the latter.
+		Then we have $\mathcal{V}_x := \mathcal{U}_x \cap \mathcal{V} \neq \emptyset$.
+		In particular
+		\begin{equation}
+			g(\mathcal{V}_x) \left( \left.s\right|_{\mathcal{V}_x} -
+					\left.t\right|_{\mathcal{V}_x} \right) =
+			g(\mathcal{V}_x) \left( \left.s\right|_{\mathcal{V}_x}\right) -
+			g(\mathcal{V}_x) \left( \left.t\right|_{\mathcal{V}_x}\right) =
+			\left.s''\right|_{\mathcal{V}_x} -
+			\left.s''\right|_{\mathcal{V}_x} =
+			0
+		.\end{equation}
+		(The above follows from linearity of $g(\mathcal{V}_x)$, morphism in $\mathsf{Ab}$).
+		Then $\left.s\right|_{\mathcal{V}_x} -
+			\left.t\right|_{\mathcal{V}_x} \in \ker g(\mathcal{V}_x)$.
+		By left exactness of $\Gamma_{\mathcal{V}_x}$ we obtain that this is in the image
+		of $f(\mathcal{V}_x)$, i.e. there is $\tilde{w} \in \mathcal{F}'(\mathcal{V}_x)$
+		s.t. $f(\mathcal{V}_x)(\tilde{w}) =
+		\left.s\right|_{\mathcal{V}_x} - \left.t\right|_{\mathcal{V}_x}$.
+		But $\mathcal{F}'$ is flasque, hence $\tilde{w}$ can be extended to the whole
+		$\mathcal{U}_x$, i.e. there is $w \in \mathcal{F}'(\mathcal{U}_x)$ s.t.
+		$\left.w\right|_{\mathcal{V}_x} = \tilde{w}$.
+		Then, again by left exactness of $\Gamma_{\mathcal{U}_x}$, we obtain that
+		$f(\mathcal{U}_x)(w) \in \ker g(\mathcal{U}_x)$, hence
+		for $\tilde{t} := t + f(\mathcal{U}_x)(w)$,
+		by linearity of $g(\mathcal{U}_x)$, we have
+		\begin{equation}
+			g(\mathcal{U}_x)(\tilde{t}) =
+			g(\mathcal{U}_x)(t)
+		.\end{equation}
+		Moreover we can look at the restriction of $\tilde{t}$ to $\mathcal{V}_x$
+		and obtain
+		\begin{align}
+			\left.\tilde{t}\right|_{\mathcal{V}_x} &=
+			\left.t\right|_{\mathcal{V}_x} +
+			\left.f(\mathcal{U}_x)(w)\right|_{\mathcal{V}_x} =
+			\left.t\right|_{\mathcal{V}_x} +
+			f(\mathcal{V}_x)(\left.w\right|_{\mathcal{V}_x})\\
+			&=
+			\left.t\right|_{\mathcal{V}_x} + f(\mathcal{V}_x)(\tilde{w}) =
+			\left.t\right|_{\mathcal{V}_x} +
+			\left.s\right|_{\mathcal{V}_x} -
+			\left.t\right|_{\mathcal{V}_x} =
+			\left.s\right|_{\mathcal{V}_x}
+		.\end{align}
+		Then we can glue together $s$ and $\tilde{t}$ to a section in
+		$\mathcal{F}(\mathcal{V}\cup \mathcal{U}_x)$.
+		As before this section will get mapped to $\left.s''\right|_{\mathcal{V} \cup \mathcal{U}_x}$
+		since both $s$ and $\tilde{t}$ do on their respective domains
+		and $\mathcal{F}''$ is a sheaf.
+		Then, again, we have contradicted maximality of $\left(\mathcal{V}, s\right)$.
+		We can conclude since it can only happen that $\mathcal{V} = \mathcal{U}$.\qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{cor}
+	Consider a sequence exact in $\mathsf{Sh}\left(X\right)$:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}' \arrow[r, "", rightarrow] &
+		\mathcal{F} \arrow[r, "", rightarrow] &
+		\mathcal{F}'' \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	\end{equation} 
+	and $\mathcal{F}, \mathcal{F}'$ are flasque, then also $\mathcal{F}''$ is flasque.
+\end{cor} 
+\begin{proof}
+	Consider $\mathcal{V} \subset \mathcal{U}$ open.
+	Then we have the following commutative diagram with exact rows:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}'(\mathcal{U}) \arrow[d, "", twoheadrightarrow] 
+		\arrow[r, "", rightarrow] &
+		\mathcal{F}(\mathcal{U}) \arrow[d, "", twoheadrightarrow] 
+		\arrow[r, "", rightarrow] &
+		\mathcal{F}''(\mathcal{U}) \arrow[d, "", rightarrow] 
+		\arrow[r, "", rightarrow] &
+		0\\
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F}'(\mathcal{V}) \arrow[r, "", rightarrow] &
+		\mathcal{F}(\mathcal{V}) \arrow[r, "", rightarrow] &
+		\mathcal{F}''(\mathcal{V}) \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+Moreover the first two vertical arrows are epimorphisms.
+		Then it trivially follows that also $\rho^{Z^1(\mathcal{F})}_{\mathcal{UV}}$
+		is an epimorphism. In fact, for any
+		composable $f \circ \rho^{Z^1(\mathcal{F})}_{\mathcal{UV}} = 0$,
+		we obtain
+		\begin{equation}
+			0 = f \circ \rho^{Z^1(\mathcal{F})}_{\mathcal{UV}} \circ \coker i^0(\mathcal{U}) =
+			f \circ \coker i^0(\mathcal{V}) \circ \rho^{C^0(\mathcal{F})}_{\mathcal{UV}}
+			= f
+		,\end{equation} 
+		since the last two maps are epimorphisms and composition is bilinear.
+		This holds for any $\mathcal{V} \subset \mathcal{U}$, i.e.
+		also $Z^1(\mathcal{F})$ is flasque.
+		Then, iterating by induction, we obtain that $Z^n(\mathcal{F})$ is flasque.
+		(tk: fix the names).
+\end{proof}
+tk: copy the definition of $C^)(\mathcal{F})$
+\begin{prop}[]
+	For any $\mathcal{F} \in \mathsf{Sh}\left(X\right)$, there is a canonical
+	monomorphism
+	\begin{equation}
+	\begin{tikzcd}
+		\mathcal{F} \arrow[r, "", rightarrowtail] &
+		C^0(\mathcal{F}).
+	\end{tikzcd}
+	\end{equation} 
+	into $C^0(\mathcal{F})$ a {\em flasque} sheaf.
+\end{prop}
+\begin{proof}
+	Consider the \'etal\'e space associated to $\mathcal{F}$:
+	\begin{equation}
+	\begin{tikzcd}
+		\widetilde{\mathcal{F}} = \coprod_{x \in X} \arrow[r, "\pi", rightarrow] &
+		X.
+	\end{tikzcd}
+	\end{equation} 
+	By definition $C^0(\mathcal{F})$ is the sheaf of not necessairily
+	continuous sections of $\pi$.
+	Consider $\mathcal{U} \subset X$ open, then
+	\begin{equation}
+		C^0(\mathcal{F})(\mathcal{U}) =
+		\left\{ \sigma\colon \mathcal{U} \to \widetilde{\mathcal{F}}
+		\ \middle|\ \pi \circ \sigma = id_{\mathcal{U}} \right\}
+		\simeq \prod_{x \in \mathcal{U}} \mathcal{F}_{x}
+	.\end{equation} 
+	For all $\mathcal{V} \subset \mathcal{U}$ we than ahve a surjective map
+	\begin{equation}
+	\begin{tikzcd}
+		\prod_{x \in \mathcal{U}} \mathcal{F}_{x} \arrow[r, "", twoheadrightarrow] 
+		\arrow[d, "\sim", rightarrow] &
+		\prod_{x \in \mathcal{V}} \mathcal{F}_{x} \arrow[d, "\sim", rightarrow] \\
+		C^0(\mathcal{F})(\mathcal{U}) \arrow[r, "", rightarrow] &
+		C^0(\mathcal{F})(\mathcal{V})
+	\end{tikzcd}
+	.\end{equation} 
+	Then $C^0(\mathcal{F})$ is flasque.
+	Let's construct the canonical monomorphism:
+	\begin{align}
+		\alpha\colon \mathcal{F} &\longrightarrow C^0(\mathcal{F}) \\
+		\mathcal{F}(\mathcal{U}) &\longmapsto C^0(\mathcal{F})(\mathcal{U})
+		= \prod_{x \in X} \mathcal{F}_{x} \nonumber \\
+		s &\longmapsto \left( s_x \right)_{x \in X} \nonumber
+	.\end{align} 
+	$\alpha$ is injective iff $\alpha(\mathcal{U})$ is injective for all $\mathcal{U} \subset X$.
+	In fact consider $s \in \ker \left( \alpha(\mathcal{U}) \right)$,
+	iff $s_x = 0$ for all $x \in \mathcal{U}$.
+	But this means that $s = 0$.
+\end{proof}
+
+\begin{prop}[]
+	Let $\mathcal{I} \in \mathsf{Sh}\left(X\right)$ be an {\em injective} sheaf.
+	Then $\mathcal{I}$ is {\em flasque}.
+\end{prop}
+\begin{proof}
+	By the above we have a canonical monomorphism
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{I} \arrow[r, "", rightarrow] &
+		C^0(\mathcal{I}).
+	\end{tikzcd}
+	\end{equation} 
+	By injectivity of $\mathcal{I}$ there is a map $r$ making the diagram commute:
+	\begin{equation}
+	\begin{tikzcd}
+		\mathcal{I} \arrow[r, "\alpha", rightarrowtail] 
+		\arrow[d, "id_{\mathcal{I}}"', rightarrow] &
+		C^0(\mathcal{I}) \arrow[ld, "", rightarrow] \\
+		\mathcal{I} &
+	\end{tikzcd}
+	.\end{equation} 
+	Then $r \circ \alpha = id_{\mathcal{I}}$.
+	Moreover, for any $\mathcal{U} \subset X$ open, we have
+	\begin{equation}
+		r(\mathcal{U}) \circ \alpha(\mathcal{U}) = id_{\mathcal{I}(\mathcal{U})}
+	.\end{equation} 
+	But this means that $r(\mathcal{U})$ is surjective.
+	Since $r$ is a morphism of sheaves, and $C^0(\mathcal{I})$ is flasque,
+	we have the following diagram
+	\begin{equation}
+	\begin{tikzcd}
+		C^0(\mathcal{I})(\mathcal{U}) \arrow[r, "r(\mathcal{U})", twoheadrightarrow] 
+		\arrow[d, "\rho^{C^0(\mathcal{I})}_{\mathcal{UV}}", twoheadrightarrow] &
+		\mathcal{I}(\mathcal{U}) \arrow[d, "\rho^{\mathcal{I}}_{\mathcal{UV}}", rightarrow] \\
+		C^0(\mathcal{I})(\mathcal{V}) \arrow[r, "r(\mathcal{V})", twoheadrightarrow] &
+		\mathcal{I}(\mathcal{V})
+	\end{tikzcd}
+	.\end{equation} 
+	But this implies that also $\rho^{\mathcal{I}}_{\mathcal{UV}}$ is an
+	epimorphism (tk: argue, but it seems easy).
+\end{proof}
+
+\begin{prop}[]
+	Let $\mathcal{F} \in \mathsf{Sh}\left(X\right)$ be a flasque sheaf on $X$.
+	Then $\mathcal{F}$ is $\Gamma_{\mathcal{U}}$-acyclic for any $\mathcal{U}\subset X$ open.
+\end{prop}
+\begin{proof}
+	Consider a monomorphism
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F} \arrow[r, "", rightarrow] &
+		\mathcal{I},
+	\end{tikzcd}
+	\end{equation} 
+	for $\mathcal{I}$ injective.
+	This can be extended to a short exact sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\mathcal{F} \arrow[r, "", rightarrow] &
+		\mathcal{I} \arrow[r, "", rightarrow] &
+		\mathcal{I}/\mathcal{F} \arrow[r, "", rightarrow] &
+		0,
+	\end{tikzcd}
+	\end{equation} 
+	in which both $\mathcal{F}$ and $\mathcal{I}$ are flasque.
+	Then also $\mathcal{I}/\mathcal{F}$ is flasque.
+	From the fundamental theorem in cohomology we obtain the long exact cohomology sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		H^{0} \left( \mathcal{U}, \mathcal{F} \right) \arrow[r, "", rightarrow] &
+		H^{0} \left( \mathcal{U}, \mathcal{I} \right) \arrow[r, "", rightarrow] &
+		H^{0} \left( \mathcal{U}, \mathcal{I}/\mathcal{F} \right) \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+	In particular we obtain
+	\begin{equation}
+	\begin{tikzcd}
+		H^{0} \left( \mathcal{U}, \mathcal{I} \right) \arrow[r, "", twoheadrightarrow] &
+		H^{0} \left( \mathcal{U}, \mathcal{I}/\mathcal{F} \right) \arrow[r, "", rightarrow] &
+		H^{1} \left( \mathcal{U}, \mathcal{F} \right) \arrow[r, "", rightarrow] &
+		H^{0} \left( \mathcal{U}, \mathcal{I} \right) \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+	Since the first map is surjective,
+	exactness implies that $H^{1} \left( \mathcal{U}, \mathcal{F} \right) = 0$.
+	Let's now argue by induction:we obtain that $H^{i} \left( \mathcal{U}, \mathcal{F} \right) = 0$
+	for all $i \leq n$.
+	Then, from the exact sequence (tk: copy it from someone).
+	Then we are done, since $\mathcal{I}/\mathcal{F}$ is also flasque.
+\end{proof}
+
+Construction: Godement resolution.
+It is a canonical resolution by flasque sheaves.
+\begin{defn}[]
+	Given a sheaf $\mathcal{F}$, one defines 
+	\begin{equation}
+		Z^1(\mathcal{F}) := C^0(\mathcal{F})/\mathcal{F}
+		\qquad \text{ and } \qquad
+		C^1(\mathcal{F}) := C^0( Z^1 (\mathcal{F} ))
+	.\end{equation} 
+	Then, by induction, one defines
+	\begin{equation}
+		Z^n(\mathcal{F}) := C^{n-1}(\mathcal{F})/Z^{n-1}(\mathcal{F})
+		\qquad \text{ and } \qquad
+		C^n(\mathcal{F}) := C^0( Z^n (\mathcal{F} ))
+	.\end{equation} 
+	Moreover, by induction, one defines the differential
+	\begin{equation}
+	\begin{tikzcd}
+		d^n\colon C^n(\mathcal{F}) \arrow[r, "\coker i^n", rightarrow] &
+		Z^{n+1}(\mathcal{F}) \arrow[r, "i^{n+1}", rightarrow] &
+		C^{n+1}(\mathcal{F}).
+	\end{tikzcd}
+	.\end{equation} 
+\end{defn}
+
+\begin{rem}[]
+	For $n \geq 0$ we have $\ker d^n = Z^n(\mathcal{F})$,
+	where $Z^0(\mathcal{F}) := \mathcal{F}$.
+	Moreover $\ima d^n = Z^n(\mathcal{F})$.
+	(tk: copy the proof from the homework: factorization in mono and epi).
+
+	It follows that the sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		C^0(\mathcal{F}) \arrow[r, "", rightarrow] &
+		C^1(\mathcal{F}) \arrow[r, "", rightarrow] &
+		C^2(\mathcal{F}) \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	\end{equation} 
+	is exact in $\mathsf{Sh}\left(X\right)$.
+	In particular we have constructed a flasque resolution of $\mathcal{F}$.
+
+	Moreover, since each part of the construction is
+	functorial, then also the Godement resolution is.
+	In particular any morphism $\alpha\colon \mathcal{F} \to \mathcal{G}$ of sheaves
+	induces a morphism in $\mathrm{Ch}(\mathsf{Sh}\left(X\right))$
+	$\alpha^\bullet\colon C^\bullet(\mathcal{F}) \to C^\bullet(\mathcal{G})$.
+\end{rem}
+One can apply to the cochain complex, degree-wise, the functor $\Gamma_{\mathcal{U}}$,
+hence one defines the functor
+\begin{equation}
+\begin{tikzcd}
+	\Gamma_{\mathcal{U}}\colon \mathrm{Ch}(\mathsf{Sh}\left(X\right)) \arrow[r, "", rightarrow] &
+	\mathrm{Ch}(\mathsf{Ab})
+\end{tikzcd}
+.\end{equation} 
+\begin{prop}[]
+	The composition of the above two functors is exact.
+	tk: write it better, copy proof from the homework, correct it as on the remarkable.
+\end{prop}
+\begin{rem}[]
+	One applies the fundamental theorem of cohomology and obtains the long exact sequence:
+	\begin{equation}
+		\begin{tikzcd}[row sep=tiny]
+			0 \arrow[r, "", rightarrow] &
+			H^{0} \left( \mathcal{U}, \mathcal{F}' \right) \arrow[r, "", rightarrow] &
+			H^{0} \left( \mathcal{U}, \mathcal{F} \right) \arrow[r, "", rightarrow]
+			\arrow[d, phantom, ""{coordinate, name=Z1}] &
+			H^{0} \left( \mathcal{U}, \mathcal{F}'' \right)
+			\arrow[dll, "", rounded corners, bend left = 100,
+			to path={ -- ([xshift=2ex]\tikztostart.east)
+				|- (Z1) [near end]\tikztonodes
+				-| ([xshift=-2ex]\tikztotarget.west)
+				-- (\tikztotarget)}] & \\
+			&
+			H^{1} \left( \mathcal{U}, \mathcal{F}' \right) \arrow[r, "", rightarrow] &
+			H^{1} \left( \mathcal{U}, \mathcal{F} \right) \arrow[r, "", rightarrow]
+			\arrow[d, phantom, ""{coordinate, name=Z2}] &
+			H^{1} \left( \mathcal{U}, \mathcal{F}'' \right)
+			\arrow[dll, "", rounded corners, bend left = 100,
+			to path={ -- ([xshift=2ex]\tikztostart.east)
+				|- (Z2) [near end]\tikztonodes
+				-| ([xshift=-2ex]\tikztotarget.west)
+				-- (\tikztotarget)}] & \\
+			&
+			\phantom{H^{1} \left( \mathcal{U}, \mathcal{F} \right)} &
+			\vdots
+			\arrow[d, phantom, ""{coordinate, name=Z3}] &
+			\phantom{H^{1} \left( \mathcal{U}, \mathcal{F}'' \right)}
+			\arrow[dll, "", rounded corners, bend left = 100,
+			to path={ -- ([xshift=2ex]\tikztostart.east)
+				|- (Z3) [near end]\tikztonodes
+				-| ([xshift=-2ex]\tikztotarget.west)
+				-- (\tikztotarget)}] & \\
+			&
+			H^{n} \left( \mathcal{U}, \mathcal{F}' \right) \arrow[r, "", rightarrow] &
+			H^{n} \left( \mathcal{U}, \mathcal{F} \right) \arrow[r, "", rightarrow]
+			\arrow[d, phantom, ""{coordinate, name=Z4}] &
+			H^{n} \left( \mathcal{U}, \mathcal{F}'' \right)
+			\arrow[dll, "", rounded corners, bend left = 100,
+			to path={ -- ([xshift=2ex]\tikztostart.east)
+				|- (Z4) [near end]\tikztonodes
+				-| ([xshift=-2ex]\tikztotarget.west)
+				-- (\tikztotarget)}] & \\
+			&
+			H^{n+1} \left( \mathcal{U}, \mathcal{F}' \right) \arrow[r, "", rightarrow] &
+			\ldots &
+		\end{tikzcd}
+		,\end{equation} 
+		in which we recall that
+		\begin{equation}
+			H^{n} \left( \mathcal{U}, \mathcal{F} \right) :=
+			R^{n}\Gamma_{\mathcal{U}} \left( \mathcal{F} \right) \simeq
+			H^{n} \left( C^\bullet(\mathcal{F})(\mathcal{U}) \right)
+		.\end{equation} 
+		We have recovered the long exact sequence of cohomology groups associated
+		to the short exact sequence of sheaves
+		\begin{equation}
+		\begin{tikzcd}
+			0 \arrow[r, "", rightarrow] &
+			\mathcal{F}' \arrow[r, "", rightarrow] &
+			\mathcal{F} \arrow[r, "", rightarrow] &
+			\mathcal{F}'' \arrow[r, "", rightarrow] &
+			0
+		\end{tikzcd}
+		.\end{equation} 
+\end{rem}
+
+\end{document}
+

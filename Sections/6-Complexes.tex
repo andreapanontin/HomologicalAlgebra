@@ -1,0 +1,1048 @@
+\documentclass[../Main]{subfiles}
+\begin{document}
+\section{Complexes}
+In the following let $\mathsf{C}$ be an {\em abelian} category.
+
+\begin{defn}[(Cochain) complex in an abelian category]
+	A complex in $\mathsf{C}$ is a sequence
+	\begin{equation}
+	\begin{tikzcd}
+		\ldots \arrow[r, "", rightarrow] &
+		A^{n-1} \arrow[r, "d_A^{n-1}", rightarrow] &
+		A^n \arrow[r, "d_A^n", rightarrow] &
+		A^{n+1} \arrow[r, "d_A^{n+1}", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	\end{equation} 
+	s.t. $A^{n} \in \mathrm{Ob} \left(\mathsf{C}\right)$
+	and $d^{n+1} \circ d^n = 0$ for all $n \in \mathbb{Z}$.
+	We will denote the complex by $\left(A^\bullet, d_A\right)$.
+\end{defn}
+
+\begin{defn}[Morphism of complexes]
+	Let $\left(A^\bullet, d_A\right)$ and $\left( B^{\bullet}, d_{B} \right)$
+	be two complexes in $\mathsf{C}$.
+	A morphism between the complexes,
+	\begin{equation}
+		\begin{tikzcd}
+			f^\bullet\colon A^\bullet \arrow[r, "", rightarrow] &
+			B^\bullet
+		\end{tikzcd}
+	\end{equation} 
+	is a family of morphisms
+	\begin{equation}
+	\begin{tikzcd}
+		f^n: A^n \arrow[r, "", rightarrow] &
+		B^n
+	\end{tikzcd}
+	\end{equation} 
+	s.t. for any $n \in \mathbb{Z}$ the square commutes
+	\begin{equation}
+	\begin{tikzcd}
+		\ldots \arrow[r, "", rightarrow] &
+		A^n \arrow[r, "d^n_A", rightarrow] \arrow[d, "f^n", rightarrow] &
+		A^{n+1} \arrow[d, "f^{n+1}", rightarrow] \arrow[r, "", rightarrow] &
+		\ldots\\
+		\ldots \arrow[r, "", rightarrow] &
+		B^n \arrow[r, "d^n_B"', rightarrow] &
+		B^{n+1} \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 	
+\end{defn}
+
+\begin{defn}[Category of complexes in $\mathsf{C}$]
+	We denote the category whose objects are complexes and morphism
+	are morphism of complexes, as just defined, by $\mathrm{Ch}(\mathsf{C})$
+	and call it the category of complexes in $\mathsf{C}$.
+\end{defn}
+
+\begin{exr}
+Show that the category $\mathrm{Ch}(\mathsf{C})$ is abelian.
+\end{exr} 
+\begin{exr}\leavevmode\vspace{-.2\baselineskip}
+	\begin{enumerate}
+		\item In particular, given $f^\bullet\colon A^\bullet \to B^\bullet$
+			any morphism of complexes, then $\ker f^\bullet$ is the complex
+			\begin{equation}
+			\begin{tikzcd}
+				\ldots \arrow[r, "", rightarrow] &
+				\ker f^{n-1} \arrow[r, "d^{n-1}", rightarrow] &
+				\ker f^n \arrow[r, "d^n", rightarrow] &
+				\ker f^{n+1} \arrow[r, "d^{n+1}", rightarrow] &
+				\ldots
+			\end{tikzcd}
+			,\end{equation} 
+			where $d^n$ are the maps induced by $d^n_A$.
+		\item Analogously show that the cokernel of $f$ is the complex
+			\begin{equation}
+			\begin{tikzcd}
+				\ldots \arrow[r, "", rightarrow] &
+				\coker f^{n-1} \arrow[r, "d^{n-1}", rightarrow] &
+				\coker f^n \arrow[r, "d^n", rightarrow] &
+				\coker f^{n+1} \arrow[r, "d^{n+1}", rightarrow] &
+				\ldots
+			\end{tikzcd}
+			,\end{equation} 
+			where $d^n$ is induced by $d^n_B$.
+	\end{enumerate}
+\end{exr} 
+
+\begin{rem}[]
+	Recall that condition $d^{n+1} \circ d^n = 0$ induces
+	a map
+	\begin{equation}
+	\begin{tikzcd}
+		\ima d^n \arrow[r, "", rightarrowtail] &
+		\ker d^{n+1}
+	\end{tikzcd}
+	.\end{equation} 
+\end{rem}
+
+\begin{defn}[Cohomology of the complex]
+	Fixed a complex $\left( A^{\bullet}, d_{A} \right)$,
+	from the above map, for every $n \in \mathbb{Z}$, one denotes by
+	\begin{equation}
+		H^n(A^\bullet) := \coker \left( \ima d^{n-1}
+		\hookrightarrow \ker d^{n}\right) =:
+		\ker d^{n} / \ima d^{n-1}
+	.\end{equation} 
+	(The last notation can be viewed as purely formal, but it recalls
+	the intuition developed in $\mathsf{Ab}$).
+	We call $H^n(A^\bullet)$ the $n$-th cohomology of $\left( A^{\bullet}, d_{A} \right)$.
+\end{defn}
+
+\begin{exr}[Functoriality of cohomology]
+	Any morphism of complexes $f^\bullet\colon A^\bullet \to B^\bullet$
+	induces, for every index $n$, a morphism at the level of cohomologies:
+	\begin{equation}
+	\begin{tikzcd}
+		H^n(f^\bullet) \colon H^n(A^\bullet) \arrow[r, "", rightarrow] &
+		H^n(B^\bullet)
+	\end{tikzcd}
+	\end{equation} 
+	as a morphism in $\mathsf{C}$.
+	Then, for any $n \in \mathbb{Z}$, we have defined a functor
+	\begin{align}
+		H^n\colon \mathrm{Ch}(\mathsf{C}) &\longrightarrow \mathsf{C} \\
+		A^\bullet &\longmapsto H^n(A^\bullet) \nonumber \\
+		f^\bullet &\longmapsto H^n(f^\bullet) \nonumber
+	.\end{align} 
+	Moreover this functor is additive.
+\end{exr} 
+
+\begin{lem}[ker-coker sequence]\label{lem:kerCokerSequence}
+	Consider the following in $\mathsf{C}$:
+	\begin{equation}
+	\begin{tikzcd}
+		X \arrow[r, "f", rightarrow] &
+		Y \arrow[r, "g", rightarrow] &
+		Z
+	\end{tikzcd}
+	.\end{equation} 
+	We have an exact sequence in $\mathsf{C}$:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\ker f \arrow[r, "", rightarrow] &
+		\ker g \circ f \arrow[r, "", rightarrow] 
+		\arrow[d, phantom, ""{coordinate, name=Z}] &
+		\ker g   
+		\arrow[dll, "", rounded corners, bend left = 100,
+		to path={ -- ([xshift=2ex]\tikztostart.east)
+			|- (Z) [near end]\tikztonodes
+			-| ([xshift=-2ex]\tikztotarget.west)
+			-- (\tikztotarget)}] & \\
+		&
+		\coker f \arrow[r, "", rightarrow] &
+		\coker g \circ f \arrow[r, "", rightarrow] &
+		\coker g \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+\end{lem} 
+\begin{proof}
+	From the composition one obtains the diagram
+	\begin{equation}
+	\begin{tikzcd}
+		&
+		A \arrow[r, "f", rightarrow] 
+		\arrow[d, "g \circ f", rightarrow] &
+		Y \arrow[d, "g", rightarrow] \arrow[r, "", rightarrow] &
+		\coker f \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+		0\\
+		0 \arrow[r, "", rightarrow] &
+		Z \arrow[r, "", equal] &
+		Z \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	Clearly the diagram commutes and has exact rows.
+	Then one can apply the snake lemma.
+	We are only left to prove that
+	\begin{equation}
+		\ker \left( \ker f \circ g \to \ker g \right) \simeq \ker f
+	\end{equation} 
+	in order to conclude the proof.
+	This is left as an exercise to the reader.
+\end{proof}
+
+\begin{lem}
+	Consider a short exact sequence in $\mathrm{Ch}(\mathsf{C})$
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A^\bullet \arrow[r, "", rightarrow] &
+		B^\bullet \arrow[r, "", rightarrow] &
+		C^\bullet \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	Then there exists, for all $n \in \mathbb{Z}$, a canonical map
+	\begin{equation}
+	\begin{tikzcd}
+		\delta^n\colon H^{n} \left( C^\bullet \right) \arrow[r, "", rightarrow] &
+		H^{n+1} \left( A^\bullet \right)
+	\end{tikzcd}
+	\end{equation} 
+	s.t. the following is a long exact sequence in $\mathsf{C}$:
+	\begin{equation}
+	\begin{tikzcd}[row sep=tiny]
+		\ldots \arrow[r, "", rightarrow] &
+		H^{n} \left( A^\bullet \right) \arrow[r, "", rightarrow] &
+		H^{n} \left( B^\bullet \right) \arrow[r, "", rightarrow] 
+		\arrow[d, phantom, ""{coordinate, name=Z}] &
+		H^{n} \left( C^\bullet \right) \arrow[r, "\delta^n"', phantom, rightarrow] 
+		\arrow[dll, "", rounded corners, bend left = 100,
+		to path={ -- ([xshift=2ex]\tikztostart.east)\tikztonodes
+			|- (Z) [near end]
+			-| ([xshift=-2ex]\tikztotarget.west)
+			-- (\tikztotarget)}] & 
+			\phantom{a} \\
+		& 
+		H^{n+1} \left( A^\bullet \right) \arrow[r, "", rightarrow] &
+		H^{n+1} \left( B^\bullet \right) \arrow[r, "", rightarrow] &
+		H^{n+1} \left( C^\bullet \right) \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+	Moreover morphisms of short exact sequences of complexes induce morphisms
+	of long exact sequences in $\mathsf{C}$.
+	More explicitly, given any commutative diagram
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A^\bullet \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+		B^\bullet \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+		C^\bullet \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+		0\\
+		0 \arrow[r, "", rightarrow] &
+		('A)^\bullet \arrow[r, "", rightarrow] &
+		('B)^\bullet \arrow[r, "", rightarrow] &
+		('C)^\bullet \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	\end{equation} 
+	one obtains a commutative diagram, whose arrows are induced by the above:
+	\begin{equation*}
+	\begin{tikzcd}
+		\ldots \arrow[r, "", rightarrow] &
+		H^{n} \left( A^\bullet \right)\arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+		H^{n} \left( B^\bullet \right) \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+		H^{n} \left( C^\bullet \right) \arrow[r, "\delta^n", rightarrow] \arrow[d, "", rightarrow] &
+		H^{n+1} \left( A^\bullet \right) \arrow[d, "", rightarrow] 
+		\arrow[r, "", rightarrow] &
+		\ldots \\
+		\ldots \arrow[r, "", rightarrow] &
+		H^{n} \left( 'A^\bullet \right)\arrow[r, "", rightarrow] &
+		H^{n} \left( 'B^\bullet \right) \arrow[r, "", rightarrow] &
+		H^{n} \left( 'C^\bullet \right) \arrow[r, "'\delta^n"', rightarrow] &
+		H^{n+1} \left( 'A^\bullet \right) \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation*} 
+\end{lem} 
+\begin{proof}
+	For any $\left( A^{\bullet}, d_{A} \right) \in \mathrm{Ch}(\mathsf{X})$
+	we denote by $Z^n(A^\bullet) := \ker d_A^n$,
+	a subobject of $A^n$, i.e. we have a canonical inclusion
+	\begin{equation}
+	\begin{tikzcd}
+		Z^n(A^\bullet) \arrow[r, "", hookrightarrow] &
+		A^n
+	\end{tikzcd}
+	.\end{equation} 
+	Analogously we define $I^n(A^\bullet) := \ima d^{n-1}$.
+	Since we have a complex we also have an inclusion
+	\begin{equation}
+	\begin{tikzcd}
+		I^n(A^\bullet) \arrow[r, "", hookrightarrow] &
+		Z^n(A^\bullet) \arrow[r, "", hookrightarrow] &
+		A^n
+	\end{tikzcd}
+	.\end{equation} 
+	Then, by definition, we have the equality
+	\begin{equation}
+		H^{n} \left( A^\bullet \right) = Z^n(A^\bullet)/I^n(A^\bullet)
+	.\end{equation} 
+	In the following, when there will be no possibility of confusion,
+	we will denote the above simply by $Z^n$ and $I^n$, omitting to specify the
+	complex $A^\bullet$.
+	Notice that we will only prove the first part of the lemma, since the last follows
+	from the functoriality of snake lemma, the main ingredient of this proof.
+
+	Since we have a morphism of short exact sequences of complexes,
+	we obtain a morphism of short exact sequences in $\mathsf{C}$ for all $n \in \mathbb{Z}$.
+	That induces the following commutative diagram, with exact rows in the middle.
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		Z^n (A^\bullet) \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+		Z^n (B^\bullet) \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] 
+		\arrow[ddd, phantom, ""{coordinate, name=Z}] &
+		Z^n (C^\bullet) \arrow[d, "", rightarrow] 
+		\arrow[dddll, "", dashed, rounded corners, bend left = 100,
+		to path={ -- ([xshift=2ex]\tikztostart.east)
+			|- (Z) [near end]\tikztonodes
+			-| ([xshift=-2ex]\tikztotarget.west)
+			-- (\tikztotarget)}] & \\
+		0 \arrow[r, "", rightarrow] &
+		A^n \arrow[r, "", rightarrow] \arrow[d, "d^n_A" near start, rightarrow] &
+		B^n \arrow[r, "", rightarrow] \arrow[d, "d^n_B", near start, rightarrow] &
+		C^n \arrow[r, "", rightarrow] \arrow[d, "d^n_C", near start, rightarrow] &
+		0\\
+		0 \arrow[r, "", rightarrow] &
+		A^{n+1} \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+		B^{n+1} \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+		C^{n+1} \arrow[r, "", rightarrow] \arrow[d, "", rightarrow] &
+		0\\
+		&
+		A^{n+1}/I^{n+1}(A^\bullet) \arrow[r, "", rightarrow] &
+		B^{n+1}/I^{n+1}(B^\bullet) \arrow[r, "", rightarrow] &
+		C^{n+1}/I^{n+1}(C^\bullet) \arrow[r, "", rightarrow] &
+		0\\
+	\end{tikzcd}
+	.\end{equation} 
+	Then we apply snake lemma and obtain the following long exact sequence:
+	\begin{equation}
+	\begin{tikzcd}[row sep=tiny]
+		0 \arrow[r, "", rightarrow] &
+		Z^n(A^\bullet) \arrow[r, "", rightarrow] &
+		Z^n(B^\bullet) \arrow[r, "", rightarrow]
+		\arrow[d, phantom, ""{coordinate, name=Z}] &
+		Z^n(C^\bullet) 
+		\arrow[dlll, "", rounded corners, bend left = 100,
+		to path={ -- ([xshift=2ex]\tikztostart.east)
+			|- (Z) [near end]\tikztonodes
+			-| ([xshift=-2ex]\tikztotarget.west)
+			-- (\tikztotarget)}] \\
+		A^{n+1}/I^{n+1} \arrow[r, "", rightarrow] &
+		B^{n+1}/I^{n+1} \arrow[r, "", rightarrow] &
+		C^{n+1}/I^{n+1} \arrow[r, "", rightarrow] &
+		0.
+	\end{tikzcd}
+	\end{equation} 
+	Since $d^{n+1}_A \circ d^n_A = 0$, we obtain that $d^n_A$ factors
+	through $i^{n+1}\colon Z^{n+1} \hookrightarrow A^{n+1}$.
+	Then we obtain the commutative
+	\begin{equation}
+	\begin{tikzcd}
+		I^n \arrow[r, "i^n_A", hookrightarrow] \arrow[rr, "0", rightarrow, bend left] &
+		A^n \arrow[r, "d^n_A", rightarrow] \arrow[d, "p_n^A"', twoheadrightarrow] 
+		\arrow[rd, "\widetilde{d^n_A}", dashrightarrow] &
+		A^{n+1} \arrow[r, "", rightarrow] &
+		\ldots\\
+						  &
+		A^n/I^n \arrow[r, "\overline{d^n_A}"', rightarrow] &
+		Z^{n+1}(A^\bullet) \arrow[u, "i^{n+1}"', hookrightarrow]  &
+	\end{tikzcd}
+	.\end{equation} 
+	Then, since $i^{n+1} \circ \widetilde{d^n_A} \circ i^n_A = 
+	d^n_A \circ i^n_A = 0$ and $i^{n+1}$ is a mono, we obtain that
+	$\widetilde{d^n_A}$ factors through $\coker i^n_A \simeq \coker d^{n-1}_A = A^n/I^n$
+	(by lemma 2.13, tk: fix the reference).
+	Then, patching together the information from the snake lemma and the above
+	construction, we obtain the following commutative diagram, with exact rows:
+	\begin{equation}
+	\begin{tikzcd}
+		&
+		A^n/I^n(A^\bullet) \arrow[r, "", rightarrow] \arrow[d, "\overline{d^n_A}", rightarrow] &
+		B^n/I^n(B^\bullet) \arrow[r, "", rightarrow] \arrow[d, "\overline{d^n_B}", rightarrow] &
+		C^n/I^n(C^\bullet) \arrow[r, "", rightarrow] \arrow[d, "\overline{d^n_C}", rightarrow] &
+		0\\
+		0 \arrow[r, "", rightarrow] &
+		Z^{n+1}(A^\bullet) \arrow[r, "", rightarrow] &
+		Z^{n+1}(A^\bullet) \arrow[r, "", rightarrow] &
+		Z^{n+1}(C^\bullet) &
+	\end{tikzcd}
+	.\end{equation} 
+	Now we claim that
+	\begin{align}
+		\ker \overline{d^n_A} &\simeq H^{n} \left( A^\bullet \right)\\
+		\coker \overline{d^n_A} &\simeq H^{n+1} \left( A^\bullet \right)
+	.\end{align} 
+	(This will be proved after the theorem).
+	Applying the snake lemma now grants the desired sequence:
+	\begin{equation}
+	\begin{tikzcd}[row sep=tiny]
+		\ldots \arrow[r, "", rightarrow] &
+		H^{n} \left( A^\bullet \right) \arrow[r, "", rightarrow] &
+		H^{n} \left( B^\bullet \right) \arrow[r, "", rightarrow] 
+		\arrow[d, phantom, ""{coordinate, name=Z}] &
+		H^{n} \left( C^\bullet \right) \arrow[r, "\delta^n"', phantom, rightarrow] 
+		\arrow[dll, "", rounded corners, bend left = 100,
+		to path={ -- ([xshift=2ex]\tikztostart.east)\tikztonodes
+			|- (Z) [near end]
+			-| ([xshift=-2ex]\tikztotarget.west)
+			-- (\tikztotarget)}] & 
+			\phantom{a} \\
+		& 
+		H^{n+1} \left( A^\bullet \right) \arrow[r, "", rightarrow] &
+		H^{n+1} \left( B^\bullet \right) \arrow[r, "", rightarrow] &
+		H^{n+1} \left( C^\bullet \right) \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+	Then functoriality follows from functoriality of snake lemma
+	and functoriality of the claim, which is proved thanks to the following lemma.
+\end{proof}
+
+\begin{proof}[Proof of the claim]
+	We have the commutative diagram
+	(as seen before)
+	\begin{equation}
+	\begin{tikzcd}[column sep=tiny]
+		A^n \arrow[rr, "\widetilde{d^n_A}", rightarrow] 
+		\arrow[rd, "p^n_A"', rightarrow] & &
+		Z^{n+1}\\
+		&
+		A^n/I^n \arrow[ur, "\overline{d^n_A}"', rightarrow] 
+	\end{tikzcd}
+	.\end{equation} 
+	Which means that $\widetilde{d^n_A} = \overline{d^n_A} \circ p^n_A$.
+	Applying the ker-coker sequence lemma to this composition we obtain the exact sequence
+	\begin{equation}
+	\begin{tikzcd}[row sep=tiny]
+		0 \arrow[r, "", rightarrow] &
+		\ker p^n_A \arrow[r, "", rightarrow] &
+		\ker \widetilde{d^n_A} \arrow[r, "", rightarrow] 
+		\arrow[d, phantom, ""{coordinate, name=Z}] &
+		\ker \overline{d^n_A} 
+		\arrow[dll, "", rounded corners, bend left = 100,
+		to path={ -- ([xshift=2ex]\tikztostart.east)\tikztonodes
+			|- (Z) [near end]
+			-| ([xshift=-2ex]\tikztotarget.west)
+			-- (\tikztotarget)}] & \\
+		& 
+		\coker p^n_A \arrow[r, "", rightarrow] &
+		\coker \widetilde{d^n_A} \arrow[r, "", rightarrow] &
+		\coker \overline{d^n_A} \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	Since $p^n_A$ is an epimorphism it has zero cokernel, moreover its kernel,
+	by definition is $I^n$.
+	Then, substituting in the above we obtain
+	\begin{equation}\label{eqn:exactKerCokerClaim}
+	\begin{tikzcd}[row sep=tiny]
+		0 \arrow[r, "", rightarrow] &
+		I^n \arrow[r, "", rightarrow] &
+		\ker \widetilde{d^n_A} \arrow[r, "", rightarrow] 
+		\arrow[d, phantom, ""{coordinate, name=Z}] &
+		\ker \overline{d^n_A} 
+		\arrow[dll, "", rounded corners, bend left = 100,
+		to path={ -- ([xshift=2ex]\tikztostart.east)\tikztonodes
+			|- (Z) [near end]
+			-| ([xshift=-2ex]\tikztotarget.west)
+			-- (\tikztotarget)}] & \\
+		& 
+		0 \arrow[r, "", rightarrow] &
+		\coker \widetilde{d^n_A} \arrow[r, "", rightarrow] &
+		\coker \overline{d^n_A} \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	From exactness of the sequence we immediately obtain
+	\begin{equation}
+		\coker \overline{d^n} \simeq \coker \widetilde{d^n} \simeq
+		Z^{n+1}/I^{n+1} = H^{n+1} \left( A^\bullet \right)
+	.\end{equation} 
+	Then, since the inclusion $i^n_A\colon Z^n \hookrightarrow A^n$ is injective
+	and $d^n_A = i^n_A \circ \widetilde{d^n_A}$,
+	one obtains 
+	\begin{equation}
+	Z^n = \ker d^n_A \simeq \ker \widetilde{d^n}
+	.\end{equation} 
+	Then, again, from exactness of \eqref{eqn:exactKerCokerClaim}
+	one can conclude with:
+	\begin{equation}
+		\ker \overline{d^n} \simeq Z^n/I^n = H^{n} \left( A^\bullet \right)
+	.\end{equation} 
+\end{proof}
+
+\begin{defn}[Nullhomotopic morphism]
+	Consider two cochain complexes $\left( A^{\bullet}, d_{A} \right),
+	\left( B^{\bullet}, d_{B} \right) \in \mathrm{Ch}(\mathsf{C})$.
+	A morphism $f^\bullet\colon A^\bullet \to B^\bullet$ is said
+	to be {\em nullhomotopic} iff there exist a family 
+	$\left\{ h^n \right\}_{n \in \mathbb{Z}}$ of morphisms
+	\begin{equation}
+	\begin{tikzcd}
+		h^n \colon A^n \arrow[r, "", rightarrow] &
+		B^{n-1}
+	\end{tikzcd}
+	\end{equation} 
+	s.t. for all $n \in \mathbb{Z}$,
+	\begin{equation}
+	f^n = h^{n+1} \circ d_A^n + d_B^{n-1} \circ h^n
+	.\end{equation} 
+	In pictures:
+	\begin{equation}
+	\begin{tikzcd}
+		\ldots \arrow[r, "", rightarrow] &
+		A^{n-1} \arrow[r, "d^{n-1}_A", rightarrow] \arrow[d, "f^{n-1}", rightarrow] &
+		A^n \arrow[r, "d_A^n", rightarrow] \arrow[d, "f^n", rightarrow] 
+						 \arrow[ld, "h^n", rightarrow] &
+		A^{n+1} \arrow[r, "d_A^{n+1}", rightarrow] \arrow[d, "f^{n+1}", rightarrow]
+						\arrow[ld, "h^{n+1}", rightarrow] &
+		\ldots\\
+		\ldots \arrow[r, "", rightarrow] &
+		B^{n-1} \arrow[r, "d_B^{n-1}"', rightarrow] &
+		B^n \arrow[r, "d_B^n"', rightarrow] &
+		B^{n+1} \arrow[r, "d_B^{n+1}"', rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+\end{defn}
+
+\begin{prop}[]
+	If $f^\bullet\colon A^\bullet \to B^\bullet$ is nullhomotopic, then,
+	for any $n \in \mathbb{Z}$, it induces the zero morphism
+	at the level of cohomologies, i.e.
+	\begin{equation}
+		\begin{tikzcd}
+		0 = H^{n} \left( f \right)\colon H^{n} \left( A^\bullet \right) \arrow[r, "", rightarrow] &
+		H^{n} \left( B^\bullet \right).
+		\end{tikzcd}
+	\end{equation} 
+\end{prop}
+\begin{proof}
+	By definition (using Freyd-Mitchell, operating in a category of modules) we have
+	\begin{align}
+		H^{n} \left( f \right)\colon Z^n(A^\bullet)/I^n(A^\bullet) 
+		&\longrightarrow Z^n(B^\bullet)/I^n(B^\bullet) \\
+		\overline{x} &\longmapsto \overline{f^n(x)} \nonumber
+	,\end{align} 
+	for $x \in Z^n(A^\bullet)$.
+	By assumption we have the following equality:
+	\begin{equation}
+		f^n(x) = h^{n+1} \circ d_A^n(x) + d^{n+1} \circ h^n(x)
+	.\end{equation} 
+	Since $x \in Z^n(A^\bullet) = \ker d_A^n(x)$ the first summand is zero.
+	Then $f^n(x) \in \ima d^{n+1}_B$ and
+	\begin{equation}
+		0 = \overline{f^n(x)} \in Z^n(B^\bullet)/I^n(B^\bullet)
+	.\end{equation} 
+\end{proof}
+
+\begin{defn}[Homotopic morphisms]
+	Two morphisms $f^\bullet, g^\bullet\colon A^\bullet \to B^\bullet$
+	are called {\em homotopic} iff $f^\bullet - g^\bullet$ is nullhomotopic.
+	The family $\left( h^n \right)_{n \in \mathbb{Z}}$ making $f^\bullet - g^\bullet$
+	nullhomotopic is called {\em homotopy}.
+	More explicitly we have, for every $n \in \mathbb{Z}$
+	\begin{equation}
+	f^n - g^n = h^{n+1} \circ d^n_A + d^n_B \circ h^n
+	.\end{equation} 
+\end{defn}
+
+\begin{rem}[]
+	If $f^\bullet, g^\bullet\colon A^\bullet \to B^\bullet$ are homotopic, then
+	for all $n \in \mathbb{Z}$ we have
+	\begin{equation}
+	\begin{tikzcd}
+		H^{n} \left( f^\bullet \right) = H^{n} \left( g^\bullet \right) \colon
+		H^{n} \left( A^\bullet \right) \arrow[r, "", rightarrow] &
+		H^{n} \left( B^\bullet \right).
+	\end{tikzcd}
+	\end{equation} 
+	This is true, since $H^n$ is an additive functor, hence
+	\begin{equation}
+	H^{n} \left( f^\bullet - g^\bullet \right) =
+	H^{n} \left( f^\bullet \right) - H^{n} \left( g^\bullet \right)
+	.\end{equation} 
+\end{rem}
+
+\begin{rem}[]
+	Let $f,g\colon X \to Y$ be continuous maps of nice (e.g. CW-complexes) topological spaces.
+	One can define the singular cochain complex $C^\bullet(X,\mathbb{Z})$.
+	Suppose that $f$ and $g$ are homotopic, i.e. there is a continuous map
+	\begin{equation}
+		\begin{tikzcd}
+		h\colon X \cross \left[ 0,1 \right] \arrow[r, "", rightarrow] &
+		Y
+		\end{tikzcd}
+	\end{equation} 
+	s.t. $\left.h\right|_{X \cross \left\{ 0 \right\}} = f$ and
+	$\left.h\right|_{X \cross \left\{ 1 \right\}} = g$.
+	Then they induce two maps of complexes
+	\begin{equation}
+	\begin{tikzcd}
+		g^\bullet, f^\bullet: C^\bullet(X, \mathbb{Z}) \arrow[r, "", rightarrow] &
+		C^\bullet(Y, \mathbb{Z})
+	\end{tikzcd}
+	\end{equation} 
+	which are homotopic as in the above definition.
+\end{rem}
+
+\subsection{Resolutions}
+Let $\mathsf{C}$ be an {\em abelian} category.
+\begin{defn}[Resolution]
+	Consider $A \in \mathrm{Ob} \left(\mathsf{C}\right)$, then a {\em resolution}
+	of $A$ is an exact sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		I^0 \arrow[r, "d^0", rightarrow] &
+		I^1 \arrow[r, "d^1", rightarrow] &
+		I^2 \arrow[r, "d^2", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	\end{equation}
+	If, moreover, each $I^i$ is {\em injective}, then we say that
+	it is an {\em injective resolution}.
+	More compactly we are going to denote it by $A \to I^\bullet$.
+\end{defn}
+
+\begin{prop}[]
+	If $\mathsf{C}$ has enough injectives, then any
+	$A \in \mathrm{Ob} \left(\mathsf{C}\right)$ admits an injective resolution.
+\end{prop}
+\begin{proof}
+	Since $\mathsf{C}$ has enough injectives we have
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		I^0
+	\end{tikzcd}
+	\end{equation} 
+	for an injective object $I^0$.
+	Set $I^0/A := \coker \left( A \hookrightarrow I^0 \right)$.
+	Again, $\mathsf{C}$ has enough injectives, then there is
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		I^0/A \arrow[r, "", rightarrow] &
+		I^1
+	\end{tikzcd}
+	\end{equation} 
+	for $I^1$ injective.
+	We define
+	\begin{equation}
+	\begin{tikzcd}
+		d^0 \colon I^0 \arrow[r, "", twoheadrightarrow] &
+		I^0/A \arrow[r, "", rightarrowtail] &
+		I^1
+	\end{tikzcd}
+	.\end{equation} 
+	The kernel of the above map is just $A$, since the second map is injective, hence it coincides with
+	$A = \ker I^0 \twoheadrightarrow I^0/A$.
+	Then, as above, we can choose $I^2$ injective and
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		\coker d^0 \arrow[r, "", rightarrow] &
+		I^2
+	\end{tikzcd}
+	.\end{equation} 
+	We define again
+	\begin{equation}
+	\begin{tikzcd}
+		d^1 \colon I^1 \arrow[r, "", twoheadrightarrow] &
+		\coker d^0 \arrow[r, "", rightarrowtail] &
+		I^2
+	\end{tikzcd}
+	.\end{equation} 
+	Then, again reasoning as before, we obtain
+	\begin{equation}
+		\ker d^1 \simeq \ker \left( \coker d^0 \right) =: \ima d^0
+	.\end{equation} 
+	Then by induction one defines $\left( I^{\bullet}, d_{I} \right)$
+	s.t. $\ker d^n \simeq \ima d^{n-1}$.
+\end{proof}
+
+\begin{rem}[Another point of view]
+	Given $A \in \mathrm{Ob} \left(\mathsf{C}\right)$, one can view 
+	an injective resolution
+	of $A$ as a morphism of complexes
+	\begin{equation}
+	\begin{tikzcd}
+		A^\bullet \arrow[r, "", rightarrow] &
+		I^\bullet.
+	\end{tikzcd}
+	\end{equation} 
+	If we consider the complex $A^\bullet$ concentrated in degree $0$, i.e.
+	\begin{equation}
+	\begin{tikzcd}
+		\ldots \arrow[r, "", rightarrow] &
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		0 \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	\end{equation} 
+	$A^0 = A$ and $A^n = 0$ for all $n \neq 0$.
+	Then the morphism of complexes
+	\begin{equation}
+	\begin{tikzcd}
+		A^\bullet \arrow[r, "", rightarrow] &
+		I^\bullet
+	\end{tikzcd}
+	\end{equation} 
+	is given by the commutative
+	\begin{equation}
+	\begin{tikzcd}
+		\ldots \arrow[r, "", rightarrow] &
+		0 \arrow[r, "", rightarrow] 
+		\arrow[d, "", rightarrow] &
+		A \arrow[r, "", rightarrow] 
+		\arrow[d, "", rightarrow] &
+		0 \arrow[r, "", rightarrow] 
+		\arrow[d, "", rightarrow] &
+		0 \arrow[r, "", rightarrow]
+		\arrow[d, "", rightarrow] &
+		\ldots\\
+		\ldots \arrow[r, "", rightarrow] &
+		0 \arrow[r, "", rightarrow] &
+		I^0 \arrow[r, "d^0"', rightarrow] &
+		I^1 \arrow[r, "d^1"', rightarrow] &
+		I^2 \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	\end{equation} 
+	such that have the following isomorphisms:
+	\begin{equation}
+		\begin{tikzcd}[row sep=tiny]
+			A \simeq H^{0} \left( A^\bullet \right) \arrow[r, "\sim", rightarrow] &
+			H^{0} \left( I^\bullet \right) \simeq 
+			\ker d^0\\
+			0 = H^{n} \left( A^\bullet \right) 
+			\arrow[r, "", equal] &
+			H^{n} \left( I^\bullet \right)
+		\end{tikzcd}
+	.\end{equation} 
+	By exactness of $I^\bullet$ and triviality of $A^\bullet$ 
+	the above mean that $A^\bullet \to I^\bullet$ induces isomorphism
+	for each $n$ at the level of cohomologies.
+	And we give a name to such maps.
+\end{rem}
+				
+\begin{defn}[Quasi-isomorphism]
+	Consider a morphism of complexes in $\mathrm{Ch}(\mathsf{C})$
+	\begin{equation}
+	\begin{tikzcd}
+		f\colon X^\bullet \arrow[r, "", rightarrow] &
+		Y^\bullet.
+	\end{tikzcd}
+	\end{equation} 
+	It is a {\em quasi-isomorphism} iff, for all $n \in \mathbb{Z}$, it induces
+	an isomorphism at the level of the $n$-th cohomology:
+	\begin{equation}
+		\begin{tikzcd}
+			H^{n} \left( f \right)\colon H^{n} \left( X^\bullet \right)
+			\arrow[r, "\sim", rightarrow] &
+			H^{n} \left( Y^\bullet \right)
+		\end{tikzcd}
+	.\end{equation} 	
+\end{defn}
+\begin{rem}[Resolution, take 2]
+	Actually an injective resolution of $A$ is just the data of a quasi-isomorphism
+	between $A^\bullet$ the complex concentrated in $0$ defined above, 
+	and a complex $I^\bullet$ of injective objects, starting from degree $0$.
+	This point of view will allow to generalize the definition later on.
+\end{rem}
+
+\begin{defn}[Extension of a morphism]
+	Let $A, B \in \mathsf{C}$, with a morphism
+	$f\colon A \to B$.
+	Consider two resolutions
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[r, "", rightarrow] &
+		I^\bullet
+	\end{tikzcd}
+	\qquad \text{ and } \qquad
+	\begin{tikzcd}
+		B \arrow[r, "", rightarrow] &
+		J^\bullet
+	\end{tikzcd}
+	.\end{equation} 
+	An extension 
+	of $f\colon A \to B$
+	is a morphism of complexes
+	\begin{equation}
+		\begin{tikzcd}
+		f^\bullet: I^\bullet \arrow[r, "", rightarrow] &
+		J^\bullet
+		\end{tikzcd}
+	\end{equation} 
+	s.t. the following diagram commutes
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] \arrow[d, "f", rightarrow] &
+		I^0 \arrow[r, "", rightarrow] \arrow[d, "f^0", rightarrow] &
+		I^1 \arrow[r, "", rightarrow] \arrow[d, "f^1", rightarrow] &
+		\ldots\\
+		0 \arrow[r, "", rightarrow] &
+		B \arrow[r, "", rightarrow] &
+		J^0 \arrow[r, "", rightarrow] &
+		J^1 \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+	In other words the following diagram of morphisms of complexes commute:
+	\begin{equation}
+	\begin{tikzcd}
+		A^\bullet \arrow[r, "", rightarrow] 
+		\arrow[d, "f"', rightarrow] &
+		I^\bullet \arrow[d, "f^\bullet", rightarrow] \\
+		B^\bullet \arrow[r, "", rightarrow] &
+		J^\bullet
+	\end{tikzcd}
+	.\end{equation} 
+\end{defn}
+
+\begin{prop}[]\label{prop:ExistanceUniquenessLift}
+	Consider $A, B \in \mathsf{C}$,
+	$A \to  I^\bullet$ a resolution of $A$
+	and $B \to  J^\bullet$ an injective resolution of $B$.
+	Then, for any $f\colon A \to B$, there is an extension
+	$f^\bullet\colon I^\bullet \to J^\bullet$,
+	which is unique up to homotopy.
+\end{prop}
+\begin{proof}\leavevmode\vspace{-.2\baselineskip}
+	\begin{description}
+		\item[Uniqueness by homotopy:]
+	Suppose one has two extensions $f^\bullet, g^\bullet\colon I^\bullet \to J^\bullet$
+	of $f\colon A \to B$.
+	Then $f^\bullet - g^\bullet\colon I^\bullet \to J^\bullet$
+	extends the zero map $f-f = 0\colon A \to B$.
+	Then we only need to show that any extension of the zero map
+	is nullhomotopic.
+	Consider
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[d, "0"', rightarrow] \arrow[r, "", rightarrow] &
+		I^\bullet \arrow[d, "f^\bullet", rightarrow] \\
+		B \arrow[r, "", rightarrow] &
+		J^\bullet
+	\end{tikzcd}
+	.\end{equation} 
+	In particular, at degree $0$, we have
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[d, "0"', rightarrow] \arrow[r, "i_A", rightarrow] \arrow[rd, "", dashrightarrow] &
+		I^0 \arrow[d, "f^0", rightarrow] \\
+		0 \arrow[r, "", rightarrow] &
+		B \arrow[r, "i_B"', rightarrow] &
+		J^0
+	\end{tikzcd}
+	.\end{equation} 
+	By commutativity of the diagram the dashed arrow is the zero map,
+	hence $f^0$ factorizes through
+	$\coker (A \hookrightarrow I^0) = I^0/A$.
+	This gives rise to the map
+	\begin{equation}
+	\begin{tikzcd}
+		I^0/A \arrow[r, "\overline{f^0}", rightarrow] &
+		J^0
+	\end{tikzcd}
+	.\end{equation} 
+	Then we recall that, since $A \to I^\bullet$ is a complex, $d_I^0 \circ i_A = 0$,
+	hence also this map factors through $I^0/A$ and we have 
+	$\ker d^0_I \simeq \ima i_A = \ker \coker i_A$.
+	But then, applying lemma \ref{lem:kerCokerSequence}, we obtain that the map
+	through which $d^0_I$ factorizes is a mono, i.e. $I^0/A \hookrightarrow I^1$.
+	Moreover, since $J^0$ is injective, we obtain the diagram
+	\begin{equation}
+	\begin{tikzcd}
+		I^0 \arrow[r, "", twoheadrightarrow] \arrow[rd, "f^0"', rightarrow] 
+		\arrow[rr, "d_I^0", rightarrow, bend left] &
+		I^0/A \arrow[r, "", rightarrowtail]  \arrow[d, "\overline{f^0}", rightarrow] &
+		I^1 \arrow[ld, "\exists h^1", dashrightarrow] \\
+		&
+		J^0
+	\end{tikzcd}
+	.\end{equation} 
+	More explicitly this diagram states that $f^0 = h^1 \circ d_I^0$.
+	Suppose now, by strong induction on $n \geq 1$, that there exist
+	$h^n\colon I^n \longrightarrow J^{n-1}$
+	and
+	$h^{n+1}\colon I^{n+1} \longrightarrow J^{n}$
+	s.t.
+	\begin{equation}
+	f^n = h^{n+1} \circ d^n_I + d^{n-1}_J \circ h^n
+	.\end{equation} 
+	The above construction grants this for $n = 0$, with $h^0 = 0$. In fact
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		I^0 \arrow[ld, "h^0", rightarrow] \arrow[r, "d^0_I", rightarrow] 
+		\arrow[d, "f^0", rightarrow] &
+		I^1 \arrow[d, "f^1", rightarrow] 
+		\arrow[ld, "h^1", rightarrow] \\
+		0 \arrow[r, "", rightarrow] &
+		J^0 \arrow[r, "", rightarrow] &
+		J^1
+	\end{tikzcd}
+	.\end{equation} 
+	By induction we obtain the following diagram:
+	\begin{equation}
+	\begin{tikzcd}
+		\ldots \arrow[r, "", rightarrow] &
+		I^{n-1} \arrow[r, "d^{n-1}_I", rightarrow] 
+		\arrow[d, "f^1", rightarrow] &
+		I^n \arrow[r, "d^n_I", rightarrow] \arrow[ld, "h^n", rightarrow] 
+		\arrow[d, "f^n", rightarrow] &
+		I^{n+1} \arrow[d, "f^{n+1}", rightarrow] \arrow[ld, "h^{n+1}", rightarrow] 
+		\arrow[r, "d^{n+1}_I", rightarrow] &
+		I^{n+2} \arrow[r, "", rightarrow] \arrow[d, "f^{n+2}", rightarrow] &
+		\ldots \\
+		\ldots \arrow[r, "", rightarrow] &
+		J^{n-1} \arrow[r, "d^{n-1}_J"', rightarrow] &
+		J^n \arrow[r, "d^n_J"', rightarrow] &
+		J^{n+1} \arrow[r, "d^{n+1}_J"', rightarrow] &
+		J^{n+2} \arrow[r, "", rightarrow] &
+		\ldots
+	\end{tikzcd}
+	.\end{equation} 
+	Consider now the following composition:
+	\begin{align}
+		(f^{n+1} - d_I^n \circ h^{n+1}) \circ d_I^n &=
+		(f^{n+1} \circ d_I^n) - d_I^n \circ h^{n+1} \circ d_I^n\\
+		&=
+		\left( f^{n+1} \circ d_I^n \right) - d_J^n \circ h^{n-1} =
+		d^n_I \circ \left( f^n - h^{n+1} \circ d_I^n \right)\nonumber\\
+		&=
+		d^n_J \circ d_J^{n-1} \circ h^n = 0\nonumber
+	,\end{align} 
+	where the last equality holds from induction hypothesis.
+	Hence the map $f^{n+1} - d_J^n \circ h^{n+1} = (*)$ 
+	factorizes through $\coker d^n_I$,
+	giving rise to the following commutative diagram:
+	\begin{equation}
+		\begin{tikzcd}[row sep=small]
+		I^{n+1} \arrow[r, "", rightarrow] \arrow[rr, "(*)", bend left, rightarrow] &
+		\coker d_I^n \arrow[r, "", rightarrow] &
+		J^{n+1}\\
+	\end{tikzcd}
+	.\end{equation} 
+	Again, since $d^{n+1}_I$ factors through $\coker d^n_I$,
+	using lemma \ref{lem:kerCokerSequence}, we obtain that the factorization is injective.
+	Then combining it with the above diagram we get
+	\begin{equation}
+	\begin{tikzcd}
+		I^{n+1} \arrow[r, "", rightarrow] \arrow[d, "(*)"', rightarrow] &
+		\coker d_I^{n} \arrow[r, "", rightarrowtail] 
+		\arrow[ld, "", rightarrow] &
+		I^{n+2} \arrow[dll, "\exists h^{n+2}", dashrightarrow, bend left] \\
+		J^{n+1}
+	\end{tikzcd}
+	.\end{equation} 		
+	And $h^{n+2}$ exists since $J^{n+1}$ is injective.
+	Finally commutativity of the diagram grants that
+	\begin{equation}
+	f^{n+1} - d^n_J \circ h^{n+1} = h^{n+2} \circ d_I^{n+1}
+	.\end{equation} 
+
+		\item[Existance of the extension:]
+			By hypothesis we are given the diagram, with exact rows:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i_A", rightarrow] 
+		\arrow[d, "f"', rightarrow] \arrow[rd, "", dashrightarrow] &
+		I^0\\
+		0 \arrow[r, "", rightarrow] &
+		B \arrow[r, "i_B", rightarrow] &
+		J^0
+	\end{tikzcd}
+	.\end{equation} 
+	Since $J^0$ is injective and $i_A$ a mono, there exists a map
+	$f^0\colon I^0 \to J^0$ making the diagram commute:
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[r, "i_A", rightarrow] 
+		\arrow[d, "f"', rightarrow] &
+		I^0 \arrow[d, "f^0", rightarrow] \\
+		B \arrow[r, "i_B", rightarrow] &
+		J^0
+	\end{tikzcd}
+	.\end{equation} 
+	As proved before $d^0_I$ factors through $\coker i_A$, via a monomorphism.
+	Moreover we can see that $(\coker i_B \circ f^0) \circ i_A = \coker i_B \circ i_B \circ f = 0$,
+	hence $f^0$ factorizes via $\overline{f^0}$ through $\coker i_A$.
+	This gives rise to the commutative diagram:
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[r, "i_A", rightarrow] 
+		\arrow[d, "f"', rightarrow] &
+		I^0 \arrow[d, "f^0", rightarrow] 
+		\arrow[r, "", rightarrow] &
+		I^0/A \arrow[r, "", rightarrowtail] \arrow[d, "\overline{f^0}", rightarrow] 
+		\arrow[rd, "", dashrightarrow] &
+		I^1 \\
+		B \arrow[r, "i_B", rightarrow] &
+		J^0 \arrow[r, "", rightarrow] &
+		J^0/B \arrow[r, "", rightarrowtail] &
+		J^1
+	\end{tikzcd}
+	.\end{equation} 
+	Again, by injectivity of $J^1$ one obtains the map
+	$f^1\colon I^1 \to J^1$.
+	Notice that commutativity of the whole diagram, in particular, grants commutativity of
+	\begin{equation}
+	\begin{tikzcd}
+		I^0 \arrow[r, "d^0_I", rightarrow] \arrow[d, "f^0"', rightarrow] &
+		I^1 \arrow[d, "f^1", rightarrow] \\
+		J^0 \arrow[r, "d^0_J"', rightarrow] &
+		J^1
+	\end{tikzcd}
+	.\end{equation} 
+	Now we can procede by induction on $n \geq 1$.
+	Assume that we have constructed $f^{n-1}$ and $f^n$, then reasoning similarly to before we obtain
+	the commutative diagram
+	\begin{equation}
+	\begin{tikzcd}
+		I^{n-1} \arrow[r, "i_A", rightarrow] 
+		\arrow[d, "f^{n-1}", rightarrow] &
+		I^n \arrow[d, "f^n", rightarrow] 
+		\arrow[r, "", rightarrow] &
+		\coker d^{n-1}_I \arrow[r, "", rightarrowtail] 
+		\arrow[d, "\overline{f^n}", rightarrow] 
+		\arrow[rd, "", dashrightarrow] &
+		I^{n+1} \arrow[d, "f^{n+1}", dashrightarrow] \\
+		J^{n-1} \arrow[r, "i_B", rightarrow] &
+		J^n \arrow[r, "", rightarrow] &
+		\coker d^{n-1}_J \arrow[r, "", rightarrowtail] &
+		J^{n+1}
+	\end{tikzcd}
+	.\end{equation} 
+	Again the arrow $f^{n+1}$ exists by injectivity of $J^{n+1}$, and the following square commutes:
+	\begin{equation}
+	\begin{tikzcd}
+		I^n \arrow[r, "d^n_I", rightarrow] \arrow[d, "f^n"', rightarrow] &
+		I^{n+1} \arrow[d, "f^{n+1}", rightarrow] \\
+		J^n \arrow[r, "d^n_J"', rightarrow] &
+		J^{n+1}
+	\end{tikzcd}
+	.\end{equation} 
+	Then this construction gives rise to a morphism of complexes $f^\bullet\colon I^\bullet \to J^\bullet$,
+	and by construction it is an extension of $f\colon A \to B$.\qedhere
+	\end{description} 
+\end{proof}
+\end{document}

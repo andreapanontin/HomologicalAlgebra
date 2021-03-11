@@ -1,0 +1,392 @@
+\documentclass[../Main]{subfiles}
+\begin{document}
+\subsection{Functors between additive categories}
+\begin{defn}[Additive functor]
+	Let $\mathsf{C}, \mathsf{D}$ be (pre)additive categories.
+	A functor $F\colon \mathsf{C} \to \mathsf{D}$ is said to be {\em additive} iff
+	for any $A, B \in \mathrm{Ob} \left(\mathsf{C}\right)$, the map
+	\begin{equation}
+	F_{A,B}\colon \mathrm{Hom}_{\mathsf{C}} \left( A, B \right) \to \mathrm{Hom}_{\mathsf{D}} \left( FA, FB \right)
+	\end{equation} 
+	is a morphism of abelian group.
+\end{defn}
+
+%\begin{rem}[Recall]
+%	An additive category is a preadditive category with finite products.
+%	Actually an additive category can also be defined as a category with a zero object, binary product
+%	and coproduct s.t. 
+%	(tk: copy the definition)
+%	\begin{enumerate}
+%		\item There is an isomorphism $X \cross Y$
+%	\end{enumerate}
+%\end{rem}
+
+\begin{rem}[]
+	It would be natural to define an additive functor 
+	\begin{align}
+		F\colon \mathsf{C} &\longrightarrow \mathsf{D} 
+	\end{align} 
+	as simply a functor which preserves finite products, (since finite products and coproducts
+	coincide and are the only required structure in an additive category).
+	In fact such two definitions coincide in the case of an additive category.
+	Not in a preadditive category though.
+\end{rem}
+
+\begin{rem}[]
+	In the next proof we will use the following fact, true in any preadditive category $\mathsf{C}$:
+	if $T \in \mathrm{Ob} \left(\mathsf{C}\right)$ is a final object, then for
+	any other $X \in \mathrm{Ob} \left(\mathsf{C}\right)$, we have
+	\begin{equation}
+	X \cross T \simeq X
+	.\end{equation} 
+\end{rem}
+
+\begin{lem}\label{lem:CharactAddFct}
+	Let $F\colon \mathsf{C} \to \mathsf{D}$ be a functor between additive categories. TFAE:
+	\begin{enumerate}
+		\item $F$ is additive (in the sense of the definition).
+		\item $F$ preserves finite products (in particular the final object).
+		\item $F$ preserves the product of any pair of objects.
+		\item $F$ preserves finite coproducts (in particular the initial object).
+		\item $F$ preserves the coproduct of any pair of objects.
+	\end{enumerate}
+\end{lem} 
+\begin{proof}\leavevmode\vspace{-.2\baselineskip}
+	\begin{description}
+		\item[2 $\iff$ 3:] one direction is obvious, let's prove the inverse.
+			We want to procede by induction on the number of objects in
+			the product, in case $n=3$ we use the associativity in the following way
+			and generalize to arbitrary $n$:
+				\begin{align}
+					F(A_1 \cross A_2 \cross A_3) &=
+					F((A_1 \cross A_2) \cross A_3) =
+					F(A_1 \cross A_2) \cross F(A_3)\\
+					&=
+					F(A_1) \cross F(A_2) \cross F(A_3)
+				.\end{align} 
+				Moreover we need to prove that $F$ sends the empty product into
+				the empty product, i.e. $F(0) = 0$:
+				By definition of product we have
+				\begin{equation}
+					\mathrm{Hom}_{\mathsf{C}} \left( D, F(0) \cross F(A) \right)
+					\simeq \mathrm{Hom}_{\mathsf{C}} \left( D, F(0) \right)
+					\cross \mathrm{Hom}_{\mathsf{C}} \left( D, F(A) \right)
+				.\end{equation} 
+				Then, from the above remark we obtain that 
+				\begin{equation}
+					F(0 \cross A) = F(A)
+				.\end{equation} 
+				Then in the above we must have
+				\begin{equation}
+					\mathrm{Hom}_{\mathsf{C}} \left( D, F(0) \right) = \left\{ * \right\}
+				\end{equation} 
+				for all $D \in \mathrm{Ob} \left(\mathsf{D}\right)$,
+				i.e. $F(0)$ is a final (hence zero in an additive category) object.
+
+		\item[3 $\iff$ 5:] By additivity of $\mathsf{C}$ and $\mathsf{D}$ we obtain
+				\begin{align}
+					F(A \coprod B) \simeq F(A \cross B) \simeq
+					F(A) \cross F(B) \simeq
+					F(A) \coprod F(B)	
+				.\end{align} 
+				We also need to show that $F(i_A) = i_{F(A)}$.
+				In fact we have $i_A := (id_A, 0)$,
+				hence $F(i_A) = (id_{F(A)}, F(0)) = i_{F(A)}$, since
+				$F$ preserves terminal objects.
+				Then $\left(F(A \coprod B), F(i_A), F(i_B)\right)$
+				is a coproduct in $\mathsf{D}$.
+				The converse is the same, inverting product and coproduct.
+
+		\item[2 $\implies$ 1:] Let $A, B \in \mathrm{Ob} \left(\mathsf{C}\right)$.
+			Consider the zero map
+			\begin{equation}
+			\begin{tikzcd}
+				A \arrow[r, "", rightarrow] &
+				0_{\mathsf{C}} \arrow[r, "", rightarrow] &
+				B
+			\end{tikzcd}
+			.\end{equation} 
+			Then $F$ sends it into
+			\begin{equation}
+			\begin{tikzcd}
+				F(A) \arrow[r, "", rightarrow] &
+				0_{\mathsf{D}} \arrow[r, "", rightarrow] &
+				F(B)
+			\end{tikzcd}
+			,\end{equation} 
+			where we used the property we proved above, i.e. that
+			a functor $F$ preserving finite products sends zero
+			objects into zero objects.
+			In other words $F$ preserves the zero map.
+
+			Let's now show that it is compatible with addition.
+			In fact we have seen, in lemma \ref{lem:MorphismSumAdditiveCat},
+			that in additive categories we have
+			\begin{equation}
+				f + g = \delta_B \circ (f,g)
+			,\end{equation} 
+			where the above represents the diagram
+			\begin{equation}
+			\begin{tikzcd}
+				f+g : A \arrow[r, "(f g)", rightarrow] &
+				B \cross B \arrow[r, "", equals] &
+				B \coprod B \arrow[r, "\delta_B", rightarrow] &
+				B
+			\end{tikzcd}
+			.\end{equation} 
+			As shown before $F$ preserves both finite products and coproducts, then
+			\begin{equation}
+			\begin{tikzcd}
+				F(f+g): F(A) \arrow[r, "(F(f) F(g))", rightarrow] &
+				F(B) \cross F(B) \arrow[r, "", equals] &
+				F(B) \coprod F(B) \arrow[r, "F(\delta_B)", rightarrow] &
+				F(B)
+			\end{tikzcd}
+			.\end{equation} 
+			Here we need to notice that $F(\delta_B) = \delta_{F(B)}$, which
+			is also a consequence of the fact that $F$ preserves finite coproducts.
+			Then, by lemma \ref{lem:MorphismSumAdditiveCat} again,
+			we obtain $F(f+g) = F(f) + F(g)$.
+
+		\item[1 $\implies$ 3:]
+			Consider $A, B \in \mathrm{Ob} \left(\mathsf{C}\right)$, then we know
+			\begin{equation}
+			id_{A \cross B} = i_A \circ p_A + i_B \circ p_B
+			.\end{equation} 
+			Being $F$ an additive functor (preserves identity, composition and
+			group operation, i.e. sum) we obtain that
+			\begin{equation}
+				id_{F(A \cross B)} = F(id_{A \cross B}) =
+				F(i_A) \circ F(p_A) + F(i_B) \circ F(p_B)
+			.\end{equation} 
+			Given any $D \in \mathrm{Ob} \left(\mathsf{D}\right)$
+			and a pair of maps $f\colon D \to F(A)$
+			and $g\colon D \to F(B)$, we want to prove
+			that there is a unique $h\colon D \to F(A \cross B)$
+			making the diagram commute
+			\begin{equation}
+			\begin{tikzcd}
+				&
+				F(A) \arrow[d, "F(i_A)", rightarrow, bend left] \\
+				D \arrow[ru, "f", rightarrow] \arrow[rd, "g"', rightarrow] 
+				\arrow[r, "\exists\, ! h", dashrightarrow] &
+				F(A \cross B) \arrow[u, "F(p_A)" near start, rightarrow]
+				\arrow[d, "F(p_B)"' near start, rightarrow] \\
+				&
+				F(B) \arrow[u, "F(i_B)"', rightarrow, bend right] 
+			\end{tikzcd}
+			.\end{equation} 
+			Let's start by showing uniqueness, assuming it exists.
+			Clearly
+			\begin{align}
+				h = id_{F(A \cross B)} \circ h &=
+				\left( F(i_A) \circ F(p_A) + F(i_B) \circ F(p_B) \right) \circ h\\
+				&=
+				\left( F(i_A) \circ F(p_A) \circ h \right) + 
+				\left( F(i_B) \circ F(p_B) \circ h \right) \nonumber\\
+				&=
+				F(i_A) \circ f + F(i_B) \circ g\nonumber
+			,\end{align} 
+			where the last equality is due to the commutativity of the diagram.
+			Then $h$ is uniquely determined by $f$ and $g$, hence it is clearly unique.
+
+			Let's now check that the above formula satisfies the conditions.
+			If
+			\begin{equation}
+				h := F(i_A) \circ f + F(i_B) \circ g
+			.\end{equation} 
+			We need to show that the triangles commute, i.e.
+			\begin{equation}
+				F(p_A) \circ h = F(\underbrace{p_A \circ i_A}_{id_A}) \circ f
+				+ F(\underbrace{p_A \circ i_B}_{0}) \circ g =
+				f + 0 = f
+			.\end{equation} 
+			Analogously that
+			\begin{equation}
+				F(p_B) \circ h = F(\underbrace{p_B \circ i_A}_{0}) \circ f
+				+ F(\underbrace{p_B \circ i_B}_{id_B}) \circ g =
+				g + 0 = g
+			.\end{equation} 
+			Then $\left(F(A \cross B), F(p_A), F(p_B)\right)$
+			is a product of $F(A)$ and $F(B)$.\qedhere
+	\end{description} 
+\end{proof}
+
+\begin{defn}[]
+	Let $\mathsf{C}$ and $\mathsf{D}$ be {\em abelian} categories.
+	Let $F\colon \mathsf{C} \to \mathsf{D}$ be a functor.
+	\begin{enumerate}
+		\item 
+	We say that $F$ is {\em left exact} iff, for any exact sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		B \arrow[r, "", rightarrow] &
+		C
+	\end{tikzcd}
+	.\end{equation} 
+	in $\mathsf{C}$, the image sequence is exact in $\mathsf{D}$
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		F(A) \arrow[r, "", rightarrow] &
+		F(B) \arrow[r, "", rightarrow] &
+		F(C)
+	\end{tikzcd}
+	.\end{equation} 
+		\item 
+	We say that $F$ is {\em right exact} iff, for any exact sequence
+	\begin{equation}
+	\begin{tikzcd}
+		A \arrow[r, "", rightarrow] &
+		B \arrow[r, "", rightarrow] &
+		C \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	in $\mathsf{C}$, the image sequence is exact in $\mathsf{D}$
+	\begin{equation}
+	\begin{tikzcd}
+		F(A) \arrow[r, "", rightarrow] &
+		F(B) \arrow[r, "", rightarrow] &
+		F(C) \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+\item We say that $F$ is {\em exact} iff it is both left and right exact.
+	In other words iff given any exact sequence
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "", rightarrow] &
+		B \arrow[r, "", rightarrow] &
+		C \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	in $\mathsf{C}$, the image sequence is exact in $\mathsf{D}$
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		F(A) \arrow[r, "", rightarrow] &
+		F(B) \arrow[r, "", rightarrow] &
+		F(C) \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	\end{enumerate}
+\end{defn}
+
+\begin{lem}
+	Let $F\colon \mathsf{C} \to \mathsf{D}$ be a left exact functor between
+	abelian categories, then $F$ is additive.
+\end{lem} 
+\begin{proof}
+	It's enough to show that $F$ preserves the coproduct of
+	two objects, by lemma \ref{lem:CharactAddFct}.
+	Let's consider the split exact sequence in $\mathsf{C}$:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i_A", rightarrow] &
+		A \oplus B \arrow[r, "p_B", rightarrow] &
+		B \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	Then, since $F$ is left exact, we obtain the exact sequence in $\mathsf{D}$:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		F(A) \arrow[r, "F(i_A)", rightarrow] &
+		F(A \oplus B) \arrow[r, "F(p_B)", rightarrow] &
+		F(B)
+	\end{tikzcd}
+	.\end{equation} 
+	Since the first sequence is split, we know that there is the section $i_B: B \to A \oplus B$,
+	s.t. $p_B \circ i_B = id_B$.
+	This implies that $F(i_B)$ is a section of $F(p_B)$, i.e.
+	\begin{equation}
+		F(p_B) \circ F(i_B) = id_B
+	.\end{equation} 
+	One can easily show that this condition implies that $F(p_B)$ is an epimorphism.
+	Then the following is actually a split exact sequence:
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		F(A) \arrow[r, "F(i_A)", rightarrow] &
+		F(A \oplus B) \arrow[r, "F(p_B)", rightarrow] &
+		F(B) \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	By the characterization of split exact sequences we know we have a commutative diagram
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		F(A) \arrow[r, "F(i_A)", rightarrow] \arrow[d, "", equals] &
+		F(A \oplus B) \arrow[r, "F(p_B)", rightarrow] \arrow[d, "\varphi", rightarrow] &
+		F(B) \arrow[r, "", rightarrow] \arrow[d, "", equals] &
+		0\\
+		0 \arrow[r, "", rightarrow] &
+		F(A) \arrow[r, "i_{F(A)}", rightarrow] &
+		F(A) \oplus F(A) \arrow[r, "p_{F(B)}", rightarrow] &
+		F(B) \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	.\end{equation} 
+	Since the diagram commutes, $\varphi$ is an isomorphism, and by definition
+	$\left(F(A) \oplus F(B), i_{F(A)}, i_{F(B)}\right)$ is a coproduct,
+	it easily follows that $\left(F(A \oplus B), F(i_A), F(i_B)\right)$
+	is a coproduct of $F(A)$ and $F(B)$.
+\end{proof}
+
+\begin{rem}[]
+	For the sake of completeness let's show that
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+		A \arrow[r, "i_A", rightarrow] &
+		A \oplus B \arrow[r, "p_B", rightarrow] &
+		B \arrow[r, "", rightarrow] &
+		0
+	\end{tikzcd}
+	\end{equation} 
+	is exact in $\mathsf{C}$.
+	In fact it is exact on the left iff, for any $M \in \mathrm{Ob} \left(\mathsf{C}\right)$,
+	the following
+	\begin{equation}
+	\begin{tikzcd}
+		0 \arrow[r, "", rightarrow] &
+	\mathrm{Hom}_{\mathsf{C}} \left( M, A \right) \arrow[r, "i_{A*}", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, A \oplus B \right) \arrow[r, "p_{B*}", rightarrow] &
+		\mathrm{Hom}_{\mathsf{C}} \left( M, B \right)
+	\end{tikzcd}
+	.\end{equation} 
+	This is clearly exact in $\mathsf{Ab}$, since by universal property of product we have
+	the following isomorphism:
+	\begin{equation}
+	\mathrm{Hom}_{\mathsf{C}} \left( M, A \oplus B \right) \simeq
+	\mathrm{Hom}_{\mathsf{C}} \left( M, A \right) \cross 
+	\mathrm{Hom}_{\mathsf{C}} \left( M, B \right)
+	.\end{equation} 
+	Finally the whole sequence is exact, since $p_B$ is an
+	epimorphism (it has a section, but can be proven in other ways too).
+\end{rem}
+
+\begin{rem}[]
+	A morphism which admits a right inverse is an epimorphism:
+	Recall that $f$ is an epimorphism iff it is right erasable,
+	i.e. for any pair of composable maps s.t.
+	\begin{equation}
+	\alpha \circ f = \beta \circ f
+	\end{equation} 
+	implies $\alpha = \beta$.
+	But this is obvious, since
+	\begin{equation}
+	\alpha = \alpha \circ f \circ s = \beta \circ f \circ s = \beta
+	,\end{equation} 
+	in which we denoted by $s$ the section (right inverse) of $f$.
+\end{rem}
+\end{document}
